@@ -1,6 +1,6 @@
 {
   "name": "4d-prototype",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Agent Skill: turn requirement docs into 4D prototypes — a clickable prototype plus a time axis that plays the business by itself, with roles, workflow DAG, original-format data, formal checks of the flow and a switchable appearance (palettes, brand color, dark mode, styles).",
   "type": "module",
   "bin": {
