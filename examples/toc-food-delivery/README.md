@@ -1,94 +1,90 @@
-# toC 示例：橙子到家 · 一单外卖的全流程（4D 原型）
+# Consumer example: one food-delivery order, end to end (a 4D prototype)
 
-这是 [4d-prototype](../../skills/4d-prototype/SKILL.md) 方法的 toC 示例：虚构的即时配送平台“橙子到家”，一单外卖从开店准备、骑手上线、下单支付、接单出餐与派单到店，到取餐配送、收货评价、运营看板，再到次日对账、结算、打款与售后退款冲减。看点是**时间轴（第四维）+ 多端联动 + 订单状态机 + 实时调度**；角色、流程、数据是时间轴上每一刻能看到的东西：
+A consumer example of the [4d-prototype](../../skills/4d-prototype/SKILL.md) method: the fictitious on-demand delivery platform "Orange Home" (橙子到家). One order goes from opening the store, couriers coming online, ordering and payment, accepting and cooking in parallel with dispatch and the ride to the store, pickup and delivery, rating and the operations dashboard, to next-day reconciliation, settlement, payout and a partial refund offset in the next cycle. The highlights are **the time axis (the fourth dimension) + linked apps + an order state machine + real-time dispatch**; actors, workflow and data are what you see at each moment on the timeline:
 
-- **时间（第四维）**：业务时钟（10:50 骑手上线 → 11:52 下单 → 12:20 送达 → 次日 01:00 对账、02:00 结算、08:00 打款 → 后天 02:00 冲减）；0.25×–2× 随时调速，空格暂停，点击依赖图任一节点切换或重放；骑手在地图上随虚拟时钟平滑移动。
-- **角色**：用户、商家、骑手、城市运营；平台服务、智能调度（算法）、定时任务；支付网关（外部，模拟）。
-- **流程**：17 个环节组成的依赖图（DAG），分四行业务分支：商家一支（接单 → 备餐出餐）与调度一支（骑手上线 → 智能派单 → 骑手到店）并行，在“取餐配送”汇合；资金一支从支付流水起（渠道对账 → T+1 结算 → 打款到账），售后退款在“下期冲减”与结算汇合。T+1 结算为“需求必需”，部分退款与下期冲减为“原型补充 · 可选”。
-- **数据**：16 种数据对象，App 界面、库表、接口报文、对账 Excel 按原样展示；“一单订单”和“一笔钱”的逐阶段字段变化与状态迁移。
+- **Time (the fourth dimension)**: a business clock (10:50 couriers online → 11:52 order → 12:20 delivered → next day 01:00 reconciliation, 02:00 settlement, 08:00 payout → day after 02:00 offset). Change the speed from 0.25× to 2× at any time, pause with Space, click any node of the DAG to switch to it or replay it. Couriers move smoothly across the map on the virtual clock.
+- **Actors**: customer, merchant, courier, city operations; platform services, dispatch (algorithm), scheduled jobs; the payment gateway (external, simulated).
+- **Workflow**: a DAG of 17 steps in four lanes. The merchant branch (accept → cook) runs in parallel with the dispatch branch (couriers online → dispatch → courier at the store) and they join at pickup and delivery. The money branch starts from the payment flow (channel reconciliation → T+1 settlement → payout), and the refund joins settlement at the next-cycle offset. T+1 settlement is marked "required by the spec"; the partial refund and the offset are "prototype addition · optional".
+- **Data**: 16 data objects. App screens, database tables, API payloads and the reconciliation spreadsheet are shown in their original form, with stage-by-stage field changes and state transitions of "one order" and "one payment".
 
-> 品牌、商家、人物、地址、坐标与全部数据均为虚构；地图是风格化示意图，支付网关为模拟实现，不连接任何真实系统。
+> Brand, merchants, people, addresses, coordinates and all data are fictitious; the map is a stylized diagram and the payment gateway is simulated. Nothing connects to a real system.
 
-需求摘要（虚构）、补充假设与待确认问题见 [docs/原型说明与待确认事项.md](docs/原型说明与待确认事项.md)（第 4 节与原型内“假设与待确认”页同源）。
+The (fictitious) requirement summary, added assumptions and open questions are in [docs/原型说明与待确认事项.md](docs/原型说明与待确认事项.md) (section 4 is generated from the same source as the in-app assumptions page; in Chinese, like the UI).
 
-## 运行
+## Run
 
 ```bash
 npm install
 npm run dev
 ```
 
-打开 http://localhost:5290 （按 1920×1080 验收）。首页点“一键运行完整流程”自动走完全流程，可在弹窗里选情景；或打开“三端联动”，直接点三台手机上的按钮自己走一遍（接单后平台会自动派单）。
+Open http://localhost:5290 (acceptance viewport 1920×1080). Click "一键运行完整流程" (run the whole flow) on the home page to play the whole flow; you can pick a scenario in the dialog. Or open "三端联动" (linked apps) and click through the three phones yourself — dispatch happens automatically after the merchant accepts.
 
-| 命令 | 说明 |
+| Command | What it does |
 |---|---|
-| `npm run dev` | 开发服务器（端口 5290；PC 版 `/`，手机版 `/app.html`） |
-| `npm run dev:lan` | 同上，并允许局域网内的手机访问 |
-| `npm run typecheck` | TypeScript 类型检查 |
-| `npm test` | 价格试算、订单状态机（含非法迁移）、调度打分与 ETA、支付回调幂等、分账勾稽与退款分摊、渠道对账与打款冲减、6 个情景的预期结果、流程 DAG 不变量（含并行分支与汇合）、格式样例与数据流转、文档同步 |
-| `npm run build` / `npm run preview` | 构建静态产物 / 本地预览（端口 5291） |
-| `node scripts/gen-notes.mjs` | 由 `src/content/notes.ts` 重新生成文档第 4 节 |
+| `npm run dev` | Dev server (port 5290; desktop at `/`, phone version at `/app.html`) |
+| `npm run dev:lan` | Same, reachable from phones on the local network |
+| `npm run typecheck` | TypeScript type check |
+| `npm test` | Pricing, order state machine (including illegal transitions), dispatch scoring and ETA, idempotent payment callbacks, settlement balancing and refund allocation, reconciliation and payout offsets, expected results of the six scenarios, DAG invariants (parallel branches and joins), format samples and lineage, docs sync |
+| `npm run build` / `npm run preview` | Static build / local preview (port 5291) |
+| `node scripts/gen-notes.mjs` | Regenerate section 4 of the notes document from `src/content/notes.ts` |
 
-## 手机版 App
+## Phone version
 
-打开 http://localhost:5290/app.html （验收基准为 iPhone 16 的 393×852 CSS 视口）。一台手机里装着四个 App：
+Open http://localhost:5290/app.html (acceptance viewport: iPhone 16, 393×852 CSS px). One phone holds four apps:
 
-- **橙子到家（用户）**：首页（品类、领券、附近好店）→ 店铺点菜（加购飞入购物车、满减提示）→ 确认订单（价格试算）→ 收银台（模拟网关）→ 订单追踪（地图随骑手自动缩放、进度、骑手卡片）→ 评价 → 售后；另有订单与“我的”页签。
-- **商家版**：菜品与库存、开始营业、新订单铃声与接单、备餐倒计时圆环、出餐、退款处理。
-- **橙子骑手**：午高峰运力预测与上线听单、听单雷达、派单弹层（含“为什么派给你”的得分构成）、到店 / 取餐 / 送达三段任务、车辆故障与改派、收入明细。
-- **橙子运营**：实时看板（指标、半小时订单量、需求热力、超时预警）、营销券发布、资金（渠道对账 → T+1 结算 → 打款到账 → 下期冲减）。
+- **Orange Home (customer)**: home, store and menu, order confirmation with price calculation, checkout (simulated gateway), order tracking on a map, rating, after-sales.
+- **Merchant**: dishes and stock, opening the store, new-order alert and accept, cooking countdown, food ready, refunds.
+- **Courier**: lunch-peak capacity forecast and going online, dispatch sheet with "why you got this order" scores, store / pickup / delivery tasks, breakdown and reassignment, earnings.
+- **Operations**: live dashboard, coupon publishing, money (channel reconciliation → T+1 settlement → payout → next-cycle offset).
 
-桌面上有订单的“实时活动”卡片与一键演示入口。一键演示时，手机随当前子步骤的操作人在四个 App 之间自动切换，顶部胶囊显示当前环节，点开是控制面板（上一 / 暂停 / 下一 / 结束、速度、方式，以及子步骤、依赖图、数据格式、平台事件四个页签），触点代替手指完成操作。手动操作时，接单后平台自动派单、商家同意退款后网关自动退款。
+In a one-click run the phone switches between the four apps to follow whoever acts in the current sub-step, a capsule at the top shows the current step, and a touch indicator replaces the finger. On a computer it shows inside an iPhone frame with narration on the left and platform events on the right. It is a mobile web prototype, not a native iOS / Android project, and shares `src/sim`, `src/state`, `src/flow` and the step scripts with the desktop version.
 
-- 在手机上：电脑运行 `npm run dev:lan`（允许局域网访问），手机与电脑连同一 Wi-Fi，用手机浏览器打开终端里显示的 Network 地址加 `/app.html`；可“添加到主屏幕”以全屏独立 App 方式打开。
-- 在电脑上：自动显示为 iPhone 外框讲解模式，左侧是说明，右侧是平台事件流。
-- 它是移动 Web 原型，不是原生 iOS / Android 工程；与 PC 版共用 `src/sim`、`src/state`、`src/flow` 与环节脚本（`src/state/liveFlow.ts`、`opsFlow.ts`）。
+## Pages
 
-## 页面
-
-| 路由 | 页面 | 说明 |
+| Route | Page | Contents |
 |---|---|---|
-| `#/` | 场景导览 | 五分钟读懂这门生意、6 个情景一键演示、业务地图 |
-| `#/live` | 三端联动 | 用户 / 商家 / 骑手三台手机 + 示意地图 + 运力预测与派单打分 + 订单状态机 + 履约时间轴 + 平台事件流 |
-| `#/ops` | 运营后台 | 实时看板（指标、半小时订单量、超时预警、需求热力）、营销券配置（`?tab=coupon`） |
-| `#/settle` | 结算中心 | 资金链路总览、渠道对账、T+1 分账、单笔资金去向、结算对账 Excel（可下载）、打款到账、下期冲减 |
-| `#/flow` | 全流程总览 | 依赖图 / 泳道、操作方分工、数据流转、文件与数据格式、数据对象目录、自动化与人工把关 |
-| `#/design` | 方案讨论 | 调度权重滑杆实时重排、支付回调幂等时序、券门槛口径与平台补贴 |
-| `#/notes` | 假设与待确认 | 33 条补充假设、需求空白与待确认问题；重置演示数据 |
+| `#/` | Scenario tour | A five-minute primer, the six scenarios one click away, business map |
+| `#/live` | Linked apps | Customer / merchant / courier phones + map + capacity forecast and dispatch scoring + order state machine + fulfillment timeline + platform events |
+| `#/ops` | Operations console | Live dashboard, coupon configuration (`?tab=coupon`) |
+| `#/settle` | Settlement center | Money flow overview, channel reconciliation, T+1 split, where one order's money goes, reconciliation spreadsheet (downloadable), payout, next-cycle offset |
+| `#/flow` | Whole-flow overview | DAG / swimlanes, actors, lineage, file and data formats, data object catalog, automation and human checkpoints |
+| `#/design` | Solution discussion | Dispatch weight sliders that re-rank couriers live, payment-callback idempotency sequence, coupon threshold definitions and subsidies |
+| `#/notes` | Assumptions and open questions | 33 added assumptions, gaps in the spec and open questions; reset demo data |
 
-## 情景
+## Scenarios
 
-| 情景 | 看点 |
+| Scenario | What to look at |
 |---|---|
-| 标准单（午高峰） | 商家满 50 减 6 + 平台券满 40 减 8，实付 49 元；派给顺路的阿强；约 29 分钟送达；平台这一单只赚 0.07 元 |
-| 出餐慢，骑手等餐 | 出餐 25 分钟，等餐超 10 分钟预警、催单、骑手等餐补贴；超时 9 分钟，发 3 元赔付券 |
-| 骑手故障，超时预警与改派 | 阿强半路停下 3 分钟 → 预警 → 改派给老马，仍按时送达 |
-| 下雨，配送费加价 | 配送费 +2、骑手补贴 +3，承诺时间放宽到 12:30，这一单平台在补贴 |
-| 支付回调重复 | 网关重发同一 trade_no，平台幂等忽略，不重复推送商家 |
-| 优惠门槛 | 原价 40 元、商家优惠后 37 元，平台券不可用，提示“差 3 元可用” |
+| Standard order (lunch peak) | Merchant "¥6 off over ¥50" + platform coupon "¥8 off over ¥40", ¥49 paid; dispatched to the courier on the way; about 29 minutes to deliver; the platform earns ¥0.07 on this order |
+| Slow kitchen, courier waits | Food takes 25 minutes; a warning after 10 minutes of waiting, a reminder and a waiting subsidy; 9 minutes late, a ¥3 compensation coupon |
+| Courier breakdown, reassignment | The courier stops for 3 minutes → warning → reassigned to the nearest courier, still on time |
+| Rain surcharge | Delivery fee +¥2, courier subsidy +¥3, promised time relaxed to 12:30; the platform subsidizes this order |
+| Duplicate payment callback | The gateway resends the same trade_no; the platform ignores it idempotently and does not notify the merchant twice |
+| Coupon threshold | ¥40 list price, ¥37 after the merchant discount: the platform coupon can't be used, with a "¥3 short" hint |
 
-每个情景最后都有售后：卤蛋漏送，部分退款 2.25 元（按原价占比分摊优惠）；这单已结算打款，后天 02:00 在下一结算周期冲减（商家 2.20 元、平台 0.05 元）。
+Every scenario ends with after-sales: a missing item, a ¥2.25 partial refund allocated by list-price share; the order has already been settled and paid out, so the refund is offset in the next settlement cycle at 02:00 the day after.
 
-## 技术说明
+## Technical notes
 
-- Vite + React + TypeScript + Tailwind CSS；运行时依赖只有 `react`、`react-dom`。地图、插画、图表、xlsx 写入均为自实现。
-- 模拟后端在 `src/sim/world.ts`：一组纯函数动作（World → World），页面、4D 编排、格式样例、数据流转与测试共用；`advanceTo` 让任一环节都能“自备上游”。
-- 世界按阶段线性推进，依赖图有并行分支：环节脚本用 `prepareStep(id, pre, out)`（`src/state/liveFlow.ts`）自备上游——排在后面的并行环节已先执行时只回放、不回退世界。一键运行按 `STEPS` 的业务时间顺序走。
-- 动画只用 `transform` / `opacity`，骑手位置按虚拟时钟逐帧插值（`vNow()` 只读、不触发回调），暂停即冻结，尊重 `prefers-reduced-motion`。
-- 4D 编排层位于 `src/flow/`（流程定义、导演、虚拟时钟、光标、格式样例、数据流转）与 `src/components/flow/`（导航、依赖图、“流程 · 数据”窗口、播放控制、泳道），由 toB 示例改写而来。
+- Vite + React + TypeScript + Tailwind CSS; the only runtime dependencies are `react` and `react-dom`. Map, illustrations, charts and xlsx writing are implemented in-house.
+- The simulated backend is `src/sim/world.ts`: pure actions (World → World) shared by pages, the time axis, format samples, lineage and tests; `advanceTo` lets any step supply its own upstream.
+- The world advances through linear stages while the DAG has parallel branches: step scripts use `prepareStep(id, pre, out)` (`src/state/liveFlow.ts`), so a parallel step that already ran is replayed, not rewound. A one-click run follows `STEPS` in business-time order.
+- Animations use only `transform` / `opacity`; courier positions are interpolated from the virtual clock (`vNow()` is read-only), so pausing freezes them; `prefers-reduced-motion` is respected.
+- The time axis (4D orchestration layer) is in `src/flow/` and `src/components/flow/`, adapted from the B2B example.
 
-## 目录
+## Layout
 
 ```
 src/
-  domain/      基础资料与地图（catalog）、价格试算、订单状态机、调度打分、支付报文与幂等、结算分账与退款、种子数据
-  sim/         模拟世界与动作（world）、情景（scenarios）
-  state/       三端联动状态（live）、会话、券草稿、重置
-  flow/        4D 编排：操作方、数据对象、流程定义（DAG）、导演、虚拟时钟、光标、格式样例、数据流转
-  components/  live/（手机外框、三端 App、示意地图、派单打分、状态机、时间轴、事件流）、flow/、ui/、layout/
-  pages/       各页面（PC）
-  mobile/      手机版：入口 main.tsx、外框与讲解（MobileRoot）、系统层（PhoneOS：桌面、App 切换、灵动岛）、四个 App、演示层（DemoLayer）
-  content/     假设与待确认（notes.ts）
-docs/          原型说明与待确认事项
+  domain/      catalog and map, pricing, order state machine, dispatch scoring, payment payloads and idempotency, settlement and refunds, seed data
+  sim/         simulated world and actions, scenarios
+  state/       linked-apps state, session, coupon draft, reset
+  flow/        time axis: actors, data objects, workflow (DAG), director, virtual clock, cursor, format samples, lineage
+  components/  live/ (phone frames, the three apps, map, dispatch board, state machine, timeline, events), flow/, ui/, layout/
+  pages/       desktop pages
+  mobile/      phone version: entry, frame and narration, phone OS layer, the four apps, demo layer
+  content/     assumptions and open questions (notes.ts)
+docs/          prototype notes, assumptions and open questions (Chinese)
 scripts/       gen-notes.mjs
 ```

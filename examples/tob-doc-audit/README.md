@@ -1,68 +1,68 @@
-# toB 示例：单据智能核查助手（4D 原型）
+# B2B example: document audit assistant (a 4D prototype)
 
-这是 [4d-prototype](../../skills/4d-prototype/SKILL.md) 方法的 toB 示例：虚构的“远帆集团”财务共享中心用规则引擎 + 智能体核查子公司的收付款单据。它展示了一个 4D 原型应有的全部要素——核心是第四维“时间”，其余三项是时间轴上每一刻能看到的东西：
+A B2B example of the [4d-prototype](../../skills/4d-prototype/SKILL.md) method: the finance shared-service center of the fictitious "Yuanfan Group" (远帆集团) audits its subsidiaries' payment and receipt documents with a rules engine plus an agent. It shows everything a 4D prototype should have. The core is the fourth dimension, time; the other three are what you see at each moment on the timeline:
 
-- **时间（第四维）**：一单批次按业务时间展开（07:00 主数据同步 → 10:30 RPA 接口上传 → 14:01 核查 → 14:20 复核 → 15:30 整改 → 次日 02:00 夜间跑批 → 次日 09:00 驾驶舱）；一键运行完整流程，0.25×–2× 随时调速，空格暂停，点击依赖图任一节点切换或重放；演示光标与“流程 · 数据”窗口全程跟随。
-- **角色**：集团财务管理员、区域财务管理员、子公司核查岗与复核岗，外加 RPA、后台批量、智能体、外部平台（供应商协同平台）四类机器 / 外部操作方。
-- **流程**：14 个环节组成的依赖图（DAG），四行分支：主数据（每日组织同步，扇出到规则维护与两种上传的核查）、规则库（AI 解读制度 → 自然语言维护 → 误报回流调优）、接口上传（RPA 上传 → 回写协同平台，有疑点的付款申请挂起）、界面上传（上传 → 核查 → 自动导出 → 复核 → 整改），汇合到区域查看与驾驶舱（含挂起与整改闭环）；夜间跑批与误报回流为“原型补充 · 可选”。
-- **数据**：18 种数据对象，文件 / 库表 / 接口报文按原始样式展示；单据与交易对方的逐阶段字段变化（lineage）。
+- **Time (the fourth dimension)**: one batch unfolds in business time (07:00 master-data sync → 10:30 RPA upload through the API → 14:01 audit → 14:20 review → 15:30 rectification → 02:00 next day, nightly batch → 09:00 next day, dashboard). Run the whole flow with one click, change the speed from 0.25× to 2× at any time, pause with Space, click any node of the DAG to switch to it or replay it. The demo cursor and the "Flow · Data" dock follow along.
+- **Actors**: group finance admin, regional finance admin, subsidiary checker and reviewer, plus four machine / external actors: RPA, backend batch, agent, and an external platform (the supplier collaboration portal).
+- **Workflow**: a DAG of 14 steps in four lanes — master data (a daily organization sync that fans out to rule maintenance and both upload paths), rule library (AI reads policy documents → natural-language maintenance → tuning from false positives), API upload (RPA upload → write-back to the portal, holding suspicious payment requests), and UI upload (upload → audit → automatic export → review → rectification). They join at the regional view and the dashboard. The nightly batch and the false-positive feedback loop are marked "prototype addition · optional".
+- **Data**: 18 data objects. Files, database tables and API payloads are shown in their original form, with field-by-field lineage of a document and a counterparty across stages.
 
-> 场景、集团、子公司、客商、组织编码、员工、账号、单据编号、制度文件全部为虚构，不对应任何真实主体。原型不调用大模型：确定性规则真实执行，语义判断按“期望的智能体行为”预设并展示推理轨迹。
+> The scenario, group, subsidiaries, counterparties, organization codes, employees, accounts, document numbers and policy documents are all fictitious. The prototype does not call an LLM: deterministic rules really run, and semantic verdicts are preset to the expected agent behavior with the full reasoning trace shown.
 
-需求缺失处的补充假设与待确认问题见 [docs/原型说明与待确认事项.md](docs/原型说明与待确认事项.md)（与原型内“假设与待确认”页同源）。
+Assumptions and open questions that fill gaps in the requirements are in [docs/原型说明与待确认事项.md](docs/原型说明与待确认事项.md) (generated from the same source as the in-app "assumptions and open questions" page; in Chinese, like the UI).
 
-## 运行
+## Run
 
 ```bash
 npm install
 npm run dev
 ```
 
-打开 http://localhost:5280 （按 1920×1080 验收），点首页“一键运行完整流程”自动走完整条业务流程；首页“场景导览”另有 6 个演示剧本。顶栏“演示角色”模拟统一认证登录用户，不同岗位的菜单、权限与可见范围不同。
+Open http://localhost:5280 (acceptance viewport 1920×1080) and click "一键运行完整流程" (run the whole flow) on the home page. The home page also has six demo scripts. The "demo role" switch in the top bar simulates the signed-in user; each role has its own menus, permissions and data scope.
 
-| 命令 | 说明 |
+| Command | What it does |
 |---|---|
-| `npm run dev` | 开发服务器（端口 5280） |
-| `npm run typecheck` | TypeScript 类型检查 |
-| `npm test` | 规则引擎情景（每个情景恰好命中预期规则、合规数据零误报）、批次级国家/地区一致性、规则库与自然语言维护、结果留存与可见范围、xlsx 与导出版式、全流程 DAG 不变量与数据流转、文档同步 |
-| `npm run build` / `npm run preview` | 构建静态产物 / 本地预览（端口 5281） |
+| `npm run dev` | Dev server (port 5280) |
+| `npm run typecheck` | TypeScript type check |
+| `npm test` | Rules-engine scenarios (each hits exactly the expected rules, compliant data produces zero findings), batch-level country consistency, rule library and natural-language maintenance, result retention and visibility, xlsx and export layouts, DAG invariants and lineage, docs sync |
+| `npm run build` / `npm run preview` | Static build / local preview (port 5281) |
 
-## 页面
+## Pages
 
-| 路由 | 页面 | 说明 |
+| Route | Page | Contents |
 |---|---|---|
-| `#/` | 场景导览 | 业务地图、五分钟读懂收付款单据核查、演示剧本 |
-| `#/check` | 一键核查 | 界面上传 / 接口上传（RPA）→ 按工号匹配规则库核查 → 按大类查看 → 自动生成结果文件并保存批次 |
-| `#/results` | 核查结果 | 批次列表（按岗位确定可见范围）、批次详情、单据视图与推理轨迹、复核确认 |
-| `#/rules` | 核查规则库 | 规则目录（按大类）、自然语言维护（diff + 逐条确认）、版本与变更、AI 解读制度文件、用户与规则库 |
-| `#/cockpit` | 核查驾驶舱 | 区域 / 集团分层聚合，集团可下钻 |
-| `#/flow` | 全流程总览 | 依赖图（DAG）、操作方泳道、文件与数据格式样例、数据结构逐阶段变化、数据对象目录、智能体介入点、判例库 |
-| `#/agent-ops` | 智能体运行设计 | 语义组合统计、分层架构、成本估算、夜间跑批模拟 |
-| `#/notes` | 假设与待确认 | 补充假设、需求疑点、待确认问题；重置演示数据 |
+| `#/` | Scenario tour | Business map, a five-minute primer, demo scripts |
+| `#/check` | One-click audit | UI upload / API upload (RPA) → audit with the rule library matched by employee ID → view by category → result file generated and the batch saved |
+| `#/results` | Audit results | Batches (visibility by role), batch detail, document view with reasoning trace, review |
+| `#/rules` | Rule library | Rule catalog, natural-language maintenance (diff + per-change confirmation), versions, AI reading of policy documents, users and rule libraries |
+| `#/cockpit` | Dashboard | Regional / group aggregation with drill-down |
+| `#/flow` | Whole-flow overview | DAG, actor swimlanes, file and data formats, lineage, data object catalog, agent touchpoints, case library |
+| `#/agent-ops` | Agent run design | Semantic combination statistics, layered architecture, cost estimate, nightly batch simulation |
+| `#/notes` | Assumptions and open questions | Added assumptions, doubts about the spec, open questions; reset demo data |
 
-## 技术说明
+## Technical notes
 
-- Vite + React + TypeScript + Tailwind CSS；运行时依赖只有 `react`、`react-dom`。xlsx 读写、图表均为自实现。
-- 哈希路由 + 相对路径构建，`dist/` 可直接作为静态文件部署；页面按需加载。
-- 演示状态（角色、各组织规则库与版本、本机核查批次、判例库）保存在浏览器 localStorage，可在“假设与待确认”页重置。历史核查批次为确定性种子（`src/mock/batches.ts`），按各组织的初始规则库重算，列表统计与明细一致。
-- 4D 编排层位于 `src/flow/`（流程定义、导演、虚拟时钟、光标、格式样例、数据流转）与 `src/components/flow/`（导航、依赖图、“流程 · 数据”窗口、播放控制、泳道）。
+- Vite + React + TypeScript + Tailwind CSS; the only runtime dependencies are `react` and `react-dom`. xlsx reading and writing and the charts are implemented in-house.
+- Hash routing and relative build paths, so `dist/` deploys as static files; pages load on demand.
+- Demo state (role, rule libraries and versions per organization, local audit batches, case library) lives in localStorage and can be reset on the assumptions page. Historical batches are a deterministic seed (`src/mock/batches.ts`), recomputed with each organization's initial rule library, so list statistics match the details.
+- The time axis (4D orchestration layer) is in `src/flow/` (workflow definition, director, virtual clock, cursor, format samples, lineage) and `src/components/flow/` (navigator, DAG, "Flow · Data" dock, playback controls, swimlanes).
 
-## 目录
+## Layout
 
 ```
 src/
-  domain/      单据字段映射（docs.ts）、类别编码、国家/地区、名称清洗、组织与岗位
-  rules/       规则实现池（catalog）、智能体裁判（judges）、引擎（engine，含批次级规则）、自然语言新增的规则模板
-  agent/       用途说明语义知识、核查流水线、批次级国家/地区索引、自然语言维护规则库
-  state/       组织规则库与版本、核查结果留存、判例库、会话
-  flow/        4D 编排：操作方、数据对象目录、流程定义（DAG）、演示导演、虚拟时钟、光标、格式样例、数据流转
-  mock/        虚构单据与疑点情景（ledger.ts）、客商与子公司、历史核查批次种子、制度文件摘要、语义组合统计
-  pages/       各页面
-  components/  外壳、基础组件、核查过程与结果组件、图表、flow/
-  lib/         路由、状态、xlsx 读写、三类工作表解析、导出版式
-docs/          原型说明与待确认事项
+  domain/      document field mapping, category codes, countries, name cleaning, organizations and roles
+  rules/       rule catalog, agent judges, engine (with batch-level rules), templates for rules added in natural language
+  agent/       semantic knowledge, audit pipeline, batch-level country index, natural-language rule maintenance
+  state/       rule libraries and versions, result retention, case library, session
+  flow/        time axis: actors, data objects, workflow (DAG), director, virtual clock, cursor, format samples, lineage
+  mock/        fictitious documents and finding scenarios, counterparties and subsidiaries, batch seed, policy summaries
+  pages/       pages
+  components/  shell, basic components, audit process and result components, charts, flow/
+  lib/         router, state, xlsx, sheet parsing, export layouts
+docs/          prototype notes, assumptions and open questions (Chinese)
 ```
 
-## 来源
+## Origin
 
-本示例由一个真实项目的原型改写而来：保留了架构、页面、4D 编排层与规则机制，领域全部替换为虚构的集团财务场景，并删除了所有由真实数据得出的统计数字。
+This example was rewritten from the prototype of a real project: the architecture, pages, time axis and rule mechanics were kept, the domain was replaced with a fictitious group-finance scenario, and every statistic derived from real data was removed.
