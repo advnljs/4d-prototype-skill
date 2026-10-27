@@ -1,4 +1,4 @@
-# 4D Prototype · a Claude Code skill
+# 4D Prototype · an Agent Skill
 
 Turn requirement documents into **4D prototypes**. A traditional prototype has three dimensions: screens laid out in space. A 4D prototype adds the fourth dimension — **time**. The whole business becomes a timeline that plays by itself in business time, from the first event to the last (scheduled jobs, overnight reconciliation and settlement, parallel branches included). Pause it, change the speed from 0.25× to 2×, jump to any step, replay it, or take over and click at any moment.
 
@@ -33,7 +33,7 @@ npx skills add advnljs/4d-prototype-skill    # skills.sh: choose which agents to
 clawhub install 4d-prototype                 # ClawHub
 ```
 
-Then start a new Claude Code session and hand it your requirement materials, for example: "Build a 4D prototype from the requirement docs in refer/".
+Then start a new session of your agent (Claude Code or any agent that loads skills) and hand it your requirement materials, for example: "Build a 4D prototype from the requirement docs in refer/".
 
 ## What's in this repository
 

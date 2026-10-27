@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Installs the bundled 4d-prototype skill for Claude Code (zero dependencies).
+// Installs the bundled 4d-prototype Agent Skill (zero dependencies). The default target is Claude Code's skills folder;
+// --dir installs it for any agent that loads skills from a folder.
 //
 //   npx 4d-prototype              → ~/.claude/skills/4d-prototype   (all projects)
 //   npx 4d-prototype --project    → ./.claude/skills/4d-prototype   (this project only)
@@ -16,7 +17,7 @@ const source = join(pkgRoot, 'skills', NAME);
 const { version } = JSON.parse(readFileSync(join(pkgRoot, 'package.json'), 'utf8'));
 const args = process.argv.slice(2);
 
-const usage = `4d-prototype ${version} — install the 4D prototype skill for Claude Code
+const usage = `4d-prototype ${version} — install the 4D prototype Agent Skill
 
 Usage: npx 4d-prototype [--project | --dir <path>] [--force]
 
@@ -27,7 +28,7 @@ Usage: npx 4d-prototype [--project | --dir <path>] [--force]
   -h, --help     show this help
   -v, --version  print the version
 
-Then ask Claude Code to build a prototype from your requirement doc.
+Then ask your agent (e.g. Claude Code) to build a prototype from your requirement doc.
 Examples and docs: https://github.com/advnljs/4d-prototype-skill`;
 
 if (args.includes('-h') || args.includes('--help')) {
@@ -63,7 +64,7 @@ if (existsSync(target) || isLink(target)) {
 const skip = new Set(['__pycache__', '.DS_Store', 'node_modules']);
 cpSync(source, target, { recursive: true, filter: (p) => !skip.has(basename(p)) });
 console.log(`Installed ${NAME} ${version} → ${target}`);
-console.log('Restart Claude Code (or start a new session), then ask it to build a prototype from your requirement doc.');
+console.log('Start a new session of your agent (e.g. Claude Code), then ask it to build a prototype from your requirement doc.');
 
 function isLink(p) {
   try {
