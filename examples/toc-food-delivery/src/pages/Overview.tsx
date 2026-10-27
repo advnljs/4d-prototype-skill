@@ -27,16 +27,16 @@ export function Overview() {
   };
   return (
     <div className="pb-10">
-      {/* 首屏 */}
-      <section className="relative mx-10 mt-7 overflow-hidden rounded-[28px] bg-[#2a1d14] px-12 py-11 text-white">
-        <div className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-[#f25a0f] opacity-35 blur-[90px]" />
-        <div className="pointer-events-none absolute bottom-[-140px] left-[30%] h-[300px] w-[300px] rounded-full bg-[#ff9a3c] opacity-20 blur-[90px]" />
+      {/* 首屏。theme-fixed:start —— 深色横幅在浅色、深色下都保持深色，只随配色换色调 */}
+      <section className="relative mx-10 mt-7 overflow-hidden rounded-[28px] bg-[color-mix(in_oklab,var(--color-primary-500)_14%,#110d0b)] px-12 py-11 text-white">
+        <div className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-primary-500 opacity-35 blur-[90px]" />
+        <div className="pointer-events-none absolute bottom-[-140px] left-[30%] h-[300px] w-[300px] rounded-full bg-primary-400 opacity-20 blur-[90px]" />
         <div className="relative grid grid-cols-12 items-center gap-10">
           <div className="col-span-7">
-            <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-[#ffd9b8] ring-1 ring-inset ring-white/15">4D 原型 · toC 示例 · 数据全部虚构</span>
+            <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-[color-mix(in_oklab,var(--color-primary-400)_45%,white)] ring-1 ring-inset ring-white/15">4D 原型 · toC 示例 · 数据全部虚构</span>
             <h1 className="mt-4 text-[44px] font-bold leading-[1.12] tracking-[-0.03em]">
               一单外卖的
-              <span className="bg-gradient-to-r from-[#ffb45e] to-[#ff7a1a] bg-clip-text text-transparent"> 29 分钟</span>
+              <span className="bg-gradient-to-r from-[color-mix(in_oklab,var(--color-primary-400)_70%,white)] to-primary-400 bg-clip-text text-transparent"> 29 分钟</span>
             </h1>
             <p className="mt-4 max-w-[600px] text-[15px] leading-relaxed text-white/75">
               虚构的即时配送平台“橙子到家”：骑手上线、用户下单、商家接单出餐与智能调度派骑手并行、骑手取送、次日对账结算与打款、售后退款下期冲减。三台手机与平台同屏联动，按依赖图一键播放，随时暂停、调速、跳到任一环节，看每一步的数据长什么样、怎么变。
@@ -45,10 +45,10 @@ export function Overview() {
               <Button size="lg" variant="primary" icon="play" onClick={openFlowStart} disabled={active}>
                 一键运行完整流程
               </Button>
-              <Button size="lg" icon="bike" onClick={() => navigate('/live')} className="bg-white/10 text-white hover:bg-white/15">
+              <Button size="lg" icon="bike" onClick={() => navigate('/live')} className="bg-surface/10 text-white hover:bg-surface/15">
                 打开三端联动
               </Button>
-              <a href="./app.html" className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-6 text-[15px] font-medium text-white transition-colors hover:bg-white/15">
+              <a href="./app.html" className="inline-flex h-11 items-center gap-2 rounded-full bg-surface/10 px-6 text-[15px] font-medium text-white transition-colors hover:bg-surface/15">
                 <Icon name="phone" size={16} />
                 手机版 App
               </a>
@@ -72,6 +72,7 @@ export function Overview() {
           </div>
         </div>
       </section>
+      {/* theme-fixed:end */}
 
       {/* 五分钟读懂 */}
       <section className="mx-10 mt-9">
@@ -100,7 +101,7 @@ export function Overview() {
                 <div key={k} className="flex items-center gap-2 text-2xs text-ink-600">
                   <span className="w-10">{WEIGHT_LABEL[k]}</span>
                   <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100">
-                    <span className="block h-full rounded-full bg-[#d1307a]" style={{ width: `${DEFAULT_WEIGHTS[k] * 100 * 2}%` }} />
+                    <span className="block h-full rounded-full bg-act-dispatch" style={{ width: `${DEFAULT_WEIGHTS[k] * 100 * 2}%` }} />
                   </span>
                   <span className="num w-8 text-right">{DEFAULT_WEIGHTS[k] * 100}%</span>
                 </div>
@@ -133,7 +134,7 @@ export function Overview() {
         </div>
         <div className="mt-4 grid grid-cols-3 gap-5">
           {SCENARIOS.map((s) => (
-            <article key={s.key} className={cx('flex flex-col rounded-[20px] bg-surface p-5 shadow-raise ring-1 transition-shadow hover:shadow-pop', s.key === scenario ? 'ring-primary-300' : 'ring-black/[0.04]')}>
+            <article key={s.key} className={cx('flex flex-col rounded-[20px] bg-surface p-5 shadow-raise ring-1 transition-shadow hover:shadow-pop', s.key === scenario ? 'ring-primary-300' : 'ring-ink-950/[0.04]')}>
               <div className="flex items-center gap-2">
                 <Badge tone={s.key === 'standard' ? 'primary' : 'neutral'}>{s.tag}</Badge>
                 {s.key === scenario ? <span className="text-2xs font-medium text-primary-600">当前情景</span> : null}
@@ -180,7 +181,7 @@ export function Overview() {
         <p className="mt-1 text-sm text-ink-500">五个阶段、{STEPS.length} 个环节；点环节打开对应页面（自动切换演示角色）。完整依赖图见“全流程总览”。</p>
         <ol className="mt-4 grid grid-cols-5 gap-4">
           {PHASES.map((p, i) => (
-            <li key={p.key} className="rounded-[20px] bg-surface p-4 shadow-raise ring-1 ring-black/[0.04]">
+            <li key={p.key} className="rounded-[20px] bg-surface p-4 shadow-raise ring-1 ring-ink-950/[0.04]">
               <div className="num text-2xs font-semibold text-primary-600">阶段 {i + 1}</div>
               <div className="mt-0.5 text-[15px] font-semibold text-ink-900">{p.title}</div>
               <div className="num text-2xs text-ink-400">{p.when}</div>
@@ -205,7 +206,7 @@ export function Overview() {
 
 function Card({ n, title, desc, children }: { n: string; title: string; desc: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col rounded-[20px] bg-surface p-5 shadow-raise ring-1 ring-black/[0.04]">
+    <div className="flex flex-col rounded-[20px] bg-surface p-5 shadow-raise ring-1 ring-ink-950/[0.04]">
       <span className="brand-grad flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold text-white">{n}</span>
       <h3 className="mt-3 text-[15px] font-semibold text-ink-900">{title}</h3>
       <p className="mt-1 flex-1 text-xs leading-relaxed text-ink-600">{desc}</p>
@@ -219,21 +220,21 @@ function HeroArt() {
   const w = useMemo(() => runScenario('standard', 'delivered'), []);
   const o = w.order!;
   const items: { who: string; color: string; time: string; text: string; delay: string; x: string }[] = [
-    { who: '用户端', color: '#2f6fed', time: clockLabel(o.createdAt), text: '领券下单 · 实付 ¥49', delay: '0s', x: 'ml-0' },
-    { who: '商家端', color: '#e0590b', time: clockLabel(o.acceptedAt!), text: '新订单 #12 · 已接单', delay: '0.6s', x: 'ml-14' },
-    { who: '骑手端', color: '#0e9f6e', time: clockLabel(o.deliveredAt!), text: '阿强 · 准时送达', delay: '1.2s', x: 'ml-6' },
+    { who: '用户端', color: 'var(--color-act-user)', time: clockLabel(o.createdAt), text: '领券下单 · 实付 ¥49', delay: '0s', x: 'ml-0' },
+    { who: '商家端', color: 'var(--color-act-merchant)', time: clockLabel(o.acceptedAt!), text: '新订单 #12 · 已接单', delay: '0.6s', x: 'ml-14' },
+    { who: '骑手端', color: 'var(--color-act-rider)', time: clockLabel(o.deliveredAt!), text: '阿强 · 准时送达', delay: '1.2s', x: 'ml-6' },
   ];
   return (
     <div className="relative h-[330px]">
       <div className="absolute right-6 top-0">
-        <div className="anim-float rounded-[30px] bg-white/10 p-4 backdrop-blur">
+        <div className="anim-float rounded-[30px] bg-surface/10 p-4 backdrop-blur">
           <FoodArt kind="beefNoodle" size={150} steam />
         </div>
       </div>
       <div className="absolute bottom-0 left-0 space-y-3">
         {items.map((it) => (
-          <div key={it.who} className={cx('anim-float flex w-[260px] items-center gap-3 rounded-[16px] bg-white px-3.5 py-3 text-ink-900 shadow-pop', it.x)} style={{ animationDelay: it.delay }}>
-            <span className="flex h-9 w-9 items-center justify-center rounded-[11px] text-white" style={{ background: it.color }}>
+          <div key={it.who} className={cx('anim-float flex w-[260px] items-center gap-3 rounded-[16px] bg-surface px-3.5 py-3 text-ink-900 shadow-pop', it.x)} style={{ animationDelay: it.delay }}>
+            <span className="flex h-9 w-9 items-center justify-center rounded-[11px] text-surface" style={{ background: it.color }}>
               <Icon name={it.who === '用户端' ? 'user' : it.who === '商家端' ? 'store' : 'bike'} size={17} strokeWidth={2} />
             </span>
             <div className="min-w-0 flex-1 leading-tight">

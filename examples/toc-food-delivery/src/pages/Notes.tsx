@@ -33,7 +33,7 @@ export function Notes() {
       <div className="space-y-6 px-10 py-7">
         {groups.map((g) => (
           <Panel key={g.key} title={g.title} desc={g.desc} bodyClassName="p-0 pb-2">
-            <ul className="divide-y divide-black/[0.05]">
+            <ul className="divide-y divide-ink-950/[0.05]">
               {g.items.map((it) => (
                 <li key={it.id} className="grid grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1fr)_180px] gap-6 px-6 py-4">
                   <span className="code pt-0.5 text-ink-400">{it.id}</span>

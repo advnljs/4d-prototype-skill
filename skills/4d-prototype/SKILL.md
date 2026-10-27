@@ -49,17 +49,19 @@ Stop the timeline anywhere and the prototype answers three questions about that 
    - Scenario tour: domain primer + demo scripts.
    - Solution discussion: e.g. run mode, performance and cost, API design, deployment.
    - Assumptions and open questions, with a "reset demo data" button.
-4. **The time axis (the 4D orchestration layer)**: business times in the workflow definition, demo director, virtual clock, playback controls, demo cursor, global flow navigator, the "Flow · Data" dock, and a whole-flow overview page.
-5. **Docs**:
+4. **Switchable appearance**: palette presets + the client's brand color, light / dark, and two UI styles (soft / sharp), switchable at any time from the top bar. Content shown in its original look (apps in phone frames, file and format samples, external-system pages) keeps its own colors. See [references/pages-and-ux.md](references/pages-and-ux.md) §2.1.
+5. **The time axis (the 4D orchestration layer)**: business times in the workflow definition, demo director, virtual clock, playback controls, demo cursor, global flow navigator, the "Flow · Data" dock, and a whole-flow overview page.
+6. **Docs**:
    - `README.md`
    - A prototype notes document under `docs/` (written in the UI language), generated from the same source as the assumptions page, with a test that keeps the two in sync.
    - `memory-bank/`, if the user's global instructions ask for one.
-6. **Tests**:
+7. **Tests**:
    - Business-logic scenarios: every designed scenario produces exactly the expected result; normal data produces zero false findings.
    - Workflow DAG invariants.
    - Data lineage.
    - Export and payload layouts.
    - Docs sync.
+   - Appearance: contrast across palettes × modes × styles, and no raw colors outside islands.
 
 ## Core principles
 
@@ -77,6 +79,7 @@ Each principle comes from a real failure or an explicit user request. Understand
 
   Why: the prototype gets changed over and over, and any hand-written second copy drifts.
 - **Any step can start at any time.** Each step's page script must be able to supply its own demo input when upstream output is missing. Why: in discussions people click into random steps. The user explicitly required "every node must be switchable, including after the whole flow has finished".
+- **Colors are tokens, and the appearance is switchable.** Components use token names only (`bg-surface`, `text-ink-900`, `bg-primary-500` …), never raw colors, so palette, light / dark and style can be switched at any time and the client's brand color can be dropped in. Original-look content (phones, file samples, external pages) is an island that keeps its own colors. Why: the user asked for switchable colors and UI style, and retrofitting it means touching every component — in the examples, several hundred hard-coded colors.
 - **Demos have no real side effects.** No real downloads (show a toast instead), no real API calls, no real notifications. Mock pages of external systems keep that system's own look and carry a permanent "simulated environment" watermark.
 - **Small milestones; tag before structural changes.** Every milestone ends runnable, verified and committed. Before a structural change — linear flow to DAG, merging or deleting modules, changing a data source — tag the current version, e.g. `v0.8-linear-flow`, `v0.15-pre-redesign`.
 
@@ -85,7 +88,7 @@ Each principle comes from a real failure or an explicit user request. Understand
 | Phase | Goal | Output | Details |
 |---|---|---|---|
 | P0 Intake | Understand the materials; list modules, roles, business objects and states, data, **the business timeline**, external systems, rules and gaps; classify the project type | Requirement inventory, first assumption register, specs, milestone plan | [references/intake.md](references/intake.md) |
-| P1 Skeleton and design system (M0) | The project runs; shell, routing, state and design tokens in place | A bootable skeleton, first commit | [references/pages-and-ux.md](references/pages-and-ux.md) |
+| P1 Skeleton and design system (M0) | The project runs; shell, routing, state, design tokens and the appearance switcher in place | A bootable skeleton, first commit | [references/pages-and-ux.md](references/pages-and-ux.md) |
 | P2 Domain core and mock backend (M1) | Domain model, business logic / rules / state machines, external-system mocks, mock scenarios, unit tests; also the **timeline as data**: actors, data objects, and the workflow with business times | Core logic with passing tests | [references/domain-and-mock.md](references/domain-and-mock.md) |
 | P3 Module pages (M2…Mn) | One milestone per requirement module: processing made visible, results traceable | Business pages that work end to end | [references/pages-and-ux.md](references/pages-and-ux.md) |
 | P4 Discussion pages | Scenario tour, solution discussion, assumptions and open questions, reset | Pages for discussion | [references/pages-and-ux.md](references/pages-and-ux.md) |
@@ -145,7 +148,7 @@ The pages are the three-dimensional part; the timeline gets wired in at P6, but 
 
 ### P6 The time axis: the 4D orchestration layer
 
-This is the heart of the skill — the fourth dimension. The spec is [references/flow-orchestration.md](references/flow-orchestration.md). A reusable TypeScript reference implementation lives in [assets/flow-kit/](assets/flow-kit/README.md), with a "purchase request approval + ERP integration" example. It is verified: type check and 21 tests pass, and a 2× one-click run completes 8/8 steps without errors. It contains:
+This is the heart of the skill — the fourth dimension. The spec is [references/flow-orchestration.md](references/flow-orchestration.md). A reusable TypeScript reference implementation lives in [assets/flow-kit/](assets/flow-kit/README.md), with a "purchase request approval + ERP integration" example. It is verified: type check and 60 tests pass (flow invariants, clock, appearance), and a 2× one-click run completes 8/8 steps without errors. It contains:
 
 - State store and router
 - Virtual clock
@@ -223,6 +226,7 @@ Both examples have a Chinese UI. Use these labels to keep new prototypes consist
 | actor | 操作方 |
 | data object / lineage | 数据对象 / 数据流转 |
 | time axis / business clock | 时间轴 / 业务时钟 |
+| appearance / palette / light–dark / style / brand color | 外观 / 配色 / 明暗 / 风格 / 品牌色 |
 | run the whole flow (one click) | 一键运行完整流程 |
 | autoplay / step mode | 自动连播 / 逐步 |
 | assumed done | 视为完成 |

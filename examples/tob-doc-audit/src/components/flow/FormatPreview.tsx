@@ -9,13 +9,13 @@ import { buildXlsx, type CellStyle, type XCell } from '@/lib/xlsx/writer';
 
 /** 与 xlsx 写入样式一致的预览配色（见 lib/xlsx/writer.ts STYLES） */
 const CELL_CLS: Record<CellStyle, string> = {
-  plain: 'bg-white text-[#1f1f1f]',
-  bordered: 'bg-white text-[#1f1f1f]',
+  plain: 'bg-surface text-[#1f1f1f]',
+  bordered: 'bg-surface text-[#1f1f1f]',
   header: 'bg-[#E6ECF2] font-semibold text-[#1f1f1f] text-center',
   summary: 'bg-[#FFF3D6] font-semibold text-[#1f1f1f]',
   flag: 'bg-[#FBE1DE] text-[#1f1f1f]',
   flagKey: 'bg-[#FBE1DE] font-semibold text-[#9B2420]',
-  title: 'bg-white text-[14px] font-semibold text-[#1f1f1f]',
+  title: 'bg-surface text-[14px] font-semibold text-[#1f1f1f]',
 };
 
 function colName(i: number) {
@@ -39,7 +39,7 @@ export function SheetPreview({ sample, maxRows = 12, maxCols = 9, compact }: { s
   const rows = sheet.rows.slice(0, maxRows);
   const width = (i: number) => Math.min(260, Math.max(56, Math.round((sheet.widths?.[i] ?? 12) * 7 + 10)));
   return (
-    <div className="overflow-hidden rounded-[12px] border border-[#c9d1d9] bg-white shadow-raise">
+    <div className="theme-island overflow-hidden rounded-[12px] border border-[#c9d1d9] bg-surface shadow-raise">
       <div className="flex items-center gap-2 border-b border-[#d6dbe0] bg-[#f3f6f4] px-3 py-1.5">
         <span className="flex h-5 w-5 items-center justify-center rounded-[4px] bg-[#1f7a46] text-[10px] font-bold text-white">X</span>
         <span className="code truncate text-[12.5px] text-ink-800">{sample.fileName}</span>
@@ -102,7 +102,7 @@ export function SheetPreview({ sample, maxRows = 12, maxCols = 9, compact }: { s
         </table>
       </div>
       <div className={cx('flex items-center gap-2 border-t border-[#d6dbe0] bg-[#f3f6f4] px-2 py-1', compact && 'hidden')}>
-        <span className="rounded-t-[4px] border-b-2 border-[#1f7a46] bg-white px-3 py-0.5 text-2xs font-medium text-[#1f7a46]">{sheet.name}</span>
+        <span className="rounded-t-[4px] border-b-2 border-[#1f7a46] bg-surface px-3 py-0.5 text-2xs font-medium text-[#1f7a46]">{sheet.name}</span>
         <Button
           size="sm"
           variant="ghost"
@@ -122,7 +122,7 @@ export function TablePreview({ sample, maxRows = 12 }: { sample: Extract<FormatS
   const rows = sample.rows.slice(0, maxRows);
   const total = sample.total ?? sample.rows.length;
   return (
-    <div className="overflow-hidden rounded-[12px] border border-[#cfd6e4] bg-white shadow-raise">
+    <div className="theme-island overflow-hidden rounded-[12px] border border-[#cfd6e4] bg-surface shadow-raise">
       <div className="flex items-center gap-2 border-b border-[#dde3ee] bg-[#eef2f8] px-3 py-1.5">
         <Icon name="database" size={14} className="shrink-0 text-[#3b5b92]" />
         <span className="code truncate text-[12.5px] font-semibold text-[#24324d]">{sample.table}</span>
@@ -146,7 +146,7 @@ export function TablePreview({ sample, maxRows = 12 }: { sample: Extract<FormatS
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={i} className={i % 2 ? 'bg-[#fafbfd]' : 'bg-white'}>
+              <tr key={i} className={i % 2 ? 'bg-[#fafbfd]' : 'bg-surface'}>
                 {r.map((v, j) => (
                   <td key={j} title={v === null ? 'NULL' : String(v)} className={cx('max-w-[280px] truncate border-b border-r border-[#eef1f6] px-2 py-[3px] last:border-r-0', v === null ? 'italic text-ink-400' : typeof v === 'number' ? 'num text-right text-ink-900' : 'text-ink-900')}>
                     {v === null ? 'NULL' : String(v)}
@@ -167,7 +167,7 @@ export function JsonPreview({ value, maxHeight = 360 }: { value: unknown; maxHei
   const text = useMemo(() => JSON.stringify(value, null, 2), [value]);
   const lines = text.split('\n');
   return (
-    <pre className="code overflow-auto rounded-[12px] bg-[#1d1f24] px-4 py-3 text-[12.5px] leading-[20px] text-[#d4d7dd]" style={{ maxHeight }}>
+    <pre className="theme-island code overflow-auto rounded-[12px] bg-[#1d1f24] px-4 py-3 text-[12.5px] leading-[20px] text-[#d4d7dd]" style={{ maxHeight }}>
       {lines.map((ln, i) => (
         <Fragment key={i}>
           <JsonLine line={ln} />
@@ -208,14 +208,14 @@ function colorValue(v: string) {
 
 export function FormPreview({ sample }: { sample: Extract<FormatSample, { kind: 'form' }> }) {
   return (
-    <div className="overflow-hidden rounded-[6px] border border-[#9db7cf] bg-[#f6f9fc] font-[SimSun,'Songti_SC',serif]">
+    <div className="theme-island overflow-hidden rounded-[6px] border border-[#9db7cf] bg-[#f6f9fc] font-[SimSun,'Songti_SC',serif]">
       <div className="bg-gradient-to-b from-[#2f6fa8] to-[#245a8a] px-3 py-1.5 text-[13px] font-semibold text-white">{sample.title}</div>
       <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 p-3">
         {sample.fields.map(([k, v, wide]) =>
           wide ? (
             <div key={k} className="col-span-2 flex items-start gap-2 text-[12.5px]">
               <span className="w-[132px] shrink-0 pt-0.5 text-right text-[#333]">{k}：</span>
-              <span className="min-h-[64px] min-w-0 flex-1 whitespace-pre-wrap border border-[#9db7cf] bg-white px-2 py-1 leading-[20px] text-[#222]">{v || '—'}</span>
+              <span className="min-h-[64px] min-w-0 flex-1 whitespace-pre-wrap border border-[#9db7cf] bg-surface px-2 py-1 leading-[20px] text-[#222]">{v || '—'}</span>
             </div>
           ) : (
             <div key={k} className="flex items-center gap-2 text-[12.5px]">
@@ -236,8 +236,8 @@ const KIND_LABEL: Record<FormatSample['kind'], string> = { sheet: 'Excel 表格'
 /** 文书原样：公文版式（标题居中、发文信息、条款正文） */
 export function DocPreview({ sample }: { sample: Extract<FormatSample, { kind: 'doc' }> }) {
   return (
-    <div className="rounded-[6px] bg-[#e9e9ec] p-3">
-      <article className="relative mx-auto max-w-[760px] bg-white px-10 py-8 shadow-[0_1px_4px_rgb(0_0_0/0.18)]" style={{ fontFamily: "'Songti SC', SimSun, 'Noto Serif SC', serif" }}>
+    <div className="theme-island rounded-[6px] bg-[#e9e9ec] p-3">
+      <article className="relative mx-auto max-w-[760px] bg-surface px-10 py-8 shadow-[0_1px_4px_rgb(0_0_0/0.18)]" style={{ fontFamily: "'Songti SC', SimSun, 'Noto Serif SC', serif" }}>
         <span className="pointer-events-none absolute right-6 top-4 rotate-[-8deg] rounded-[4px] border border-seal-200 px-2 text-2xs text-seal-500">示意摘要</span>
         <h4 className="text-center text-[19px] font-bold leading-snug text-[#1a1a1a]">{sample.docTitle}</h4>
         <p className="mt-2 text-center text-[12px] text-[#555]">{sample.meta.join('　')}</p>
@@ -306,7 +306,7 @@ export function FormatSamplesView({ k, compact }: { k: DataKey; compact?: boolea
                 key={j}
                 type="button"
                 onClick={() => setI(j)}
-                className={cx('rounded-full px-2 text-2xs leading-[20px] transition-colors', j === i ? 'bg-ink-900 text-white' : 'bg-black/[0.05] text-ink-600 hover:bg-black/[0.09]')}
+                className={cx('rounded-full px-2 text-2xs leading-[20px] transition-colors', j === i ? 'bg-ink-900 text-surface' : 'bg-ink-950/[0.05] text-ink-600 hover:bg-ink-950/[0.09]')}
               >
                 {KIND_LABEL[x.kind]}
               </button>
@@ -343,7 +343,7 @@ export function FormatGallery({ groups }: { groups: { title: string; desc: strin
                     type="button"
                     onClick={() => setCur(it.k)}
                     aria-current={cur === it.k ? 'true' : undefined}
-                    className={cx('w-full rounded-[10px] px-2.5 py-2 text-left transition-colors', cur === it.k ? 'bg-primary-50 ring-1 ring-primary-100' : 'hover:bg-black/[0.035]')}
+                    className={cx('w-full rounded-[10px] px-2.5 py-2 text-left transition-colors', cur === it.k ? 'bg-primary-50 ring-1 ring-primary-100' : 'hover:bg-ink-950/[0.035]')}
                   >
                     <div className={cx('text-[13px]', cur === it.k ? 'font-semibold text-ink-900' : 'text-ink-800')}>{it.label}</div>
                     <div className="text-2xs text-ink-500">{it.hint}</div>

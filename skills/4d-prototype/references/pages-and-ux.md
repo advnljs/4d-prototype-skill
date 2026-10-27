@@ -45,6 +45,31 @@ Applies to all kinds of IT projects. Combine page patterns by project type (see 
 - **Consumer projects** can carry more brand: a warm primary color, rounded cards, product imagery drawn as SVG, micro-interactions. Motion must stay smooth — animate only `transform` and `opacity`, aim for 60 fps, and still respect `prefers-reduced-motion`.
 - **External-system mocks keep that system's own look** (e.g. a legacy portal, a payment gateway page) and carry a permanent "simulated environment" watermark, to separate in-house systems from external ones and to avoid being mistaken for a real system.
 
+### 2.1 Switchable appearance: palette × light / dark × style
+
+Every prototype lets the viewer switch its overall look at any time, including in the middle of a run. The user asked for it: the same prototype is shown to clients with their own brand, on projectors and in dark rooms, and to people who prefer a denser, squarer UI. It is cheap only if colors were tokens from day one, so build it in P1 with the design tokens, not at the end.
+
+What the viewer can switch (an "外观" (appearance) button in the top bar opens the panel):
+
+| Axis | Options | How it works |
+|---|---|---|
+| Palette (配色) | The prototype's own palette (default) + a few presets (business blue, jade, violet, graphite) + **brand color** (品牌色): pick the client's color and the whole palette is generated from it | `lib/palette.ts` generates the primary scale and tinted neutrals in OKLCH, then corrects text and link steps against WCAG contrast. A too-light brand color is darkened just enough for white button text (≥ 3:1) |
+| Light / dark (明暗) | Light, dark, follow the system | Dark inverts the neutral scale and regenerates primary, semantic and actor colors for readability |
+| Style (风格) | Soft (rounded, soft shadows) / sharp (small radii, hairline borders instead of shadows) | Shadows are tokens; radii are clamped by one CSS rule on `html[data-style='sharp']` |
+
+Implementation (flow-kit has the engine; the examples have the panel, `src/components/ui/ThemeSwitcher.tsx`):
+
+- `lib/palette.ts` is pure and unit-tested: `buildVars(defaults, choice)` returns token overrides. Light + default palette returns nothing, so the hand-tuned original is untouched.
+- `lib/theme.ts` reads the original `@theme` tokens from the stylesheet, writes overrides into one `<style>` on `:root`, sets `data-mode` / `data-style` / `data-palette` on `<html>`, and persists the choice per machine. Call `initTheme()` in `main.tsx` before rendering, so the first paint is already right.
+- **Islands keep their original look.** Content shown "as it really is" — apps inside phone frames, map illustrations, file and format samples (Excel, tables, payloads, forms, documents), external-system pages — carries `class="theme-island"`; `theme.ts` restores the original tokens inside it. A dark prototype with light phone screens and light spreadsheets reads naturally; a dark spreadsheet would not be its original format any more.
+- Rules for component code, all enforced by a source-scan test (`palette.test.ts`):
+  - No raw colors outside islands: no `#hex`, no `bg-white` (use `bg-surface`), no white gradient stops (`to-surface`), no `black/` tints (use `ink-950/`; modal backdrops may stay black).
+  - Mix with the surface, not with white: `color-mix(in srgb, <color> 11%, var(--color-surface))`.
+  - **White text only on fills that stay mid-dark in both modes** (primary and semantic 500). On fills that invert in dark mode — dark ink steps used as "inverse" pills, actor colors — use `text-surface`.
+  - SVG colors through `style={{ fill: 'var(--color-ink-500)' }}`, charts through token-derived scales (`color-mix` between surface, primary and ink), never fixed hex ramps.
+  - A block that must stay fixed on purpose (a dark hero banner) is wrapped in `theme-fixed:start` / `theme-fixed:end` comments, with the reason.
+- Contrast tests run over every preset × mode × style plus a few brand colors (including a light yellow): body text ≥ 7:1, secondary text ≥ 4.5:1 on both paper and surface, links ≥ 4.5:1, white on primary ≥ 3:1, semantic text ≥ 4.5:1. In the toB example this caught a secondary gray that passed on white but failed (4.3:1) on the gray canvas.
+
 ## 3. Visualization patterns for module pages
 
 Combine these patterns for each module according to the project type (intake.md §3):

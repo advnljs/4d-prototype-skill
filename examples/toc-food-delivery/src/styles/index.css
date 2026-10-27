@@ -51,6 +51,7 @@
   --color-primary-500: #e25507;
   --color-primary-400: #ff8a1f;
   --color-primary-300: #ffb37a;
+  --color-primary-200: #ffd2ad;
   --color-primary-100: #ffe6d3;
   --color-primary-50: #fff4ec;
 
@@ -117,7 +118,7 @@
     color: var(--color-primary-700);
   }
   :focus-visible {
-    outline: 3px solid rgb(226 85 7 / 0.4);
+    outline: 3px solid color-mix(in oklab, var(--color-primary-500) 40%, transparent);
     outline-offset: 1px;
     border-radius: 8px;
   }
@@ -140,8 +141,23 @@
     @apply font-mono text-[12.5px] tracking-tight;
   }
   .brand-grad {
-    background-image: linear-gradient(160deg, #ff9a3c 0%, #f25a0f 100%);
+    background-image: linear-gradient(160deg, var(--color-primary-400) 0%, var(--color-primary-500) 100%);
   }
+}
+
+/*
+ * 外观切换（lib/theme.ts）：配色与明暗通过覆盖 token 实现；这里只放 token 管不到的部分。
+ * - 风格“方正”：所有声明了圆角的元素统一收成小圆角（药丸、头像等 rounded-full 保留）；原样呈现的 .theme-island 不变。
+ * - .theme-island：手机里的 App、地图插画、文件与格式样例。theme.ts 在这里恢复原始 token。
+ */
+html[data-style='sharp'] [class*='rounded']:not([class*='rounded-full']):not(.theme-island, .theme-island *) {
+  border-radius: 4px !important;
+}
+html[data-style='sharp'] :focus-visible {
+  border-radius: 2px;
+}
+.theme-island {
+  color: var(--color-ink-800);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -349,18 +365,18 @@ dialog::backdrop {
 @keyframes spotlight {
   0% {
     box-shadow:
-      0 0 0 0 rgb(226 85 7 / 0.55),
-      0 0 0 0 rgb(226 85 7 / 0.18);
+      0 0 0 0 color-mix(in oklab, var(--color-primary-500) 55%, transparent),
+      0 0 0 0 color-mix(in oklab, var(--color-primary-500) 18%, transparent);
   }
   35% {
     box-shadow:
-      0 0 0 3px rgb(226 85 7 / 0.55),
-      0 0 0 12px rgb(226 85 7 / 0.14);
+      0 0 0 3px color-mix(in oklab, var(--color-primary-500) 55%, transparent),
+      0 0 0 12px color-mix(in oklab, var(--color-primary-500) 14%, transparent);
   }
   100% {
     box-shadow:
-      0 0 0 3px rgb(226 85 7 / 0.45),
-      0 0 0 7px rgb(226 85 7 / 0.08);
+      0 0 0 3px color-mix(in oklab, var(--color-primary-500) 45%, transparent),
+      0 0 0 7px color-mix(in oklab, var(--color-primary-500) 8%, transparent);
   }
 }
 .flow-spotlight {

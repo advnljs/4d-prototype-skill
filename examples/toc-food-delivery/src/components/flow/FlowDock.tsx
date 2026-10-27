@@ -22,7 +22,7 @@ function EdgeCaption({ id }: { id: (typeof STEPS)[number]['id'] }) {
     <span className="inline-flex items-center gap-1 whitespace-nowrap">
       <span className="num font-semibold text-ink-700">{n}</span>
       <span className="text-ink-600">{short}</span>
-      <span className={cx('rounded-full px-1.5 leading-[16px]', data ? 'bg-primary-50 text-primary-700' : 'bg-black/[0.04] text-ink-500')}>{label}</span>
+      <span className={cx('rounded-full px-1.5 leading-[16px]', data ? 'bg-primary-50 text-primary-700' : 'bg-ink-950/[0.04] text-ink-500')}>{label}</span>
     </span>
   );
   return (
@@ -132,17 +132,17 @@ export function FlowDock() {
   const capsule = (
     <div className="pointer-events-none absolute left-1/2 z-[46] flex w-max -translate-x-1/2 flex-col items-center gap-1.5 whitespace-nowrap" style={{ bottom: open ? 'calc(100% + 8px)' : 12 }}>
       {showReady ? (
-        <div className="pointer-events-auto flex items-center gap-1.5 rounded-full bg-white/95 py-1 pl-3 pr-1 text-xs shadow-pop ring-1 ring-black/[0.08] backdrop-blur-xl">
+        <div className="pointer-events-auto flex items-center gap-1.5 rounded-full bg-surface/95 py-1 pl-3 pr-1 text-xs shadow-pop ring-1 ring-ink-950/[0.08] backdrop-blur-xl">
           <span className="shrink-0 text-primary-700">可执行</span>
           {ready.map((id, i) => (
-            <button key={id} type="button" onClick={() => goToStep(id)} className={cx('inline-flex h-6 items-center gap-1 rounded-full px-2 font-medium', i === 0 ? 'bg-primary-500 text-white' : 'bg-black/[0.05] text-ink-800 hover:bg-black/[0.09]')}>
+            <button key={id} type="button" onClick={() => goToStep(id)} className={cx('inline-flex h-6 items-center gap-1 rounded-full px-2 font-medium', i === 0 ? 'bg-primary-500 text-white' : 'bg-ink-950/[0.05] text-ink-800 hover:bg-ink-950/[0.09]')}>
               <span className="num">{STEP_INDEX[id] + 1}</span>
               {stepById(id).short}
             </button>
           ))}
         </div>
       ) : null}
-      <div role="toolbar" aria-label="演示播放控制" title="空格 暂停 / 继续 · [ ] 调速度" className="pointer-events-auto flex items-center gap-3 rounded-full bg-white/95 py-1.5 pl-2 pr-2 shadow-pop ring-1 ring-black/[0.08] backdrop-blur-xl">
+      <div role="toolbar" aria-label="演示播放控制" title="空格 暂停 / 继续 · [ ] 调速度" className="pointer-events-auto flex items-center gap-3 rounded-full bg-surface/95 py-1.5 pl-2 pr-2 shadow-pop ring-1 ring-ink-950/[0.08] backdrop-blur-xl">
         <span className="flex max-w-[200px] items-center gap-1.5 pl-1.5 text-sm">
           <span className="num flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full px-1 text-2xs font-semibold text-white" style={{ background: ACTORS[step.actor].color }}>
             {STEP_INDEX[step.id] + 1}
@@ -150,10 +150,10 @@ export function FlowDock() {
           <span className="truncate font-semibold text-ink-900">{step.short}</span>
         </span>
         <BigControls f={f} />
-        <span className="h-7 w-px bg-black/[0.08]" />
+        <span className="h-7 w-px bg-ink-950/[0.08]" />
         <SpeedControl />
         <ModeControl f={f} />
-        <span className="h-7 w-px bg-black/[0.08]" />
+        <span className="h-7 w-px bg-ink-950/[0.08]" />
         <span className="num flex shrink-0 flex-col text-2xs leading-4">
           <StatusText f={f} />
           <span className="text-ink-500">
@@ -173,7 +173,7 @@ export function FlowDock() {
       <div className="relative">
         {capsule}
         {open ? (
-          <div className={cx('relative overflow-hidden rounded-[18px] bg-white/95 shadow-pop ring-1 ring-black/[0.06] backdrop-blur-xl', !dragging && 'anim-rise')}>
+          <div className={cx('relative overflow-hidden rounded-[18px] bg-surface/95 shadow-pop ring-1 ring-ink-950/[0.06] backdrop-blur-xl', !dragging && 'anim-rise')}>
             {/* 上沿拖动条：上下拖动调整窗口高度，双击最大化 / 还原 */}
             <div
               role="separator"
@@ -184,7 +184,7 @@ export function FlowDock() {
               onDoubleClick={toggleMax}
               className="group absolute inset-x-0 top-0 z-10 flex h-3 cursor-ns-resize justify-center"
             >
-              <span className={cx('mt-1 h-1 w-12 rounded-full transition-colors', dragging ? 'bg-primary-500' : 'bg-black/[0.1] group-hover:bg-black/[0.25]')} />
+              <span className={cx('mt-1 h-1 w-12 rounded-full transition-colors', dragging ? 'bg-primary-500' : 'bg-ink-950/[0.1] group-hover:bg-ink-950/[0.25]')} />
             </div>
             <div className="grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-4 px-4 pb-3 pt-3.5">
               <div ref={dagBox} className="flex min-w-0 flex-col" style={{ height: h }}>
@@ -217,7 +217,7 @@ export function FlowDock() {
                         title={`${DATA_OBJECTS[k].name}（${DATA_OBJECTS[k].type}）`}
                         className={cx(
                           'inline-flex h-[22px] shrink-0 items-center gap-1 whitespace-nowrap rounded-[7px] px-1.5 text-2xs font-medium transition-colors',
-                          k === cur ? 'bg-ink-900 text-white' : dir === 'out' ? 'bg-pine-50 text-pine-700 ring-1 ring-inset ring-pine-100 hover:bg-pine-100/70' : 'bg-ink-50 text-ink-700 ring-1 ring-inset ring-black/[0.06] hover:bg-ink-100',
+                          k === cur ? 'bg-ink-900 text-surface' : dir === 'out' ? 'bg-pine-50 text-pine-700 ring-1 ring-inset ring-pine-100 hover:bg-pine-100/70' : 'bg-ink-50 text-ink-700 ring-1 ring-inset ring-ink-950/[0.06] hover:bg-ink-100',
                         )}
                       >
                         {k === auto && !pinned ? <span className="anim-pulse h-1.5 w-1.5 rounded-full bg-primary-400" /> : null}
@@ -259,7 +259,7 @@ function StatusText({ f }: { f: FlowState }) {
 
 function IconBtn({ icon, label, onClick }: { icon: Parameters<typeof Icon>[0]['name']; label: string; onClick: () => void }) {
   return (
-    <button type="button" aria-label={label} title={label} onClick={onClick} className="flex h-7 w-7 items-center justify-center rounded-full bg-black/[0.05] text-ink-600 hover:bg-black/[0.09]">
+    <button type="button" aria-label={label} title={label} onClick={onClick} className="flex h-7 w-7 items-center justify-center rounded-full bg-ink-950/[0.05] text-ink-600 hover:bg-ink-950/[0.09]">
       <Icon name={icon} size={14} strokeWidth={2} />
     </button>
   );

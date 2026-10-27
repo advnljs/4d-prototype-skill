@@ -22,7 +22,10 @@ Comments are in English. UI copy and example data are in Chinese, matching the w
 | `src/components/flow/DemoCursor.tsx` | Generic | Cursor rendering: popover top layer, rAF following, ripple, label flipping |
 | `src/components/flow/PlaybackControls.tsx` | Generic (neutral styling) | Big buttons, speed, play mode, the centered `PlaybackCapsule`, hotkeys `usePlaybackHotkeys` |
 | `src/pages/ExampleApp.tsx` | Example | Minimal integration: 5 page steps, 3 walk steps, a minimal step list (any step switchable) |
-| `src/styles/flow-kit.css` | Generic | Cursor keyframes, `--flow-dock-h`, sub-step highlight `.flow-spotlight` |
+| `src/styles/flow-kit.css` | Generic | Cursor keyframes, `--flow-dock-h`, sub-step highlight `.flow-spotlight`, the "sharp" style's radius rule and `.theme-island` |
+| `src/styles/tokens.css` | Starting point | Design tokens (`@theme`: ink, paper / surface, primary, semantic families, actor colors, shadows). Copy into the global CSS and adjust; components use only these names |
+| `src/lib/palette.ts` + `palette.test.ts` | Generic | Appearance engine: OKLCH scales for palette presets and a brand color, dark mode, styles, WCAG contrast correction (`buildVars`). The test checks contrast over every preset × mode × style and scans the source for raw colors outside islands (set `ISLAND_FILES`) |
+| `src/lib/theme.ts` | Generic (change the store prefix in `store.ts`) | Applies the appearance: reads the original tokens, writes overrides to `:root` and the originals to `.theme-island`, sets `data-mode` / `data-style` on `<html>`, persists per machine; `initTheme()` before the first render |
 
 ## UI you implement per project
 
@@ -37,17 +40,18 @@ These components are tightly coupled to each project's visual system, so flow-ki
 | `LineageView` + `flow/lineage.ts`: per-stage field changes and state transitions of one object | §10 | `src/components/flow/LineageView.tsx`, `src/flow/lineage.ts` |
 | `Swimlane`: actor swimlanes | §11 | `src/components/flow/Swimlane.tsx` |
 | `FlowOverview` page: all overview sections | §11 | `src/pages/FlowOverview.tsx` |
+| `ThemeSwitcher`: the "外观" panel in the top bar (palette presets + brand color, light / dark / system, soft / sharp) | pages-and-ux.md §2.1 | `src/components/ui/ThemeSwitcher.tsx` |
 
 ## Integration steps
 
-1. Copy the files under `src/` into the matching places in your project and merge `flow-kit.css` into the global styles.
+1. Copy the files under `src/` into the matching places in your project, merge `tokens.css` and `flow-kit.css` into the global styles, and call `initTheme()` in `main.tsx` before rendering. From here on, use token names only (see pages-and-ux.md §2.1).
 2. Rewrite `session.ts` (roles), `actors.ts` (actors), `dataObjects.ts` (data objects) and `workflow.ts` (`PHASES / STEPS / EDGES / DAG_POS / DAG_ROWS / DAG_COLS / DEFAULT_TAB`).
 3. In each page step's page, call `useFlowStep` the way `ExampleApp.tsx` does:
    - Supply your own upstream.
    - Track progress by nonce.
    - Put `data-demo` on clickable elements and `data-flow-anchor` on highlight regions.
 4. In the shell, mount `<DemoCursor />`, the playback capsule, `usePlaybackHotkeys(active)` and `useFlowSpotlight()`, and make the main scroll region `<main id="main">`.
-5. Put `flow.test.ts` and `clock.test.ts` in your test directory and run `npm test`.
+5. Put `flow.test.ts`, `clock.test.ts` and `palette.test.ts` in your test directory (list your island files in `palette.test.ts`) and run `npm test`.
 6. At 1920×1080, run the whole flow with one click until "finished N/N", then go through the checklist in `references/verification.md`.
 
 ## Self-check

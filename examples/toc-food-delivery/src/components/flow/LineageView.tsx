@@ -6,12 +6,12 @@ import { CHANGE_LABEL, type Change, type LStage } from '@/flow/lineage';
 import { ActorChip } from './ActorChip';
 
 const CHANGE_CLS: Record<Change, string> = {
-  keep: 'bg-black/[0.05] text-ink-500',
+  keep: 'bg-ink-950/[0.05] text-ink-500',
   map: 'bg-primary-50 text-primary-600',
   derive: 'bg-rule-50 text-rule-700',
   new: 'bg-pine-50 text-pine-700',
   mask: 'bg-amber-50 text-amber-700',
-  drop: 'bg-black/[0.04] text-ink-400 line-through',
+  drop: 'bg-ink-950/[0.04] text-ink-400 line-through',
 };
 
 /** 数据流转：阶段链 + “上一阶段 → 当前阶段”结构对比（字段标注变化方式） */
@@ -47,7 +47,7 @@ export function LineageView({ stages, compact, initial = 0 }: { stages: LStage[]
                   className={cx(
                     'flex items-center gap-1.5 rounded-full py-1 pl-1 pr-2.5 text-left transition-[background-color,box-shadow] duration-150',
                     compact ? 'text-2xs' : 'text-xs',
-                    i === idx ? 'bg-white font-medium text-ink-900 shadow-raise ring-1 ring-black/[0.06]' : i < idx ? 'text-ink-600 hover:bg-black/[0.04]' : 'text-ink-400 hover:bg-black/[0.04]',
+                    i === idx ? 'bg-surface font-medium text-ink-900 shadow-raise ring-1 ring-ink-950/[0.06]' : i < idx ? 'text-ink-600 hover:bg-ink-950/[0.04]' : 'text-ink-400 hover:bg-ink-950/[0.04]',
                   )}
                 >
                   <span className="num flex h-[18px] w-[18px] items-center justify-center rounded-full text-2xs font-semibold text-white" style={{ background: ACTORS[s.actor].color, opacity: i <= idx ? 1 : 0.4 }}>
@@ -94,14 +94,14 @@ export function LineageView({ stages, compact, initial = 0 }: { stages: LStage[]
 function StageCard({ s, dim, label, compact }: { s: LStage | null; dim?: boolean; label: string; compact?: boolean }) {
   if (!s)
     return (
-      <div className="flex items-center justify-center self-start rounded-[14px] border border-dashed border-black/[0.1] px-4 py-8 text-sm text-ink-400">
+      <div className="flex items-center justify-center self-start rounded-[14px] border border-dashed border-ink-950/[0.1] px-4 py-8 text-sm text-ink-400">
         <Icon name="inbox" size={16} className="mr-1.5" />
         数据起点（外部系统）
       </div>
     );
   return (
-    <section className={cx('anim-fade self-start rounded-[14px] border bg-surface', dim ? 'border-black/[0.05] opacity-75' : 'border-primary-100 shadow-raise')}>
-      <header className="flex flex-wrap items-center gap-2 border-b border-black/[0.05] px-4 py-2.5">
+    <section className={cx('anim-fade self-start rounded-[14px] border bg-surface', dim ? 'border-ink-950/[0.05] opacity-75' : 'border-primary-100 shadow-raise')}>
+      <header className="flex flex-wrap items-center gap-2 border-b border-ink-950/[0.05] px-4 py-2.5">
         <span className="text-2xs text-ink-400">{label}</span>
         <span className="text-sm font-semibold text-ink-900">{s.title}</span>
         <span className="code rounded-[6px] bg-ink-50 px-1.5 py-px text-[12px] text-agent-700">{s.type}</span>
@@ -116,7 +116,7 @@ function StageCard({ s, dim, label, compact }: { s: LStage | null; dim?: boolean
           <col />
           {!dim ? <col className="w-[72px]" /> : null}
         </colgroup>
-        <tbody className="divide-y divide-black/[0.04] align-top">
+        <tbody className="divide-y divide-ink-950/[0.04] align-top">
           {s.fields.map((f, i) => (
             <tr key={`${f.k}-${i}`}>
               <td className="code truncate px-4 py-1.5 text-ink-600" title={f.k}>

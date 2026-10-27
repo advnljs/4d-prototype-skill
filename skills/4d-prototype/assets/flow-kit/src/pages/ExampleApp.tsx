@@ -31,11 +31,11 @@ function MiniFlowList() {
     <ol className="space-y-1 text-sm">
       {STEPS.map((s, i) => (
         <li key={s.id}>
-          <button type="button" onClick={() => goToStep(s.id)} className="flex w-full items-center gap-2 rounded px-2 py-1 text-left hover:bg-black/5">
+          <button type="button" onClick={() => goToStep(s.id)} className="flex w-full items-center gap-2 rounded px-2 py-1 text-left hover:bg-ink-950/5">
             <span style={{ color: ACTORS[s.actor].color }}>{String.fromCodePoint(0x2460 + i)}</span>
             <span className="flex-1 truncate">{s.short}</span>
-            {s.necessity === 'optional' ? <span className="text-xs text-neutral-500">可选</span> : null}
-            <span className="text-xs text-neutral-500">{STATE_LABEL[stepStateOf(f, s.id)]}</span>
+            {s.necessity === 'optional' ? <span className="text-xs text-ink-500">可选</span> : null}
+            <span className="text-xs text-ink-500">{STATE_LABEL[stepStateOf(f, s.id)]}</span>
           </button>
         </li>
       ))}
@@ -61,10 +61,10 @@ function SettingsPage() {
     <section data-flow-anchor="rule-form" className="space-y-3">
       <h2 className="text-lg font-semibold">审批规则 v{rule.version}</h2>
       <p>财务审批阈值：{rule.financeThreshold.toLocaleString()} 元 → 草稿 {draft.toLocaleString()} 元</p>
-      <button type="button" data-demo="threshold-30000" onClick={() => setDraft(30000)} className="rounded-full bg-black/5 px-3 py-1">
+      <button type="button" data-demo="threshold-30000" onClick={() => setDraft(30000)} className="rounded-full bg-ink-950/5 px-3 py-1">
         改为 3 万
       </button>
-      <button type="button" data-demo="publish" data-flow-anchor="rule-publish" onClick={() => publishThreshold(draft)} className="ml-2 rounded-full bg-blue-600 px-3 py-1 text-white">
+      <button type="button" data-demo="publish" data-flow-anchor="rule-publish" onClick={() => publishThreshold(draft)} className="ml-2 rounded-full bg-primary-500 px-3 py-1 text-white">
         确认并发布
       </button>
     </section>
@@ -109,10 +109,10 @@ function RequestsPage() {
         <p>
           供应商：{draft.supplier || '—'}　金额：{draft.amount ? `${draft.amount.toLocaleString()} 元` : '—'}
         </p>
-        <button type="button" data-demo="fill-demo" onClick={() => setDraft(DEMO_DRAFT)} className="rounded-full bg-black/5 px-3 py-1">
+        <button type="button" data-demo="fill-demo" onClick={() => setDraft(DEMO_DRAFT)} className="rounded-full bg-ink-950/5 px-3 py-1">
           填入示例
         </button>
-        <button type="button" data-demo="submit" disabled={!draft.amount} onClick={() => submitRequest(draft)} className="ml-2 rounded-full bg-blue-600 px-3 py-1 text-white disabled:opacity-40">
+        <button type="button" data-demo="submit" disabled={!draft.amount} onClick={() => submitRequest(draft)} className="ml-2 rounded-full bg-primary-500 px-3 py-1 text-white disabled:opacity-40">
           提交
         </button>
       </div>
@@ -163,16 +163,16 @@ function ApprovalsPage({ tab }: { tab: 'dept' | 'finance' }) {
           ))}
       </ul>
       {cur ? (
-        <div data-flow-anchor="approval-detail" className="rounded-xl bg-white p-4 shadow">
+        <div data-flow-anchor="approval-detail" className="rounded-xl bg-surface p-4 shadow">
           <p>
             {cur.reqNo} · {cur.supplier} · {cur.amount.toLocaleString()} 元 · 路径 {cur.path.join(' → ')}
           </p>
-          <button type="button" data-demo="approve" onClick={() => approve(cur.reqNo, tab)} className="mt-2 rounded-full bg-blue-600 px-3 py-1 text-white">
+          <button type="button" data-demo="approve" onClick={() => approve(cur.reqNo, tab)} className="mt-2 rounded-full bg-primary-500 px-3 py-1 text-white">
             同意
           </button>
         </div>
       ) : (
-        <div data-flow-anchor="approval-detail" className="text-sm text-neutral-500">
+        <div data-flow-anchor="approval-detail" className="text-sm text-ink-500">
           选择一条待办
         </div>
       )}
@@ -199,7 +199,7 @@ function IntegrationPage({ tab }: { tab: 'sync' | 'reconcile' }) {
     );
   return (
     <section className="space-y-3">
-      <pre data-flow-anchor="erp-payload" className="rounded-xl bg-neutral-900 p-3 text-xs text-white">
+      <pre data-flow-anchor="erp-payload" className="theme-island rounded-xl bg-ink-900 p-3 text-xs text-white">
         POST /erp/api/purchase-orders{'\n'}
         {payload || '{}'}
       </pre>
@@ -249,15 +249,15 @@ export function ExampleApp() {
   usePlaybackHotkeys(active);
   useFlowSpotlight();
   return (
-    <div className="flex h-screen bg-neutral-100 text-neutral-900">
-      <aside className="w-64 shrink-0 space-y-4 overflow-auto bg-white/80 p-4">
-        <button type="button" onClick={() => void startFlow({ mode: 'auto', reset: true })} className="w-full rounded-full bg-blue-600 px-3 py-2 text-white">
+    <div className="flex h-screen bg-ink-100 text-ink-900">
+      <aside className="w-64 shrink-0 space-y-4 overflow-auto bg-surface/80 p-4">
+        <button type="button" onClick={() => void startFlow({ mode: 'auto', reset: true })} className="w-full rounded-full bg-primary-500 px-3 py-2 text-white">
           一键运行完整流程
         </button>
         <MiniFlowList />
       </aside>
       <div className="relative flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center gap-3 border-b border-black/5 bg-white/80 px-6 py-3 text-sm">
+        <header className="flex items-center gap-3 border-b border-ink-950/5 bg-surface/80 px-6 py-3 text-sm">
           <span className="font-semibold">采购申请（原型）</span>
           <span className="flex-1" />
           演示角色：
@@ -268,7 +268,7 @@ export function ExampleApp() {
               </option>
             ))}
           </select>
-          <button type="button" onClick={() => navigate('/')} className="text-blue-600">
+          <button type="button" onClick={() => navigate('/')} className="text-primary-600">
             首页
           </button>
         </header>

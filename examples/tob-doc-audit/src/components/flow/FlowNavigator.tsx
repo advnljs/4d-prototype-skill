@@ -50,13 +50,13 @@ export function FlowNavigator() {
 function Compact({ f, curIdx, inFlow, path, hereIds }: { f: FlowState; curIdx: number; inFlow: boolean; path: string; hereIds: StepId[] }) {
   const step = curIdx >= 0 ? STEPS[curIdx] : null;
   return (
-    <aside aria-label="全流程导航" className="anim-rise fixed bottom-3 left-3 z-[45] w-[224px] rounded-[16px] bg-white/90 p-3 shadow-pop ring-1 ring-black/[0.06] backdrop-blur-xl">
+    <aside aria-label="全流程导航" className="anim-rise fixed bottom-3 left-3 z-[45] w-[224px] rounded-[16px] bg-surface/90 p-3 shadow-pop ring-1 ring-ink-950/[0.06] backdrop-blur-xl">
       <div className="flex items-center justify-between">
         <span className="flex items-center gap-1.5 text-xs font-semibold text-ink-900">
           <Icon name="route" size={14} className="text-primary-500" />
           全流程导航
         </span>
-        <button type="button" aria-label="展开全流程导航" onClick={() => flowPrefs.set({ panel: 'open' })} className="flex h-6 w-6 items-center justify-center rounded-full bg-black/[0.05] text-ink-600 hover:bg-black/[0.09]">
+        <button type="button" aria-label="展开全流程导航" onClick={() => flowPrefs.set({ panel: 'open' })} className="flex h-6 w-6 items-center justify-center rounded-full bg-ink-950/[0.05] text-ink-600 hover:bg-ink-950/[0.09]">
           <Icon name="chevronUp" size={13} strokeWidth={2} />
         </button>
       </div>
@@ -129,13 +129,13 @@ function Expanded({ f, curIdx, hereIds, onData }: { f: FlowState; curIdx: number
   }, [curIdx, f.sub]);
 
   return (
-    <aside aria-label="全流程导航" className="anim-rise fixed bottom-3 left-3 z-[45] flex max-h-[calc(100vh-76px)] w-[408px] flex-col overflow-hidden rounded-[20px] bg-white/[0.94] shadow-pop ring-1 ring-black/[0.06] backdrop-blur-xl">
-      <header className="shrink-0 border-b border-black/[0.06] px-4 pb-3 pt-3.5">
+    <aside aria-label="全流程导航" className="anim-rise fixed bottom-3 left-3 z-[45] flex max-h-[calc(100vh-76px)] w-[408px] flex-col overflow-hidden rounded-[20px] bg-surface/[0.94] shadow-pop ring-1 ring-ink-950/[0.06] backdrop-blur-xl">
+      <header className="shrink-0 border-b border-ink-950/[0.06] px-4 pb-3 pt-3.5">
         <div className="flex items-center gap-2">
           <Icon name="route" size={16} className="text-primary-500" />
           <h2 className="text-[15px] font-semibold text-ink-900">全流程导航</h2>
           {f.active ? <StatusPill f={f} /> : <span className="ml-auto text-2xs text-ink-400">浏览模式</span>}
-          <button type="button" aria-label="收起全流程导航" onClick={() => flowPrefs.set({ panel: 'compact' })} className="ml-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-black/[0.05] text-ink-600 hover:bg-black/[0.09]">
+          <button type="button" aria-label="收起全流程导航" onClick={() => flowPrefs.set({ panel: 'compact' })} className="ml-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink-950/[0.05] text-ink-600 hover:bg-ink-950/[0.09]">
             <Icon name="chevronDown" size={13} strokeWidth={2} />
           </button>
         </div>
@@ -192,7 +192,7 @@ function Expanded({ f, curIdx, hereIds, onData }: { f: FlowState; curIdx: number
                     return n;
                   })
                 }
-                className="flex w-full items-center gap-2 rounded-[10px] px-2 py-1.5 text-left hover:bg-black/[0.03]"
+                className="flex w-full items-center gap-2 rounded-[10px] px-2 py-1.5 text-left hover:bg-ink-950/[0.03]"
               >
                 <Icon name="chevronRight" size={12} className={cx('shrink-0 text-ink-400 transition-transform duration-150', open && 'rotate-90')} />
                 <span className="num text-2xs font-semibold text-ink-400">阶段 {pi + 1}</span>
@@ -225,7 +225,7 @@ function StepRow({ s, f, current, here, onData }: { s: FlowStep; f: FlowState; c
         type="button"
         onClick={() => goToStep(s.id)}
         title={f.active ? (state === 'ready' ? '执行此环节（上游已完成）' : '跳到此环节（未完成的上游视为完成）') : `打开此环节页面（切换为${USERS[s.role].roleName}）`}
-        className="flex w-full items-center gap-2 rounded-[12px] px-2 py-1.5 text-left hover:bg-black/[0.03]"
+        className="flex w-full items-center gap-2 rounded-[12px] px-2 py-1.5 text-left hover:bg-ink-950/[0.03]"
       >
         <span
           className={cx(
@@ -269,7 +269,7 @@ function StepDetail({ s, f, onData }: { s: FlowStep; f: FlowState; onData: (k: D
         </div>
       ) : null}
       <DepLinks s={s} f={f} />
-      <ol className="space-y-1 rounded-[10px] bg-white/80 px-2.5 py-2 ring-1 ring-black/[0.05]">
+      <ol className="space-y-1 rounded-[10px] bg-surface/80 px-2.5 py-2 ring-1 ring-ink-950/[0.05]">
         {s.subs.map((x, k) => {
           const st = !active ? 'idle' : finishedStep || k < f.sub ? 'done' : k === f.sub ? 'cur' : 'todo';
           return (
@@ -366,7 +366,7 @@ function DepLinks({ s, f }: { s: FlowStep; f: FlowState }) {
               type="button"
               onClick={() => goToStep(id)}
               title={`${e.label}${e.data ? '' : '（时序依赖）'}`}
-              className={cx('inline-flex h-[20px] items-center gap-1 rounded-full bg-white px-1.5 text-2xs ring-1 ring-black/[0.06] hover:ring-primary-300', STATE_TONE[stepStateOf(f, id)])}
+              className={cx('inline-flex h-[20px] items-center gap-1 rounded-full bg-surface px-1.5 text-2xs ring-1 ring-ink-950/[0.06] hover:ring-primary-300', STATE_TONE[stepStateOf(f, id)])}
             >
               <span className="num font-semibold">{STEP_INDEX[id] + 1}</span>
               {stepById(id).short}
@@ -401,7 +401,7 @@ function ReadyChoices({ f }: { f: FlowState }) {
             key={id}
             type="button"
             onClick={() => goToStep(id)}
-            className={cx('inline-flex h-7 items-center gap-1.5 rounded-full px-2.5 text-xs font-medium transition-colors', i === 0 ? 'bg-primary-500 text-white hover:bg-primary-600' : 'bg-white text-ink-800 ring-1 ring-black/[0.08] hover:bg-ink-50')}
+            className={cx('inline-flex h-7 items-center gap-1.5 rounded-full px-2.5 text-xs font-medium transition-colors', i === 0 ? 'bg-primary-500 text-white hover:bg-primary-600' : 'bg-surface text-ink-800 ring-1 ring-ink-950/[0.08] hover:bg-ink-50')}
           >
             <span className="num">{STEP_INDEX[id] + 1}</span>
             {stepById(id).short}
@@ -506,7 +506,7 @@ function FlowStartModal({ open }: { open: boolean }) {
           <SpeedControl size="md" />
         </div>
         <label className="flex items-start gap-2.5 text-sm text-ink-700">
-          <input type="checkbox" checked={reset} onChange={(e) => setReset(e.target.checked)} className="mt-[3px] h-4 w-4 accent-[#0071e3]" />
+          <input type="checkbox" checked={reset} onChange={(e) => setReset(e.target.checked)} className="mt-[3px] h-4 w-4 accent-primary-500" />
           <span>
             从初始状态开始
             <span className="block text-xs text-ink-500">重置本机浏览器中的演示数据：各区域规则库的修改与版本、本机核查结果与判例库。</span>

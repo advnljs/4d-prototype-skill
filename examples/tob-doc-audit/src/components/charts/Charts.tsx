@@ -2,11 +2,12 @@ import { useMemo, useRef, useState } from 'react';
 import { cx } from '@/components/ui/primitives';
 
 /* dataviz 参考调色：单色顺序色阶（蓝，浅 → 深） */
-const SEQ = ['#cde2fb', '#b7d3f6', '#9ec5f4', '#86b6ef', '#6da7ec', '#5598e7', '#3987e5', '#2a78d6', '#256abf', '#1c5cab', '#184f95', '#104281'];
-const GRID = '#ececf0';
-const AXIS = '#d2d2d7';
-const MUTED = '#86868b';
-const SERIES = '#0071e3';
+// 顺序色阶随外观变化：从 surface 混到主色，再往 ink-900 加深（深色下也保持“越深越多”的读法）
+const SEQ = [16, 24, 32, 40, 50, 60, 70, 82, 94].map((p) => `color-mix(in oklab, var(--color-primary-500) ${p}%, var(--color-surface))`).concat([18, 32, 46].map((p) => `color-mix(in oklab, var(--color-primary-500), var(--color-ink-950) ${p}%)`));
+const GRID = 'var(--color-ink-150)';
+const AXIS = 'var(--color-ink-200)';
+const MUTED = 'var(--color-ink-400)';
+const SERIES = 'var(--color-primary-500)';
 
 /* ---------------- 折线图（单系列，十字准线 + 悬停提示） ---------------- */
 
@@ -86,19 +87,19 @@ export function LineChart({
         <path d={area} fill={SERIES} opacity={0.1} />
         <path d={path} fill="none" stroke={SERIES} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
         <circle cx={x(last)} cy={y(data[last].y)} r={4} fill={SERIES} stroke="#fff" strokeWidth={2} />
-        <text x={x(last) + 8} y={y(data[last].y) + 4} fontSize={12} fill="#172230" fontWeight={600}>
+        <text x={x(last) + 8} y={y(data[last].y) + 4} fontSize={12} style={{ fill: 'var(--color-ink-900)' }} fontWeight={600}>
           {yFormat(data[last].y)}
         </text>
         {hover !== null ? (
           <g>
-            <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={H - pad.b} stroke="#8d96a1" strokeWidth={1} />
+            <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={H - pad.b} style={{ stroke: 'var(--color-ink-400)' }} strokeWidth={1} />
             <circle cx={x(hover)} cy={y(data[hover].y)} r={4} fill={SERIES} stroke="#fff" strokeWidth={2} />
           </g>
         ) : null}
       </svg>
       {hover !== null ? (
         <div
-          className="pointer-events-none absolute top-2 rounded-[12px] border border-black/[0.07] bg-surface px-3 py-2 text-xs shadow-pop"
+          className="pointer-events-none absolute top-2 rounded-[12px] border border-ink-950/[0.07] bg-surface px-3 py-2 text-xs shadow-pop"
           style={{ left: `calc(${(x(hover) / W) * 100}% + ${hover > data.length * 0.7 ? -150 : 12}px)` }}
         >
           <div className="num text-sm font-semibold text-ink-900">{yFormat(data[hover].y)}</div>
@@ -128,7 +129,7 @@ export function Heatmap({
   const flat = values.flat();
   const max = Math.max(...flat, 1);
   const color = (v: number) => SEQ[Math.min(SEQ.length - 1, Math.floor((v / max) * (SEQ.length - 1)))];
-  const ink = (v: number) => (v / max > 0.55 ? '#ffffff' : '#172230');
+  const ink = (v: number) => (v / max > 0.55 ? 'white' : 'var(--color-ink-900)');
   const [hover, setHover] = useState<[number, number] | null>(null);
   return (
     <div role="img" aria-label={label}>
@@ -192,7 +193,7 @@ export function BarList({ items, format = (v: number) => String(v), highlight }:
         <li key={it.label} className="grid grid-cols-[minmax(0,9rem)_1fr] items-center gap-3" title={`${it.label}：${format(it.value)}${it.sub ? `（${it.sub}）` : ''}`}>
           <span className="truncate text-xs text-ink-700">{it.label}</span>
           <span className="flex items-center gap-2">
-            <span className="h-3.5 rounded-r-[4px]" style={{ width: `calc(${(it.value / max) * 100}% - 3.5rem)`, background: highlight?.(it.value) ? '#1c5cab' : '#86b6ef', minWidth: 4 }} />
+            <span className="h-3.5 rounded-r-[4px]" style={{ width: `calc(${(it.value / max) * 100}% - 3.5rem)`, background: highlight?.(it.value) ? 'var(--color-primary-600)' : 'color-mix(in oklab, var(--color-primary-500) 45%, var(--color-surface))', minWidth: 4 }} />
             <span className="num shrink-0 text-xs text-ink-800">{format(it.value)}</span>
           </span>
         </li>

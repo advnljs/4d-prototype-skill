@@ -120,7 +120,7 @@ export function FlowDag({ f, selected, onSelect }: { f: FlowState; selected: Ste
               return (
                 <span
                   key={`l-${e.from}-${e.to}`}
-                  className="anim-fade pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-white px-1.5 py-px text-2xs font-medium text-primary-700 shadow-[0_1px_3px_rgb(0_0_0/0.12)] ring-1 ring-primary-100"
+                  className="anim-fade pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-surface px-1.5 py-px text-2xs font-medium text-primary-700 shadow-[0_1px_3px_rgb(0_0_0/0.12)] ring-1 ring-primary-100"
                   style={{ left: cx_, top: cy }}
                   title={e.data ? `${DATA_OBJECTS[e.data].name}（${DATA_OBJECTS[e.data].type}）` : '时序依赖'}
                 >
@@ -146,11 +146,11 @@ export function FlowDag({ f, selected, onSelect }: { f: FlowState; selected: Ste
               aria-pressed={sel}
               title={`${s.title}${s.necessity ? `（${NECESSITY_LABEL[s.necessity]}）` : ''}`}
               className={cx(
-                'absolute z-10 rounded-[12px] bg-white px-2.5 py-1.5 text-left shadow-raise transition-[box-shadow,transform] duration-150 hover:-translate-y-px hover:shadow-pop',
-                state === 'running' ? 'ring-2 ring-primary-500' : sel ? 'ring-2 ring-primary-300' : state === 'ready' ? 'outline-dashed outline-[1.5px] outline-offset-2 outline-primary-400 ring-1 ring-black/[0.06]' : 'ring-1 ring-black/[0.06]',
+                'absolute z-10 rounded-[12px] bg-surface px-2.5 py-1.5 text-left shadow-raise transition-[box-shadow,transform] duration-150 hover:-translate-y-px hover:shadow-pop',
+                state === 'running' ? 'ring-2 ring-primary-500' : sel ? 'ring-2 ring-primary-300' : state === 'ready' ? 'outline-dashed outline-[1.5px] outline-offset-2 outline-primary-400 ring-1 ring-ink-950/[0.06]' : 'ring-1 ring-ink-950/[0.06]',
                 state === 'assumed' && 'opacity-70',
                 f.active && state === 'waiting' && 'opacity-60',
-                s.necessity === 'optional' && 'border border-dashed border-ink-300 bg-[#fafafb]',
+                s.necessity === 'optional' && 'border border-dashed border-ink-300 bg-ink-50',
               )}
               style={{ left: x(s.id), top: y(s.id), width: NODE_W, height: NODE_H, borderLeft: `3px solid ${ACTORS[s.actor].color}` }}
             >
@@ -357,7 +357,7 @@ export function DagDetail({ f, width, height, onPick, edgeLabels = false }: { f:
         ? EDGES.filter((e) => e.from === cur || e.to === cur).map((e) => (
             <span
               key={`l-${e.from}-${e.to}`}
-              className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-white px-1.5 text-2xs leading-[16px] text-primary-700 shadow-[0_1px_2px_rgb(0_0_0/0.12)] ring-1 ring-primary-100"
+              className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-surface px-1.5 text-2xs leading-[16px] text-primary-700 shadow-[0_1px_2px_rgb(0_0_0/0.12)] ring-1 ring-primary-100"
               style={{ left: (x(e.from) + nw + x(e.to)) / 2, top: (y(e.from) + y(e.to)) / 2 + nh / 2 }}
             >
               {e.label}
@@ -374,11 +374,11 @@ export function DagDetail({ f, width, height, onPick, edgeLabels = false }: { f:
             onClick={() => onPick?.(s.id)}
             title={`${STEP_INDEX[s.id] + 1}. ${s.title}（${ACTORS[s.actor].label}，${s.when}）${s.necessity ? ` · ${NECESSITY_LABEL[s.necessity]}` : ''}${STATE_LABEL[st] ? ` · ${STATE_LABEL[st]}` : ''}`}
             className={cx(
-              'absolute z-10 flex items-start gap-1 rounded-[8px] bg-white px-1.5 py-1 text-left shadow-[0_1px_2px_rgb(0_0_0/0.08)]',
-              isCur ? 'ring-2 ring-primary-500' : st === 'ready' ? 'outline-dashed outline-[1.5px] outline-offset-1 outline-primary-400 ring-1 ring-black/[0.06]' : 'ring-1 ring-black/[0.06]',
+              'absolute z-10 flex items-start gap-1 rounded-[8px] bg-surface px-1.5 py-1 text-left shadow-[0_1px_2px_rgb(0_0_0/0.08)]',
+              isCur ? 'ring-2 ring-primary-500' : st === 'ready' ? 'outline-dashed outline-[1.5px] outline-offset-1 outline-primary-400 ring-1 ring-ink-950/[0.06]' : 'ring-1 ring-ink-950/[0.06]',
               st === 'waiting' && 'opacity-55',
               st === 'assumed' && 'opacity-70',
-              s.necessity === 'optional' && 'border border-dashed border-ink-300 bg-[#fafafb]',
+              s.necessity === 'optional' && 'border border-dashed border-ink-300 bg-ink-50',
             )}
             style={{ left: x(s.id), top: y(s.id), width: nw, height: nh, borderLeft: `3px solid ${ACTORS[s.actor].color}` }}
           >

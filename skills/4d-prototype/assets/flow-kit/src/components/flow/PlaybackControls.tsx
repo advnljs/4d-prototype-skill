@@ -27,7 +27,7 @@ function RoundBtn({ icon, label, onClick, disabled, primary }: { icon: keyof typ
       title={label}
       onClick={onClick}
       disabled={disabled}
-      className={`flex shrink-0 items-center justify-center rounded-full transition-[background-color,transform] duration-150 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 ${primary ? 'bg-blue-600 text-white hover:bg-blue-500' : 'bg-black/[0.06] text-neutral-800 hover:bg-black/[0.1]'}`}
+      className={`flex shrink-0 items-center justify-center rounded-full transition-[background-color,transform] duration-150 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 ${primary ? 'bg-primary-500 text-white hover:brightness-[1.06]' : 'bg-ink-950/[0.06] text-ink-800 hover:bg-ink-950/[0.1]'}`}
       style={{ width: size, height: size }}
     >
       <svg width={primary ? 20 : 16} height={primary ? 20 : 16} viewBox="0 0 24 24" fill={icon === 'play' || icon === 'prev' || icon === 'next' ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -39,7 +39,7 @@ function RoundBtn({ icon, label, onClick, disabled, primary }: { icon: keyof typ
 
 function Segmented<T extends string>({ value, items, onChange }: { value: T; items: { value: T; label: string }[]; onChange: (v: T) => void }) {
   return (
-    <div className="inline-flex rounded-full bg-black/[0.06] p-0.5" role="radiogroup">
+    <div className="inline-flex rounded-full bg-ink-950/[0.06] p-0.5" role="radiogroup">
       {items.map((it) => (
         <button
           key={it.value}
@@ -47,7 +47,7 @@ function Segmented<T extends string>({ value, items, onChange }: { value: T; ite
           role="radio"
           aria-checked={it.value === value}
           onClick={() => onChange(it.value)}
-          className={`rounded-full px-2.5 py-1 text-xs font-medium ${it.value === value ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-600'}`}
+          className={`rounded-full px-2.5 py-1 text-xs font-medium ${it.value === value ? 'bg-surface text-ink-900 shadow-sm' : 'text-ink-600'}`}
         >
           {it.label}
         </button>
@@ -103,14 +103,14 @@ export function PlaybackCapsule() {
   const step = STEPS[f.idx];
   const status = f.status === 'finished' ? `已完成 ${f.completed.length + f.assumed.length}/${STEPS.length}` : f.paused ? '已暂停' : f.status === 'step-done' ? '本环节完成' : '运行中';
   return (
-    <div role="toolbar" aria-label="演示播放控制" className="pointer-events-auto flex w-max items-center gap-4 rounded-full bg-white/90 px-4 py-2 shadow-[0_8px_30px_-8px_rgb(0_0_0/0.35)] backdrop-blur">
-      <span className="max-w-[16rem] truncate text-sm font-medium text-neutral-900">
+    <div role="toolbar" aria-label="演示播放控制" className="pointer-events-auto flex w-max items-center gap-4 rounded-full bg-surface/90 px-4 py-2 shadow-[0_8px_30px_-8px_rgb(0_0_0/0.35)] backdrop-blur">
+      <span className="max-w-[16rem] truncate text-sm font-medium text-ink-900">
         {STEP_NO(f.idx)} {step?.short}
       </span>
       <BigControls f={f} />
       <SpeedControl />
       <ModeControl f={f} />
-      <span className="text-xs text-neutral-600">{status}</span>
+      <span className="text-xs text-ink-600">{status}</span>
     </div>
   );
 }

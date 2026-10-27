@@ -192,8 +192,8 @@ export function AgentConsole({
         </div>
       </div>
 
-      <div className="rounded-[14px] border border-black/[0.07] bg-surface">
-        <div className="flex items-center justify-between border-b border-black/[0.05] px-3.5 py-2">
+      <div className="rounded-[14px] border border-ink-950/[0.07] bg-surface">
+        <div className="flex items-center justify-between border-b border-ink-950/[0.05] px-3.5 py-2">
           <span className="text-xs font-medium text-ink-700">判定流</span>
           <span className="num text-2xs text-ink-500">
             {shownTicker}/{ticker.length}

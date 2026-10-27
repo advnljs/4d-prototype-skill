@@ -42,7 +42,7 @@ export function DataChip({ k, onOpen, tone = 'in' }: { k: DataKey; onOpen: (k: D
       title={`${d.name}（${d.type}）：点击查看数据结构`}
       className={cx(
         'inline-flex h-[22px] max-w-full items-center gap-1 rounded-[7px] px-1.5 text-2xs font-medium transition-colors',
-        tone === 'out' ? 'bg-pine-50 text-pine-700 ring-1 ring-inset ring-pine-100 hover:bg-pine-100/70' : 'bg-ink-50 text-ink-700 ring-1 ring-inset ring-black/[0.06] hover:bg-ink-100',
+        tone === 'out' ? 'bg-pine-50 text-pine-700 ring-1 ring-inset ring-pine-100 hover:bg-pine-100/70' : 'bg-ink-50 text-ink-700 ring-1 ring-inset ring-ink-950/[0.06] hover:bg-ink-100',
       )}
     >
       <Icon name={ICON[k]} size={11} className="shrink-0 opacity-70" />
@@ -111,7 +111,7 @@ function SchemaView({ k, producers, consumers }: { k: DataKey; producers: typeof
             <th className="rounded-r-[8px] px-3 py-1.5 font-medium">说明</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-black/[0.05] align-top">
+        <tbody className="divide-y divide-ink-950/[0.05] align-top">
           {d.fields.map((f) => (
             <tr key={f.name}>
               <td className="code whitespace-nowrap px-3 py-1.5 text-ink-900">{f.name}</td>

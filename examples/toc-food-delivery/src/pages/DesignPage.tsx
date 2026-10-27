@@ -51,12 +51,12 @@ function DispatchTuner() {
                 <span className="font-medium text-ink-800">{WEIGHT_LABEL[k]}</span>
                 <span className="num text-xs text-ink-500">{Math.round((w[k] / sum) * 100)}%</span>
               </div>
-              <input type="range" min={0} max={100} value={Math.round(w[k] * 100)} onChange={(e) => setW({ ...w, [k]: Number(e.target.value) / 100 })} className="mt-1.5 w-full accent-[#d1307a]" aria-label={`${WEIGHT_LABEL[k]}权重`} />
+              <input type="range" min={0} max={100} value={Math.round(w[k] * 100)} onChange={(e) => setW({ ...w, [k]: Number(e.target.value) / 100 })} className="mt-1.5 w-full accent-act-dispatch" aria-label={`${WEIGHT_LABEL[k]}权重`} />
             </label>
           ))}
           <div className="flex flex-wrap gap-1.5 pt-1">
             {PRESETS.map((p) => (
-              <button key={p.label} type="button" onClick={() => setW(p.w)} title={p.note} className="rounded-full bg-ink-50 px-3 py-1 text-xs text-ink-700 ring-1 ring-black/[0.05] hover:bg-ink-100">
+              <button key={p.label} type="button" onClick={() => setW(p.w)} title={p.note} className="rounded-full bg-ink-50 px-3 py-1 text-xs text-ink-700 ring-1 ring-ink-950/[0.05] hover:bg-ink-100">
                 {p.label}
               </button>
             ))}
@@ -84,10 +84,10 @@ function DispatchTuner() {
             </thead>
             <tbody>
               {d.candidates.map((c) => (
-                <tr key={c.riderId} className={cx('transition-colors duration-300', c.riderId === d.chosen && 'bg-[#fdf0f6]')}>
+                <tr key={c.riderId} className={cx('transition-colors duration-300', c.riderId === d.chosen && 'bg-act-dispatch/[0.07]')}>
                   <td className="rounded-l-[10px] py-2 pl-2 font-medium text-ink-900">
                     {c.name}
-                    {c.riderId === d.chosen ? <span className="ml-1.5 rounded-full bg-[#d1307a] px-1.5 text-2xs text-white">选中</span> : null}
+                    {c.riderId === d.chosen ? <span className="ml-1.5 rounded-full bg-act-dispatch px-1.5 text-2xs text-surface">选中</span> : null}
                   </td>
                   <td className="num text-ink-600">{c.km.toFixed(2)} km</td>
                   <td className="num text-ink-600">{c.load} 单</td>
@@ -136,19 +136,19 @@ function Idempotency() {
       <svg viewBox="0 0 560 240" className="w-full" role="img" aria-label="支付回调时序">
         <defs>
           <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-            <path d="M0 0 8 4 0 8z" fill="#6b625b" />
+            <path d="M0 0 8 4 0 8z" style={{ fill: 'var(--color-ink-500)' }} />
           </marker>
         </defs>
         {[
-          [90, '支付网关（模拟）', '#0e7490'],
-          [470, '平台支付服务', '#4b5563'],
+          [90, '支付网关（模拟）', 'color-mix(in oklab, var(--color-act-gateway) 80%, black)'],
+          [470, '平台支付服务', 'color-mix(in oklab, var(--color-act-platform) 80%, black)'],
         ].map(([x, l, c]) => (
           <g key={l as string}>
-            <rect x={(x as number) - 70} y="2" width="140" height="26" rx="13" fill={c as string} />
+            <rect x={(x as number) - 70} y="2" width="140" height="26" rx="13" style={{ fill: c as string }} />
             <text x={x as number} y="19.5" textAnchor="middle" fontSize="12.5" fontWeight="600" fill="#fff">
               {l}
             </text>
-            <line x1={x as number} y1="30" x2={x as number} y2="236" stroke="#d9d2cc" strokeDasharray="4 4" />
+            <line x1={x as number} y1="30" x2={x as number} y2="236" style={{ stroke: 'var(--color-ink-200)' }} strokeDasharray="4 4" />
           </g>
         ))}
         {rows.map((r) => {
@@ -156,12 +156,12 @@ function Idempotency() {
           const x2 = r.from === 'gw' ? 466 : 94;
           return (
             <g key={r.y}>
-              <line x1={x1} y1={r.y} x2={x2} y2={r.y} stroke={r.tone === 'warn' ? '#d07a00' : r.tone === 'muted' ? '#b3aaa3' : '#6b625b'} strokeWidth="1.6" strokeDasharray={r.tone === 'muted' ? '5 4' : undefined} markerEnd="url(#arr)" />
-              <text x="280" y={r.y - 7} textAnchor="middle" fontSize="12" fill={r.tone === 'warn' ? '#8a4b00' : '#3d3530'}>
+              <line x1={x1} y1={r.y} x2={x2} y2={r.y} style={{ stroke: r.tone === 'warn' ? 'var(--color-amber-500)' : r.tone === 'muted' ? 'var(--color-ink-300)' : 'var(--color-ink-500)' }} strokeWidth="1.6" strokeDasharray={r.tone === 'muted' ? '5 4' : undefined} markerEnd="url(#arr)" />
+              <text x="280" y={r.y - 7} textAnchor="middle" fontSize="12" style={{ fill: r.tone === 'warn' ? 'var(--color-amber-700)' : 'var(--color-ink-700)' }}>
                 {r.text}
               </text>
               {r.note ? (
-                <text x={r.from === 'gw' ? 470 : 90} y={r.y + 18} textAnchor="middle" fontSize="11" fill="#776d66">
+                <text x={r.from === 'gw' ? 470 : 90} y={r.y + 18} textAnchor="middle" fontSize="11" style={{ fill: 'var(--color-ink-400)' }}>
                   {r.note}
                 </text>
               ) : null}
@@ -241,7 +241,7 @@ function CouponBasis() {
             <th className="pb-2 text-right font-medium">平台净收入</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-black/[0.05]">
+        <tbody className="divide-y divide-ink-950/[0.05]">
           {rows.flatMap((r) => [
             <tr key={`${r.label}-a`}>
               <td rowSpan={2} className="py-2 pr-3 align-top text-xs text-ink-700">

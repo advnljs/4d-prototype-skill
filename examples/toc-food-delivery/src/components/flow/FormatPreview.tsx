@@ -10,13 +10,13 @@ import { toast } from '@/components/ui/Toast';
 
 /** 与 xlsx 写入样式一致的预览配色（见 lib/xlsx/writer.ts STYLES） */
 const CELL_CLS: Record<CellStyle, string> = {
-  plain: 'bg-white text-[#1f1f1f]',
-  bordered: 'bg-white text-[#1f1f1f]',
+  plain: 'bg-surface text-[#1f1f1f]',
+  bordered: 'bg-surface text-[#1f1f1f]',
   header: 'bg-[#E6ECF2] font-semibold text-[#1f1f1f] text-center',
   summary: 'bg-[#FFF3D6] font-semibold text-[#1f1f1f]',
   flag: 'bg-[#FBE1DE] text-[#1f1f1f]',
   flagKey: 'bg-[#FBE1DE] font-semibold text-[#9B2420]',
-  title: 'bg-white text-[14px] font-semibold text-[#1f1f1f]',
+  title: 'bg-surface text-[14px] font-semibold text-[#1f1f1f]',
 };
 
 function colName(i: number) {
@@ -40,7 +40,7 @@ export function SheetPreview({ sample, maxRows = 12, maxCols = 9, compact }: { s
   const rows = sheet.rows.slice(0, maxRows);
   const width = (i: number) => Math.min(260, Math.max(56, Math.round((sheet.widths?.[i] ?? 12) * 7 + 10)));
   return (
-    <div className="overflow-hidden rounded-[12px] border border-[#c9d1d9] bg-white shadow-raise">
+    <div className="theme-island overflow-hidden rounded-[12px] border border-[#c9d1d9] bg-surface shadow-raise">
       <div className="flex items-center gap-2 border-b border-[#d6dbe0] bg-[#f3f6f4] px-3 py-1.5">
         <span className="flex h-5 w-5 items-center justify-center rounded-[4px] bg-[#1f7a46] text-[10px] font-bold text-white">X</span>
         <span className="code truncate text-[12.5px] text-ink-800">{sample.fileName}</span>
@@ -103,7 +103,7 @@ export function SheetPreview({ sample, maxRows = 12, maxCols = 9, compact }: { s
         </table>
       </div>
       <div className={cx('flex items-center gap-2 border-t border-[#d6dbe0] bg-[#f3f6f4] px-2 py-1', compact && 'hidden')}>
-        <span className="rounded-t-[4px] border-b-2 border-[#1f7a46] bg-white px-3 py-0.5 text-2xs font-medium text-[#1f7a46]">{sheet.name}</span>
+        <span className="rounded-t-[4px] border-b-2 border-[#1f7a46] bg-surface px-3 py-0.5 text-2xs font-medium text-[#1f7a46]">{sheet.name}</span>
         <Button
           size="sm"
           variant="ghost"
@@ -123,7 +123,7 @@ export function TablePreview({ sample, maxRows = 12 }: { sample: Extract<FormatS
   const rows = sample.rows.slice(0, maxRows);
   const total = sample.total ?? sample.rows.length;
   return (
-    <div className="overflow-hidden rounded-[12px] border border-[#cfd6e4] bg-white shadow-raise">
+    <div className="theme-island overflow-hidden rounded-[12px] border border-[#cfd6e4] bg-surface shadow-raise">
       <div className="flex items-center gap-2 border-b border-[#dde3ee] bg-[#eef2f8] px-3 py-1.5">
         <Icon name="database" size={14} className="shrink-0 text-[#3b5b92]" />
         <span className="code truncate text-[12.5px] font-semibold text-[#24324d]">{sample.table}</span>
@@ -147,7 +147,7 @@ export function TablePreview({ sample, maxRows = 12 }: { sample: Extract<FormatS
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={i} className={i % 2 ? 'bg-[#fafbfd]' : 'bg-white'}>
+              <tr key={i} className={i % 2 ? 'bg-[#fafbfd]' : 'bg-surface'}>
                 {r.map((v, j) => (
                   <td key={j} title={v === null ? 'NULL' : String(v)} className={cx('max-w-[280px] truncate border-b border-r border-[#eef1f6] px-2 py-[3px] last:border-r-0', v === null ? 'italic text-ink-400' : typeof v === 'number' ? 'num text-right text-ink-900' : 'text-ink-900')}>
                     {v === null ? 'NULL' : String(v)}
@@ -168,7 +168,7 @@ export function JsonPreview({ value, maxHeight = 360 }: { value: unknown; maxHei
   const text = useMemo(() => JSON.stringify(value, null, 2), [value]);
   const lines = text.split('\n');
   return (
-    <pre className="code overflow-auto rounded-[12px] bg-[#1d1f24] px-4 py-3 text-[12.5px] leading-[20px] text-[#d4d7dd]" style={{ maxHeight }}>
+    <pre className="code theme-island overflow-auto rounded-[12px] bg-[#1d1f24] px-4 py-3 text-[12.5px] leading-[20px] text-[#d4d7dd]" style={{ maxHeight }}>
       {lines.map((ln, i) => (
         <Fragment key={i}>
           <JsonLine line={ln} />
@@ -210,7 +210,7 @@ function colorValue(v: string) {
 /** 后台页面原样：运营后台的表单版式 */
 export function FormPreview({ sample }: { sample: Extract<FormatSample, { kind: 'form' }> }) {
   return (
-    <div className="overflow-hidden rounded-[12px] border border-black/[0.08] bg-white shadow-raise">
+    <div className="theme-island overflow-hidden rounded-[12px] border border-ink-950/[0.08] bg-surface shadow-raise">
       <div className="flex items-center gap-2 bg-[#2a2420] px-3 py-2 text-[12.5px] font-semibold text-white">
         <span className="brand-grad h-4 w-4 rounded-[5px]" />
         {sample.title}
@@ -219,7 +219,7 @@ export function FormPreview({ sample }: { sample: Extract<FormatSample, { kind: 
         {sample.fields.map(([k, v, wide]) => (
           <div key={k} className={cx('flex items-center gap-2 text-[12.5px]', wide && 'col-span-2 items-start')}>
             <span className="w-[76px] shrink-0 text-right text-ink-500">{k}</span>
-            <span className={cx('min-w-0 flex-1 rounded-[8px] border border-black/[0.1] bg-ink-50 px-2 leading-[26px] text-ink-900', wide ? 'whitespace-pre-wrap' : 'truncate')} title={v}>
+            <span className={cx('min-w-0 flex-1 rounded-[8px] border border-ink-950/[0.1] bg-ink-50 px-2 leading-[26px] text-ink-900', wide ? 'whitespace-pre-wrap' : 'truncate')} title={v}>
               {v || '—'}
             </span>
           </div>
@@ -242,16 +242,16 @@ const DEVICE_STYLE: Record<AppCard['device'], { head: string; text: string }> = 
 export function AppPreview({ card }: { card: AppCard }) {
   const st = DEVICE_STYLE[card.device];
   return (
-    <div className="flex justify-center rounded-[14px] bg-[#efe9e1] p-4">
-      <div className="w-[300px] overflow-hidden rounded-[26px] bg-white shadow-raise ring-[6px] ring-[#1a1614]">
+    <div className="theme-island flex justify-center rounded-[14px] bg-[#efe9e1] p-4">
+      <div className="w-[300px] overflow-hidden rounded-[26px] bg-surface shadow-raise ring-[6px] ring-[#1a1614]">
         <div className={cx('px-4 pb-3 pt-3', st.head, st.text)}>
           <div className="text-2xs opacity-80">{card.app}</div>
           <div className="mt-0.5 flex items-center justify-between gap-2">
             <span className="truncate text-[15px] font-bold">{card.heading}</span>
-            {card.badge ? <span className="shrink-0 rounded-full bg-white/20 px-2 py-0.5 text-2xs font-semibold">{card.badge}</span> : null}
+            {card.badge ? <span className="shrink-0 rounded-full bg-surface/20 px-2 py-0.5 text-2xs font-semibold">{card.badge}</span> : null}
           </div>
         </div>
-        <dl className="divide-y divide-black/[0.05] px-4">
+        <dl className="divide-y divide-ink-950/[0.05] px-4">
           {card.lines.map(([k, v]) => (
             <div key={k} className="flex items-start justify-between gap-3 py-1.5 text-xs">
               <dt className="shrink-0 text-ink-500">{k}</dt>
@@ -267,14 +267,14 @@ export function AppPreview({ card }: { card: AppCard }) {
 
 function TraceView({ s, compact }: { s: Extract<FormatSample, { kind: 'trace' }>; compact?: boolean }) {
   return (
-    <div className="rounded-[12px] border border-[#f3c9dc] bg-surface px-4 py-3">
+    <div className="rounded-[12px] border border-act-dispatch/30 bg-surface px-4 py-3">
       <div className="mb-2 text-xs font-medium text-[#a3245f]">结论：{s.verdict}</div>
       <ol className="relative space-y-2 border-l-2 border-[#f3c9dc] pl-4">
         {s.steps.map((x, i) => (
           <li key={i} className="relative">
-            <span className="absolute -left-[22px] top-1 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#d1307a]" />
+            <span className="absolute -left-[22px] top-1 h-2.5 w-2.5 rounded-full border-2 border-surface bg-act-dispatch" />
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-[#fdf0f6] px-1.5 text-2xs font-medium text-[#a3245f]">{x.tag}</span>
+              <span className="rounded-full bg-act-dispatch/[0.08] px-1.5 text-2xs font-medium text-act-dispatch">{x.tag}</span>
               <span className="text-xs font-semibold text-ink-900">{x.title}</span>
             </div>
             <p className={cx('mt-0.5 text-2xs leading-relaxed text-ink-600', compact && 'line-clamp-1')}>{x.detail}</p>
@@ -334,7 +334,7 @@ export function FormatSamplesView({ k, compact }: { k: DataKey; compact?: boolea
                 key={j}
                 type="button"
                 onClick={() => setI(j)}
-                className={cx('rounded-full px-2 text-2xs leading-[20px] transition-colors', j === i ? 'bg-ink-900 text-white' : 'bg-black/[0.05] text-ink-600 hover:bg-black/[0.09]')}
+                className={cx('rounded-full px-2 text-2xs leading-[20px] transition-colors', j === i ? 'bg-ink-900 text-surface' : 'bg-ink-950/[0.05] text-ink-600 hover:bg-ink-950/[0.09]')}
               >
                 {KIND_LABEL[x.kind]}
               </button>
@@ -371,7 +371,7 @@ export function FormatGallery({ groups }: { groups: { title: string; desc: strin
                     type="button"
                     onClick={() => setCur(it.k)}
                     aria-current={cur === it.k ? 'true' : undefined}
-                    className={cx('w-full rounded-[10px] px-2.5 py-2 text-left transition-colors', cur === it.k ? 'bg-primary-50 ring-1 ring-primary-100' : 'hover:bg-black/[0.035]')}
+                    className={cx('w-full rounded-[10px] px-2.5 py-2 text-left transition-colors', cur === it.k ? 'bg-primary-50 ring-1 ring-primary-100' : 'hover:bg-ink-950/[0.035]')}
                   >
                     <div className={cx('text-[13px]', cur === it.k ? 'font-semibold text-ink-900' : 'text-ink-800')}>{it.label}</div>
                     <div className="text-2xs text-ink-500">{it.hint}</div>

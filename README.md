@@ -12,6 +12,7 @@ Every moment on the timeline shows **who** is acting (people, machines, external
 | Whether the flow is right is checked by eye | The flow is structured data, verified by invariant tests |
 | Placeholder data | Payloads, tables and spreadsheets in their original form, traceable step by step |
 | Every what-if means redrawing | Switch the scenario or change a parameter, and replay on the spot |
+| One look for every audience | Switch palette, light / dark and style at any time, or generate the whole palette from the client's brand color |
 
 It fits most IT projects: approvals and tickets, data processing and audit, system integration, admin consoles, dashboards, RPA, multi-party consumer apps, AI and agents. Backends and external systems are deterministic mocks; nothing connects to a real system.
 

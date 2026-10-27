@@ -44,3 +44,18 @@ dialog.flow-aware::backdrop {
 @media (prefers-reduced-motion: reduce) {
   .flow-spotlight { animation: none; box-shadow: 0 0 0 3px rgb(0 113 227 / 0.4); }
 }
+
+/* Appearance switching (lib/theme.ts): palettes and light/dark override tokens; only what tokens can't reach lives here.
+   - "sharp" style: every element that declares a radius gets a small one (pills and avatars, rounded-full, keep theirs);
+     .theme-island content is untouched.
+   - .theme-island: content shown in its original look (apps in phone frames, map art, file and format samples,
+     external-system pages). theme.ts restores the original tokens inside it. */
+html[data-style='sharp'] [class*='rounded']:not([class*='rounded-full']):not(.theme-island, .theme-island *) {
+  border-radius: 4px !important;
+}
+html[data-style='sharp'] :focus-visible {
+  border-radius: 2px;
+}
+.theme-island {
+  color: var(--color-ink-800);
+}

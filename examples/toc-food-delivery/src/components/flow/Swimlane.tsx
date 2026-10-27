@@ -41,7 +41,7 @@ export function Swimlane({ selected, running, done, onSelect }: { selected: Step
         {/* 泳道底色与标签 */}
         {ACTOR_ORDER.map((a, r) => (
           <Fragment key={a}>
-            <div style={{ gridRow: r + HEAD_ROWS + 1, gridColumn: `1 / span ${cols + 1}` }} className={cx('border-t border-black/[0.05]', r % 2 ? 'bg-ink-50/40' : '')} />
+            <div style={{ gridRow: r + HEAD_ROWS + 1, gridColumn: `1 / span ${cols + 1}` }} className={cx('border-t border-ink-950/[0.05]', r % 2 ? 'bg-ink-50/40' : '')} />
             <div style={{ gridRow: r + HEAD_ROWS + 1, gridColumn: 1 }} className="relative flex items-center gap-2 pr-2" title={ACTORS[a].desc}>
               <span className="h-8 w-1 shrink-0 rounded-full" style={{ background: ACTORS[a].color }} />
               <div className="min-w-0">
@@ -90,7 +90,7 @@ export function Swimlane({ selected, running, done, onSelect }: { selected: Step
               ) : null}
               {s.with.map((a) => (
                 <div key={a} style={{ gridRow: laneRow(a), gridColumn: c + 2 }} className="relative z-10 flex items-center justify-center">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-1.5 py-px text-2xs text-ink-600 shadow-[0_1px_2px_rgb(0_0_0/0.08)] ring-1 ring-black/[0.06]" title={`参与：${ACTORS[a].label}`}>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-surface px-1.5 py-px text-2xs text-ink-600 shadow-[0_1px_2px_rgb(0_0_0/0.08)] ring-1 ring-ink-950/[0.06]" title={`参与：${ACTORS[a].label}`}>
                     <span className="h-1.5 w-1.5 rounded-full" style={{ background: ACTORS[a].color }} />
                     {ACTORS[a].short}
                   </span>
@@ -103,9 +103,9 @@ export function Swimlane({ selected, running, done, onSelect }: { selected: Step
                   aria-pressed={s.id === selected}
                   title={s.title}
                   className={cx(
-                    'relative block h-[52px] w-full rounded-[10px] bg-white px-1.5 py-1 text-left shadow-raise ring-1 transition-[box-shadow,transform] duration-150 hover:-translate-y-px hover:shadow-pop',
-                    s.id === selected ? 'ring-2 ring-primary-400' : 'ring-black/[0.06]',
-                    s.necessity === 'optional' && 'border border-dashed border-ink-300 bg-[#fafafb]',
+                    'relative block h-[52px] w-full rounded-[10px] bg-surface px-1.5 py-1 text-left shadow-raise ring-1 transition-[box-shadow,transform] duration-150 hover:-translate-y-px hover:shadow-pop',
+                    s.id === selected ? 'ring-2 ring-primary-400' : 'ring-ink-950/[0.06]',
+                    s.necessity === 'optional' && 'border border-dashed border-ink-300 bg-ink-50',
                   )}
                   style={{ borderLeft: `3px solid ${ACTORS[s.actor].color}` }}
                 >

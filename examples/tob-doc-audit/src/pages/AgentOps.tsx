@@ -103,7 +103,7 @@ export function AgentOps() {
                   <th className="px-5 py-2.5 text-right font-medium">节省</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-black/[0.05]">
+              <tbody className="divide-y divide-ink-950/[0.05]">
                 {[
                   ['大模型调用次数', fmtInt(r.onlineCalls), fmtInt(r.batchCalls), 1 - r.batchCalls / r.onlineCalls],
                   ['Token 消耗', fmtInt(r.onlineTokens), fmtInt(r.batchTokens), 1 - r.batchTokens / r.onlineTokens],
@@ -118,7 +118,7 @@ export function AgentOps() {
                 ))}
               </tbody>
             </table>
-            <div className="border-t border-black/[0.05] px-5 py-3 text-xs leading-relaxed text-ink-500">
+            <div className="border-t border-ink-950/[0.05] px-5 py-3 text-xs leading-relaxed text-ink-500">
               批量方式的调用 = 新组合 {fmtInt(r.fresh)}（{fmtInt(r.combos)} 个组合 × 未命中缓存）+ 逐笔复核 {fmtInt(r.perRecord)}（国别、性质语义复核约 12% 的记录）。逐笔方式 = 笔数 × 语义规则数，且串行等待。
             </div>
           </Panel>
@@ -139,7 +139,7 @@ export function AgentOps() {
                   <th className="px-4 py-2 font-medium">运行方式</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-black/[0.05] align-top">
+              <tbody className="divide-y divide-ink-950/[0.05] align-top">
                 {[
                   ['界面上传核查', '核查岗上传后点击', '后台异步批量，数千笔约 1 分钟内出结果，自动导出并保存批次'],
                   ['接口上传核查', 'RPA 定时调用接口', 'RPA 读取供应商协同平台的待付款申请后上传，同一流程核查；接口返回批次号与结果'],
@@ -213,7 +213,7 @@ function Funnel({ rows }: { rows: { label: string; value: number; note: string }
             <span className="text-xs text-ink-500">{r.note}</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="h-5 rounded-r-[4px]" style={{ width: `calc(${(r.value / max) * 100}% - 6rem)`, minWidth: 6, background: i >= 2 ? '#2a78d6' : '#9ec5f4' }} />
+            <span className="h-5 rounded-r-[4px]" style={{ width: `calc(${(r.value / max) * 100}% - 6rem)`, minWidth: 6, background: i >= 2 ? 'var(--color-primary-500)' : 'color-mix(in oklab, var(--color-primary-500) 40%, var(--color-surface))' }} />
             <span className="num text-sm font-semibold text-ink-900">{fmtInt(r.value)}</span>
           </div>
         </li>
@@ -253,8 +253,8 @@ function Architecture() {
       </ol>
       <div className="relative mx-[6%] mt-2 h-10" aria-hidden="true">
         <svg viewBox="0 0 100 40" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
-          <path d="M 99 0 V 28 H 49 V 2" fill="none" stroke="#5a48b0" strokeWidth="0.25" vectorEffect="non-scaling-stroke" strokeDasharray="0" style={{ strokeWidth: 1.5 }} />
-          <path d="M 47.8 6 L 49 1 L 50.2 6" fill="none" stroke="#5a48b0" vectorEffect="non-scaling-stroke" style={{ strokeWidth: 1.5 }} />
+          <path d="M 99 0 V 28 H 49 V 2" fill="none" strokeWidth="0.25" vectorEffect="non-scaling-stroke" strokeDasharray="0" style={{ strokeWidth: 1.5, stroke: 'var(--color-agent-600)' }} />
+          <path d="M 47.8 6 L 49 1 L 50.2 6" fill="none" vectorEffect="non-scaling-stroke" style={{ strokeWidth: 1.5, stroke: 'var(--color-agent-600)' }} />
         </svg>
       </div>
       <div className="flex items-center justify-center gap-3 text-xs text-agent-700">
@@ -295,7 +295,7 @@ function Compare() {
           </th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-black/[0.05] align-top">
+      <tbody className="divide-y divide-ink-950/[0.05] align-top">
         {rows.map(([k, a, b, c]) => (
           <tr key={k}>
             <td className="px-4 py-2.5 font-medium text-ink-900">{k}</td>
@@ -361,7 +361,7 @@ function NightlyBatch({ est, r }: { est: Est; r: ReturnType<typeof estimate> }) 
             <PipelineView stages={stages} player={player} />
           </div>
           <div className="col-span-6">
-            <ul className="divide-y divide-black/[0.05] rounded-[14px] border border-black/[0.07]">
+            <ul className="divide-y divide-ink-950/[0.05] rounded-[14px] border border-ink-950/[0.07]">
               {stages.map((s, i) => (
                 <li key={s.key} className={cx('flex items-center justify-between px-4 py-2 text-sm', i === player.active && !player.done && 'bg-primary-50')}>
                   <span className="text-ink-700">{s.title}</span>

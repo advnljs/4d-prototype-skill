@@ -69,6 +69,7 @@ Walk through the materials with this frame and write down, for each item, "what 
   This list becomes `when` / `trigger` in `workflow.ts`, the order of `STEPS`, and the business clock of the simulated world.
 - **External systems and interfaces**: which systems, direction, mechanism, and what happens on failure.
 - **Non-functional requirements**: permissions, audit trail, data security (masking, confidentiality notices, retention), performance and capacity. The prototype need not implement them, but they must show up on a discussion page or in the assumptions.
+- **Look and brand**: whether the client has a brand color or style guide. Default: a light, professional palette, with the appearance switcher offering presets, dark mode, a sharp style and the client's brand color (pages-and-ux.md §2.1).
 - **Explicit constraints**: e.g. "there must be a mock of fetching data from the external system", "don't call an LLM yet, but show the expected intermediate steps", "fill missing information yourself but list it at the end". Record them verbatim.
 
 ## 5. Sample profile (keep aggregate numbers only)

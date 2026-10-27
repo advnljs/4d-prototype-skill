@@ -110,6 +110,12 @@ Headless Chrome throttles rendering, so treat the numbers as a relative check; c
 - Dock: dragging the top edge changes its height (record pixels before and after); maximize / collapse work, and after collapsing `--flow-dock-h` is 0; the capsule stays usable while a drawer is open.
 - Leaving the page: switching pages while a step runs pauses automatically, and resuming re-executes that step.
 
+### Appearance (palette × light / dark × style)
+
+- `npm test` includes the appearance tests: contrast over every preset × mode × style and a few brand colors, and the source scan for raw colors outside islands.
+- At 1920×1080, screenshot the main pages in at least: default light, one other palette, dark, dark + sharp + a brand color. Set the choice through localStorage (`<prefix>:theme`) and reload. Check: no white-on-white or dark-on-dark text, chips and tags readable, islands (phones, map, format samples) unchanged, the playback capsule and dock readable.
+- Switch the appearance during a one-click run: playback continues, the cursor and the highlights stay visible.
+
 ### Data consistency
 
 - List statistics match details, and page numbers match exported files.

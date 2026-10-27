@@ -34,7 +34,7 @@ export function Phone({
     <figure className="flex min-w-0 flex-col items-center gap-2.5">
       <div
         data-flow-anchor={anchor}
-        className={cx('phone-frame relative rounded-[46px] bg-[#141110] p-[7px] shadow-phone transition-[transform,box-shadow] duration-300', active && 'ring-[3px] ring-offset-4 ring-offset-paper')}
+        className={cx('phone-frame theme-island relative rounded-[46px] bg-[#141110] p-[7px] shadow-phone transition-[transform,box-shadow] duration-300', active && 'ring-[3px] ring-offset-4 ring-offset-paper')}
         style={{ width: 268, height: 552, ...(active ? ({ '--tw-ring-color': `color-mix(in srgb, ${a.color} 55%, transparent)` } as React.CSSProperties) : {}) }}
       >
         {/* 侧键 */}

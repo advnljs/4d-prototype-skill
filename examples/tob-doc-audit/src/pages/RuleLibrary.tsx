@@ -167,7 +167,7 @@ function Catalog({ lib, canEdit, onOpen }: { lib: RuleLib; canEdit: boolean; onO
         {MAJORS.map((m) => (
           <CatButton key={m.key} active={major === m.key} onClick={() => setMajor(m.key)} label={m.label} n={rules.filter((r) => r.major === m.key).length} />
         ))}
-        <div className="mt-4 rounded-[14px] border border-black/[0.07] bg-surface p-3.5 text-xs leading-relaxed text-ink-600">
+        <div className="mt-4 rounded-[14px] border border-ink-950/[0.07] bg-surface p-3.5 text-xs leading-relaxed text-ink-600">
           <div className="mb-1.5 font-semibold text-ink-800">大类口径</div>
           参照（虚构的）《资金收付管理制度（2026 版）》第二至五章的结构：及时性、完整性、收付方向、国家/地区、交易对方、币种金额账户、往来类型、款项性质、审批与合同、类别与用途。
           <div className="mb-1 mt-3 font-semibold text-ink-800">当前角色</div>
@@ -229,7 +229,7 @@ function Catalog({ lib, canEdit, onOpen }: { lib: RuleLib; canEdit: boolean; onO
               <th className="px-3 py-2 font-medium">启用</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/[0.05]">
+          <tbody className="divide-y divide-ink-950/[0.05]">
             {list.map((r) => {
               const on = lib.items[r.id]?.enabled ?? false;
               return (
@@ -282,7 +282,7 @@ function Catalog({ lib, canEdit, onOpen }: { lib: RuleLib; canEdit: boolean; onO
         </table>
         {!list.length ? <Empty icon="book" title="没有符合条件的规则" /> : null}
         {unused.length && !major ? (
-          <p className="border-t border-black/[0.05] px-4 py-3 text-xs text-ink-500">
+          <p className="border-t border-ink-950/[0.05] px-4 py-3 text-xs text-ink-500">
             规则实现池中本区域未选用：{unused.map((r) => `${r.id} ${r.name}`).join('、')}。可通过“自然语言维护”新增。
           </p>
         ) : null}
@@ -299,7 +299,7 @@ function CatButton({ active, onClick, label, n }: { active: boolean; onClick: ()
       className={cx('flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors', active ? 'bg-primary-500 font-medium text-white' : 'text-ink-700 hover:bg-ink-100')}
     >
       <span className="truncate">{label}</span>
-      <span className={cx('num rounded px-1.5 text-xs', active ? 'bg-white/20' : 'bg-ink-100 text-ink-500')}>{n}</span>
+      <span className={cx('num rounded px-1.5 text-xs', active ? 'bg-surface/20' : 'bg-ink-100 text-ink-500')}>{n}</span>
     </button>
   );
 }
@@ -341,7 +341,7 @@ function RuleBody({ rule, lib, canEdit: canEditLib }: { rule: RuleDef; lib: Rule
       </div>
 
       <section className="grid grid-cols-2 gap-5">
-        <div className="rounded-[14px] border border-black/[0.07] bg-surface p-4">
+        <div className="rounded-[14px] border border-ink-950/[0.07] bg-surface p-4">
           <h3 className="text-sm font-semibold text-ink-900">规则说明</h3>
           <p className="mt-1.5 text-sm leading-relaxed text-ink-700">{rule.desc}</p>
           <h3 className="mt-4 text-sm font-semibold text-ink-900">依据</h3>
@@ -358,7 +358,7 @@ function RuleBody({ rule, lib, canEdit: canEditLib }: { rule: RuleDef; lib: Rule
             ))}
           </ul>
         </div>
-        <div className="rounded-[14px] border border-black/[0.07] bg-surface p-4">
+        <div className="rounded-[14px] border border-ink-950/[0.07] bg-surface p-4">
           <h3 className="text-sm font-semibold text-ink-900">参数（本区域规则库）</h3>
           {rule.params?.length ? (
             <div className="mt-2 space-y-3">
@@ -403,8 +403,8 @@ function RuleBody({ rule, lib, canEdit: canEditLib }: { rule: RuleDef; lib: Rule
         </div>
       </section>
 
-      <section className="rounded-[14px] border border-black/[0.07] bg-surface">
-        <div className="flex items-center justify-between border-b border-black/[0.05] px-4 py-2.5">
+      <section className="rounded-[14px] border border-ink-950/[0.07] bg-surface">
+        <div className="flex items-center justify-between border-b border-ink-950/[0.05] px-4 py-2.5">
           <h3 className="text-sm font-semibold text-ink-900">逻辑代码（AI 生成，人工审核）</h3>
           <Badge tone="agent" icon="sparkle">
             由规则说明自动转换
@@ -414,7 +414,7 @@ function RuleBody({ rule, lib, canEdit: canEditLib }: { rule: RuleDef; lib: Rule
       </section>
 
       <section className="grid grid-cols-2 gap-5">
-        <div className="rounded-[14px] border border-black/[0.07] bg-surface p-4">
+        <div className="rounded-[14px] border border-ink-950/[0.07] bg-surface p-4">
           <h3 className="text-sm font-semibold text-ink-900">演示数据回放</h3>
           <p className="mt-1 text-xs text-ink-500">三类演示台账（246 笔）合并为一个批次，按本区域规则库参数执行。</p>
           <div className="mt-2 text-2xl font-semibold text-ink-900">{replay.hits[rule.id] ?? 0} 项</div>
@@ -429,7 +429,7 @@ function RuleBody({ rule, lib, canEdit: canEditLib }: { rule: RuleDef; lib: Rule
             </ul>
           ) : null}
         </div>
-        <div className="rounded-[14px] border border-black/[0.07] bg-surface p-4">
+        <div className="rounded-[14px] border border-ink-950/[0.07] bg-surface p-4">
           <h3 className="text-sm font-semibold text-ink-900">上线前校准建议</h3>
           <p className="mt-1 text-xs text-ink-500">原型未接入真实数据。上线前建议用一个月历史单据回放每条规则，确认命中量级与口径。</p>
           {CALIBRATION[rule.id] ? (
@@ -442,9 +442,9 @@ function RuleBody({ rule, lib, canEdit: canEditLib }: { rule: RuleDef; lib: Rule
         </div>
       </section>
 
-      <section className="rounded-[14px] border border-black/[0.07] bg-surface p-4">
+      <section className="rounded-[14px] border border-ink-950/[0.07] bg-surface p-4">
         <h3 className="text-sm font-semibold text-ink-900">本区域规则库中的变更记录</h3>
-        <ul className="mt-2 divide-y divide-black/[0.05]">
+        <ul className="mt-2 divide-y divide-ink-950/[0.05]">
           {logs.map(({ v, c }) => (
             <li key={`${v.version}-${c.id}`} className="flex gap-4 py-2 text-sm">
               <span className="code w-[96px] shrink-0 text-ink-500">{v.version}</span>
@@ -637,7 +637,7 @@ function NlTab({ lib, canEdit, onOpen }: { lib: RuleLib; canEdit: boolean; onOpe
                   const d = dec[c.id];
                   const im = impacts[c.id];
                   return (
-                    <li key={c.id} className={cx('rounded-[14px] border px-4 py-3', c.blocked ? 'border-black/[0.06] bg-ink-50/60' : d === 'confirm' ? 'border-pine-100 bg-pine-50/50' : d === 'reject' ? 'border-black/[0.06] opacity-60' : 'border-black/[0.08] bg-surface')}>
+                    <li key={c.id} className={cx('rounded-[14px] border px-4 py-3', c.blocked ? 'border-ink-950/[0.06] bg-ink-50/60' : d === 'confirm' ? 'border-pine-100 bg-pine-50/50' : d === 'reject' ? 'border-ink-950/[0.06] opacity-60' : 'border-ink-950/[0.08] bg-surface')}>
                       <div className="flex items-center gap-2">
                         <Badge tone={c.kind === 'add' ? 'primary' : c.kind === 'disable' ? 'seal' : c.kind === 'level' ? 'amber' : 'neutral'}>{CHANGE_LABEL[c.kind]}</Badge>
                         <button type="button" onClick={() => onOpen(c.ruleId)} className="code text-xs text-primary-600 hover:underline">
@@ -774,7 +774,7 @@ function VersionDiff({ v, prev }: { v: LibVersion; prev?: LibVersion }) {
             <th className="py-1.5 font-normal">理由</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-black/[0.05]">
+        <tbody className="divide-y divide-ink-950/[0.05]">
           {v.changes.map((c) => (
             <DiffRow key={c.id} c={c} />
           ))}
@@ -849,7 +849,7 @@ function OrgSyncPanel({ sub }: { sub: number }) {
         </div>
         <div data-flow-anchor="org-changes" className="col-span-8">
           <h3 className="mb-2 text-sm font-semibold text-ink-900">今日变更</h3>
-          <ul className="divide-y divide-black/[0.05] rounded-[14px] border border-black/[0.07]">
+          <ul className="divide-y divide-ink-950/[0.05] rounded-[14px] border border-ink-950/[0.07]">
             {showChanges ? (
               ORG_SYNC.changes.map((c) => (
                 <li key={c.empNo} className="flex items-start gap-3 px-4 py-2.5 text-sm">
@@ -924,7 +924,7 @@ function TuneCard({ tips, cases, onAdopt }: { tips: TuneTip[]; cases: CaseEntry[
       {tips.length ? (
         <ul className="space-y-2">
           {tips.slice(0, 2).map((t, i) => (
-            <li key={t.ruleId} data-demo={`tune-rule-${i}`} className="rounded-[12px] bg-agent-50/60 px-3 py-2.5 ring-1 ring-inset ring-black/[0.04]">
+            <li key={t.ruleId} data-demo={`tune-rule-${i}`} className="rounded-[12px] bg-agent-50/60 px-3 py-2.5 ring-1 ring-inset ring-ink-950/[0.04]">
               <div className="flex items-center gap-2 text-sm">
                 <span className="code text-xs text-ink-500">{t.ruleId}</span>
                 <span className="font-medium text-ink-900">{t.ruleName}</span>
@@ -972,7 +972,7 @@ function UsersTab() {
               <th className="px-3 py-2 font-medium">结果可见范围</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/[0.05]">
+          <tbody className="divide-y divide-ink-950/[0.05]">
             {USER_ORG.map((u) => {
               const lo = ruleLibOrgOf(u.empNo)!;
               const demo = Object.values(USERS).some((x) => x.empNo === u.empNo);
@@ -1136,7 +1136,7 @@ function PolicyTab({ onOpen }: { onOpen: (id: string) => void }) {
             </div>
             <div className="col-span-8 space-y-3">
               {doc.clauses.slice(0, player.done ? doc.clauses.length : Math.floor((player.t / Math.max(1, player.total)) * doc.clauses.length)).map((c) => (
-                <div key={c.no} className="anim-rise rounded-[14px] border border-black/[0.07] bg-surface p-4">
+                <div key={c.no} className="anim-rise rounded-[14px] border border-ink-950/[0.07] bg-surface p-4">
                   <div className="flex items-center gap-2">
                     <span className="code text-xs text-ink-500">{c.no}</span>
                     <Badge tone={c.checkable === 'none' ? 'neutral' : c.checkable === 'code' ? 'rule' : 'agent'}>{c.checkable === 'none' ? '不可由单据数据校验' : c.checkable === 'code' ? '可转为确定性规则' : '需智能体语义判断'}</Badge>
@@ -1158,7 +1158,7 @@ function PolicyTab({ onOpen }: { onOpen: (id: string) => void }) {
                   {c.map.kind === 'covered' ? (
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {c.map.rules.map((id) => (
-                        <button key={id} type="button" onClick={() => onOpen(id)} className="rounded-[12px] border border-black/[0.07] px-2 py-0.5 text-xs text-primary-600 hover:bg-primary-50">
+                        <button key={id} type="button" onClick={() => onOpen(id)} className="rounded-[12px] border border-ink-950/[0.07] px-2 py-0.5 text-xs text-primary-600 hover:bg-primary-50">
                           {id} {POOL_MAP.get(id)?.name}
                           <span className="ml-1 text-ink-400">{POOL_MAP.get(id) ? MAJOR_LABEL[POOL_MAP.get(id)!.major] : ''}</span>
                         </button>

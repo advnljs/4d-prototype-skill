@@ -15,7 +15,7 @@ const FACTORS: (keyof Weights)[] = ['distance', 'load', 'align', 'rating'];
 
 export function ScoreBars({ c, weights, best }: { c: Candidate; weights: Weights; best: boolean }) {
   const sum = FACTORS.reduce((a, k) => a + weights[k], 0) || 1;
-  const colors: Record<keyof Weights, string> = { distance: '#d1307a', load: '#f08bb6', align: '#7c42c2', rating: '#b9a6dc' };
+  const colors: Record<keyof Weights, string> = { distance: 'var(--color-act-dispatch)', load: 'color-mix(in oklab, var(--color-act-dispatch) 50%, var(--color-surface))', align: 'var(--color-agent-500)', rating: 'color-mix(in oklab, var(--color-agent-500) 45%, var(--color-surface))' };
   return (
     <div className="flex h-2.5 w-full overflow-hidden rounded-full bg-ink-100" title={FACTORS.map((k) => `${WEIGHT_LABEL[k]} ${c.parts[k].toFixed(2)} × ${(weights[k] / sum).toFixed(2)}`).join('\n')}>
       {FACTORS.map((k) => (
@@ -58,8 +58,8 @@ function CapacityBoard({ w }: { w: World }) {
       <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-2">
         <span className="text-2xs text-ink-500">商家附近</span>
         {RIDERS.map((r) => (
-          <span key={r.id} className={cx('flex items-center gap-1 rounded-full px-2 py-0.5 text-2xs transition-colors duration-300', online ? 'bg-[#e8f7f0] text-[#0b7a55]' : 'bg-ink-100 text-ink-400')}>
-            <span className={cx('h-1.5 w-1.5 rounded-full', online ? 'bg-[#0e9f6e]' : 'bg-ink-300')} />
+          <span key={r.id} className={cx('flex items-center gap-1 rounded-full px-2 py-0.5 text-2xs transition-colors duration-300', online ? 'bg-pine-50 text-pine-700' : 'bg-ink-100 text-ink-400')}>
+            <span className={cx('h-1.5 w-1.5 rounded-full', online ? 'bg-pine-500' : 'bg-ink-300')} />
             {r.short} · 手上 {r.load} 单
           </span>
         ))}
@@ -74,7 +74,7 @@ export function DispatchBoard({ d, reassigned, compact, w }: { d: DispatchDecisi
   if (!d)
     return (
       <div data-flow-anchor="dispatch-panel" className="flex h-full items-center justify-center gap-2 rounded-[14px] bg-ink-50/80 text-xs text-ink-500">
-        <Icon name="sparkle" size={14} className="text-[#d1307a]" />
+        <Icon name="sparkle" size={14} className="text-act-dispatch" />
         支付成功后，智能调度在这里召回骑手并打分
       </div>
     );
@@ -88,7 +88,7 @@ export function DispatchBoard({ d, reassigned, compact, w }: { d: DispatchDecisi
         <span className="ml-auto flex items-center gap-2 text-2xs text-ink-500">
           {FACTORS.map((k) => (
             <span key={k} className="flex items-center gap-1">
-              <span className="h-2 w-2 rounded-full" style={{ background: { distance: '#d1307a', load: '#f08bb6', align: '#7c42c2', rating: '#b9a6dc' }[k] }} />
+              <span className="h-2 w-2 rounded-full" style={{ background: { distance: 'var(--color-act-dispatch)', load: 'color-mix(in oklab, var(--color-act-dispatch) 50%, var(--color-surface))', align: 'var(--color-agent-500)', rating: 'color-mix(in oklab, var(--color-agent-500) 45%, var(--color-surface))' }[k] }} />
               {WEIGHT_LABEL[k]} {Math.round(dd.weights[k] * 100)}%
             </span>
           ))}
@@ -118,16 +118,16 @@ export function DispatchBoard({ d, reassigned, compact, w }: { d: DispatchDecisi
             const best = c.riderId === dd.chosen;
             const out = reassigned && c.riderId === reassigned.from;
             return (
-              <tr key={c.riderId} className={cx('transition-colors', best && 'bg-[#fdf0f6]')}>
+              <tr key={c.riderId} className={cx('transition-colors', best && 'bg-act-dispatch/[0.07]')}>
                 <td className="rounded-l-[8px] py-1.5 pl-1.5 font-medium text-ink-900">{c.name}</td>
                 <td className="num text-ink-600">{c.km.toFixed(1)} km</td>
                 <td className="num text-ink-600">{c.load} 单</td>
                 <td className="pr-3">
                   <ScoreBars c={c} weights={dd.weights} best={best} />
                 </td>
-                <td className={cx('num text-right font-semibold', best ? 'text-[#a3245f]' : 'text-ink-700')}>{c.score.toFixed(2)}</td>
+                <td className={cx('num text-right font-semibold', best ? 'text-act-dispatch' : 'text-ink-700')}>{c.score.toFixed(2)}</td>
                 <td className="rounded-r-[8px] pr-1.5 text-right">
-                  {best ? <span className="rounded-full bg-[#d1307a] px-1.5 py-px text-2xs font-semibold text-white">选中</span> : out ? <span className="rounded-full bg-seal-100 px-1.5 py-px text-2xs text-seal-600">故障</span> : c.excluded ? <span className="text-2xs text-ink-400">{c.excluded}</span> : null}
+                  {best ? <span className="rounded-full bg-act-dispatch px-1.5 py-px text-2xs font-semibold text-surface">选中</span> : out ? <span className="rounded-full bg-seal-100 px-1.5 py-px text-2xs text-seal-600">故障</span> : c.excluded ? <span className="text-2xs text-ink-400">{c.excluded}</span> : null}
                 </td>
               </tr>
             );
@@ -152,7 +152,7 @@ export function StateStrip({ w }: { w: World }) {
   const idx = status ? MAIN_PATH.indexOf(status) : -1;
   const refund = status === 'refunding' || status === 'refunded';
   return (
-    <div data-flow-anchor="state-strip" className="rounded-[16px] bg-surface px-5 py-3.5 shadow-raise ring-1 ring-black/[0.04]">
+    <div data-flow-anchor="state-strip" className="rounded-[16px] bg-surface px-5 py-3.5 shadow-raise ring-1 ring-ink-950/[0.04]">
       <div className="flex items-center gap-2 text-xs">
         <Icon name="receipt" size={14} className="text-primary-500" />
         <span className="font-semibold text-ink-900">订单状态机</span>
@@ -160,7 +160,7 @@ export function StateStrip({ w }: { w: World }) {
         {o ? (
           <span className="ml-auto flex items-center gap-1.5 text-2xs text-ink-500">
             配送子状态
-            <span className="rounded-full bg-[#e8f7f0] px-2 py-px font-medium text-[#0b7a55]">{RIDER_STATE_LABEL[o.riderState]}</span>
+            <span className="rounded-full bg-pine-50 px-2 py-px font-medium text-pine-700">{RIDER_STATE_LABEL[o.riderState]}</span>
           </span>
         ) : null}
       </div>
@@ -215,7 +215,7 @@ export function OrderTimeline({ w, clock }: { w: World; clock: number }) {
   const now = o && !reached(w, 'delivered') ? Math.min(clock, t1) : o?.deliveredAt;
   const elapsed = o ? Math.round(((o.deliveredAt ?? now ?? t0) - t0) * 10) / 10 : 0;
   return (
-    <div data-flow-anchor="order-timeline" className="rounded-[16px] bg-surface px-5 pb-4 pt-3.5 shadow-raise ring-1 ring-black/[0.04]">
+    <div data-flow-anchor="order-timeline" className="rounded-[16px] bg-surface px-5 pb-4 pt-3.5 shadow-raise ring-1 ring-ink-950/[0.04]">
       <div className="flex items-center gap-2 text-xs">
         <Icon name="timer" size={14} className="text-primary-500" />
         <span className="font-semibold text-ink-900">履约时间轴</span>
@@ -236,7 +236,7 @@ export function OrderTimeline({ w, clock }: { w: World; clock: number }) {
         ) : null}
         {miles.map((m) =>
           m.at !== undefined ? (
-            <span key={m.key} className="anim-pop absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white bg-primary-500 shadow" style={{ left: x(m.at) }} title={`${m.label} ${clockLabel(m.at)}`} />
+            <span key={m.key} className="anim-pop absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-surface bg-primary-500 shadow" style={{ left: x(m.at) }} title={`${m.label} ${clockLabel(m.at)}`} />
           ) : null,
         )}
       </div>
@@ -264,7 +264,7 @@ const KIND_CLS: Record<EventKind, string> = {
 export function EventLog({ w, className }: { w: World; className?: string }) {
   const list = [...w.events].sort((a, b) => b.at - a.at);
   return (
-    <div data-flow-anchor="event-log" className={cx('flex min-h-0 flex-col rounded-[16px] bg-surface px-4 pt-3.5 shadow-raise ring-1 ring-black/[0.04]', className)}>
+    <div data-flow-anchor="event-log" className={cx('flex min-h-0 flex-col rounded-[16px] bg-surface px-4 pt-3.5 shadow-raise ring-1 ring-ink-950/[0.04]', className)}>
       <div className="flex items-center gap-2 text-xs">
         <Icon name="zap" size={14} className="text-primary-500" />
         <span className="font-semibold text-ink-900">平台事件流</span>

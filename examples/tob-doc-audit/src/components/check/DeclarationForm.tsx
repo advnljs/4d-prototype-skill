@@ -118,7 +118,7 @@ function layout(items: Item[]): (Item | null)[] {
 /** 单据式字段视图：疑点涉及的字段以红色标出（本原型的“签名”视图） */
 export function DeclarationForm({ rec, highlight, warnFields }: { rec: DocRecord; highlight: Set<FieldKey>; warnFields?: Set<FieldKey> }) {
   return (
-    <div className="overflow-hidden rounded-[14px] border border-black/[0.08] bg-surface">
+    <div className="overflow-hidden rounded-[14px] border border-ink-950/[0.08] bg-surface">
       <div className="flex items-center justify-between border-b border-ink-200 bg-ink-50 px-4 py-2">
         <span className="text-sm font-semibold text-ink-800">{BIZ_FORM[rec.biz]}</span>
         <span className="text-xs text-ink-500">原文件第 {rec.row} 行</span>

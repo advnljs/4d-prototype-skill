@@ -81,7 +81,7 @@ function DrawerBody({ res, rules, ctx, extra }: { res: RecordResult; rules: Rule
           <DeclarationForm rec={res.rec} highlight={bad} warnFields={warn} />
         </div>
         <div className="col-span-5 space-y-3">
-          <div className="relative rounded-[14px] border border-black/[0.07] bg-surface p-4" data-flow-anchor="drawer-findings">
+          <div className="relative rounded-[14px] border border-ink-950/[0.07] bg-surface p-4" data-flow-anchor="drawer-findings">
             <div className="absolute right-4 top-3">
               {res.status === 'fail' ? <Stamp /> : res.status === 'warn' ? <Stamp label="待确认" tone="amber" /> : <Stamp label="通过" tone="pine" />}
             </div>
@@ -165,7 +165,7 @@ function DrawerBody({ res, rules, ctx, extra }: { res: RecordResult; rules: Rule
           <h3 className="text-md font-semibold text-ink-900">逐条规则执行明细</h3>
           <span className="text-xs text-ink-500">展开查看确定性规则的表达式求值，或智能体的推理轨迹</span>
         </div>
-        <ul className="divide-y divide-black/[0.05] overflow-hidden rounded-[14px] border border-black/[0.07] bg-surface">
+        <ul className="divide-y divide-ink-950/[0.05] overflow-hidden rounded-[14px] border border-ink-950/[0.07] bg-surface">
           {sorted.map(({ rule, j }) => {
             const o = OUTCOME[j.verdict];
             const isOpen = open.has(rule.id);
@@ -193,7 +193,7 @@ function DrawerBody({ res, rules, ctx, extra }: { res: RecordResult; rules: Rule
                   </span>
                 </button>
                 {isOpen ? (
-                  <div className="border-t border-black/[0.05] bg-ink-50/50 px-5 pb-1 pt-3 pl-12">
+                  <div className="border-t border-ink-950/[0.05] bg-ink-50/50 px-5 pb-1 pt-3 pl-12">
                     {j.steps?.length ? <TraceTimeline steps={j.steps} compact={rule.engine === 'code'} /> : <p className="pb-3 text-sm text-ink-500">{j.message}</p>}
                   </div>
                 ) : null}
@@ -208,7 +208,7 @@ function DrawerBody({ res, rules, ctx, extra }: { res: RecordResult; rules: Rule
           <h3 className="text-md font-semibold text-ink-900">数据流转：这笔记录的结构如何一步步变化</h3>
           <span className="text-xs text-ink-500">每个阶段的类型、由谁产生、字段是原样 / 映射 / 派生 / 新增 / 脱敏 / 不再携带</span>
         </div>
-        <div className="rounded-[14px] border border-black/[0.07] bg-ink-50/50 p-4">
+        <div className="rounded-[14px] border border-ink-950/[0.07] bg-ink-50/50 p-4">
           <LineageView stages={lineage} compact initial={1} />
         </div>
       </section>

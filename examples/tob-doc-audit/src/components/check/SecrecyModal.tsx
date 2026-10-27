@@ -60,7 +60,7 @@ export function SecrecyModal({
           <span className="code break-all">{fileName}</span>
           <span className="ml-2 text-ink-500">共 {rows} 行数据</span>
         </Callout>
-        <label className="flex cursor-pointer items-center gap-2 rounded-[12px] border border-black/[0.07] px-3 py-2 hover:bg-ink-50" data-demo="secrecy-agree">
+        <label className="flex cursor-pointer items-center gap-2 rounded-[12px] border border-ink-950/[0.07] px-3 py-2 hover:bg-ink-50" data-demo="secrecy-agree">
           <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="h-4 w-4 accent-[var(--color-primary-500)]" />
           我已阅读上述提示，并承诺遵守数据安全与保密要求
         </label>

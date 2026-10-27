@@ -60,7 +60,7 @@ function ToastCard({ t }: { t: ToastItem }) {
   const color =
     t.tone === 'success' ? 'text-pine-500' : t.tone === 'error' ? 'text-seal-500' : t.tone === 'download' ? 'text-primary-500' : 'text-primary-500';
   return (
-    <div className="anim-rise pointer-events-auto flex gap-3 rounded-[14px] bg-white/90 px-4 py-3 shadow-pop ring-1 ring-black/[0.06] backdrop-blur-xl">
+    <div className="anim-rise pointer-events-auto flex gap-3 rounded-[14px] bg-surface/90 px-4 py-3 shadow-pop ring-1 ring-ink-950/[0.06] backdrop-blur-xl">
       <Icon name={icon} size={18} className={cx('mt-0.5 shrink-0', color)} />
       <div className="min-w-0">
         <div className="text-sm font-semibold text-ink-900">{t.title}</div>

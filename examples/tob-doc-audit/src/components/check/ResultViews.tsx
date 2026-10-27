@@ -99,7 +99,7 @@ export function CostCompare({ run }: { run: CheckRun }) {
           <th className="pb-1.5 text-right font-normal">节省</th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-black/[0.05]">
+      <tbody className="divide-y divide-ink-950/[0.05]">
         {rows.map((r) => (
           <tr key={r.k}>
             <td className="py-1.5 text-ink-700">{r.k}</td>
@@ -236,7 +236,7 @@ export function ResultTable({
         </div>
       </div>
       {rows.length ? (
-        <div className="mt-3 overflow-x-auto rounded-[14px] border border-black/[0.07]">
+        <div className="mt-3 overflow-x-auto rounded-[14px] border border-ink-950/[0.07]">
           <table className={cx('w-full table-fixed text-sm', rowExtra ? 'min-w-[1780px]' : 'min-w-[1660px]')}>
             <colgroup>
               <col className="w-[52px]" />
@@ -270,7 +270,7 @@ export function ResultTable({
                 {rowExtra ? <th className="px-3 py-2 font-medium">操作</th> : null}
               </tr>
             </thead>
-            <tbody className="divide-y divide-black/[0.05] bg-surface">
+            <tbody className="divide-y divide-ink-950/[0.05] bg-surface">
               {rows.map((r, i) => {
                 const sc = SCENARIOS[r.rec.key];
                 return (
@@ -367,7 +367,7 @@ function MajorChip({ active, label, n, onClick, tone, demo }: { active: boolean;
       data-demo={demo}
       className={cx(
         'inline-flex h-7 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors',
-        active ? (tone === 'seal' ? 'bg-seal-600 text-white' : 'bg-ink-900 text-white') : tone === 'seal' ? 'bg-seal-50 text-seal-700 hover:bg-seal-100' : 'bg-black/[0.05] text-ink-700 hover:bg-black/[0.08]',
+        active ? (tone === 'seal' ? 'bg-seal-600 text-white' : 'bg-ink-900 text-surface') : tone === 'seal' ? 'bg-seal-50 text-seal-700 hover:bg-seal-100' : 'bg-ink-950/[0.05] text-ink-700 hover:bg-ink-950/[0.08]',
       )}
     >
       {label}
@@ -398,7 +398,7 @@ export function CountryGroups({ run }: { run: CheckRun }) {
             const all = g.variants.flatMap((v) => Object.values(v.countries).flat());
             const bizs = [...new Set(recs(all).map((r) => BIZ_SHEET[r.rec.biz]))];
             return (
-              <li key={g.id} className="rounded-[12px] bg-white px-3 py-2.5 ring-1 ring-black/[0.05]">
+              <li key={g.id} className="rounded-[12px] bg-surface px-3 py-2.5 ring-1 ring-ink-950/[0.05]">
                 <div className="flex items-center justify-between gap-2">
                   <span className="truncate text-sm font-medium text-ink-900" title={g.name}>
                     {g.name}

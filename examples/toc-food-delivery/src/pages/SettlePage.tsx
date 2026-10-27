@@ -69,9 +69,9 @@ export function SettlePage() {
             {STAGES.map((s, i) => {
               const state = progress > i + 1 || (done && settleSub < 0) ? 'done' : settleSub === i ? 'run' : progress > i ? 'done' : 'todo';
               return (
-                <li key={s} className={cx('rounded-[16px] p-4 ring-1 transition-colors duration-300', state === 'run' ? 'bg-primary-50 ring-primary-300' : state === 'done' ? 'bg-pine-50 ring-pine-100' : 'bg-ink-50 ring-black/[0.04]')}>
+                <li key={s} className={cx('rounded-[16px] p-4 ring-1 transition-colors duration-300', state === 'run' ? 'bg-primary-50 ring-primary-300' : state === 'done' ? 'bg-pine-50 ring-pine-100' : 'bg-ink-50 ring-ink-950/[0.04]')}>
                   <div className="flex items-center gap-2 text-sm font-semibold text-ink-900">
-                    <span className={cx('flex h-6 w-6 items-center justify-center rounded-full text-xs', state === 'done' ? 'bg-pine-500 text-white' : state === 'run' ? 'brand-grad text-white' : 'bg-white text-ink-500')}>{state === 'done' ? <Icon name="check" size={12} strokeWidth={3} /> : i + 1}</span>
+                    <span className={cx('flex h-6 w-6 items-center justify-center rounded-full text-xs', state === 'done' ? 'bg-pine-500 text-white' : state === 'run' ? 'brand-grad text-white' : 'bg-surface text-ink-500')}>{state === 'done' ? <Icon name="check" size={12} strokeWidth={3} /> : i + 1}</span>
                     {s}
                   </div>
                   <div className="mt-3">
@@ -193,7 +193,7 @@ function MoneyChain({ w, cur }: { w: World; cur: MoneyStep | null }) {
           <div
             className={cx(
               'relative rounded-[16px] px-4 py-3 ring-1 transition-colors duration-300',
-              n.state === 'run' ? 'bg-primary-50 ring-primary-300' : n.state === 'done' ? 'bg-pine-50 ring-pine-100' : 'bg-white ring-black/[0.06]',
+              n.state === 'run' ? 'bg-primary-50 ring-primary-300' : n.state === 'done' ? 'bg-pine-50 ring-pine-100' : 'bg-surface ring-ink-950/[0.06]',
               n.optional && 'border border-dashed border-ink-300',
             )}
           >
@@ -249,7 +249,7 @@ function Recon({ w, sub }: { w: World; sub: number }) {
           {rc?.dupIgnored ? `重复回调 ${rc.dupIgnored} 次已在支付环节幂等忽略、没有进入流水，所以对账不会多出一笔。` : '网关重发的回调只要被幂等忽略、没有进入流水，就不会造成长款。'}
         </p>
       </div>
-      <div className="overflow-hidden rounded-[14px] ring-1 ring-black/[0.06]">
+      <div className="overflow-hidden rounded-[14px] ring-1 ring-ink-950/[0.06]">
         <table className="w-full table-fixed text-xs">
           <thead className="bg-ink-50 text-left text-2xs text-ink-500">
             <tr>
@@ -259,7 +259,7 @@ function Recon({ w, sub }: { w: World; sub: number }) {
               <th className="w-[80px] px-3 py-2 text-right font-medium">核对</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/[0.04]">
+          <tbody className="divide-y divide-ink-950/[0.04]">
             {rows.length ? (
               rows.map((l) => (
                 <tr key={l.trade_no} className={l.out_trade_no === w.order?.no ? 'bg-amber-50/70' : undefined}>
@@ -280,7 +280,7 @@ function Recon({ w, sub }: { w: World; sub: number }) {
             )}
           </tbody>
         </table>
-        {rc ? <div className="border-t border-black/[0.04] bg-ink-50/60 px-3 py-1.5 text-2xs text-ink-500">共 {rc.statement.length} 行，只展示最后 6 行；黄色行为演示订单</div> : null}
+        {rc ? <div className="border-t border-ink-950/[0.04] bg-ink-50/60 px-3 py-1.5 text-2xs text-ink-500">共 {rc.statement.length} 行，只展示最后 6 行；黄色行为演示订单</div> : null}
       </div>
     </div>
   );
@@ -296,7 +296,7 @@ function PayoutView({ w, sub }: { w: World; sub: number }) {
     );
   return (
     <div className="grid grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-6">
-      <div className="overflow-hidden rounded-[14px] ring-1 ring-black/[0.06]">
+      <div className="overflow-hidden rounded-[14px] ring-1 ring-ink-950/[0.06]">
         <table className="w-full table-fixed text-sm">
           <thead className="bg-ink-50 text-left text-2xs text-ink-500">
             <tr>
@@ -307,7 +307,7 @@ function PayoutView({ w, sub }: { w: World; sub: number }) {
               <th className="w-[84px] px-3 py-2 text-right font-medium">状态</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/[0.04]">
+          <tbody className="divide-y divide-ink-950/[0.04]">
             {po.items.map((i) => (
               <tr key={i.payee}>
                 <td className="truncate px-3 py-2 text-ink-900">
@@ -322,7 +322,7 @@ function PayoutView({ w, sub }: { w: World; sub: number }) {
             ))}
           </tbody>
         </table>
-        <div className="flex justify-between border-t border-black/[0.04] bg-ink-50/60 px-3 py-1.5 text-2xs text-ink-500">
+        <div className="flex justify-between border-t border-ink-950/[0.04] bg-ink-50/60 px-3 py-1.5 text-2xs text-ink-500">
           <span className="code">{po.batchNo}</span>
           <span>
             合计 <b className="num text-ink-800">{rmb(po.total)}</b> · 回执 {clockLabel(po.at + 0.5)}
@@ -334,7 +334,7 @@ function PayoutView({ w, sub }: { w: World; sub: number }) {
           { who: '商家版 · 张老板', title: '结算款已到账', body: `${po.items[0].orders} 单，到账 ${rmb(po.items[0].amount)}`, color: 'var(--color-act-merchant)' },
           { who: `橙子骑手 · ${po.items[1].payee.replace('骑手 · ', '')}`, title: '配送收入已到账', body: `订单 #12 配送收入 ${rmb(po.items[1].amount)}`, color: 'var(--color-act-rider)' },
         ].map((n) => (
-          <div key={n.who} className={cx('rounded-[14px] bg-white px-3 py-2.5 shadow-raise ring-1 ring-black/[0.05] transition-opacity duration-300', sub >= 0 && sub < 2 ? 'opacity-40' : 'opacity-100')}>
+          <div key={n.who} className={cx('rounded-[14px] bg-surface px-3 py-2.5 shadow-raise ring-1 ring-ink-950/[0.05] transition-opacity duration-300', sub >= 0 && sub < 2 ? 'opacity-40' : 'opacity-100')}>
             <div className="flex items-center gap-1.5 text-2xs text-ink-500">
               <span className="h-2 w-2 rounded-full" style={{ background: n.color }} />
               {n.who} · 推送

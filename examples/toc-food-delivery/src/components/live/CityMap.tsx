@@ -257,7 +257,7 @@ export function Heat({ cells }: { cells: HeatCell[] }) {
 export function CityMap({ w, heat, className }: { w: World; heat?: HeatCell[]; className?: string }) {
   const rain = SCENARIO_MAP[w.scenario].params.weather === 'rain';
   return (
-    <svg viewBox="0 0 1000 600" className={className} role="img" aria-label="配送示意地图：商家、用户、骑手位置与路线">
+    <svg viewBox="0 0 1000 600" className={`theme-island ${className ?? ''}`} role="img" aria-label="配送示意地图：商家、用户、骑手位置与路线">
       <BaseMap />
       {heat ? <Heat cells={heat} /> : null}
       {rain && !heat ? <Rain /> : null}

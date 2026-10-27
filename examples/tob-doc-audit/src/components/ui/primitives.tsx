@@ -22,8 +22,8 @@ type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'agent';
 type Size = 'sm' | 'md' | 'lg';
 
 const VARIANT: Record<Variant, string> = {
-  primary: 'bg-primary-500 text-white hover:bg-[#0077ed] active:bg-primary-600 disabled:bg-ink-200 disabled:text-ink-400',
-  secondary: 'bg-black/[0.05] text-ink-900 hover:bg-black/[0.08] active:bg-black/[0.11] disabled:text-ink-300',
+  primary: 'bg-primary-500 text-white hover:brightness-[1.06] active:bg-primary-600 disabled:bg-ink-200 disabled:text-ink-400',
+  secondary: 'bg-ink-950/[0.05] text-ink-900 hover:bg-ink-950/[0.08] active:bg-ink-950/[0.11] disabled:text-ink-300',
   ghost: 'text-primary-500 hover:bg-primary-50 active:bg-primary-100 disabled:text-ink-300',
   danger: 'bg-seal-500 text-white hover:bg-seal-600 active:bg-seal-700 disabled:bg-ink-200',
   agent: 'bg-agent-500 text-white hover:bg-agent-600 active:bg-agent-700 disabled:bg-ink-200',
@@ -82,7 +82,7 @@ export function Spinner({ size = 14, className }: { size?: number; className?: s
 export type Tone = 'neutral' | 'primary' | 'seal' | 'amber' | 'pine' | 'rule' | 'agent';
 
 const TONE: Record<Tone, string> = {
-  neutral: 'bg-black/[0.05] text-ink-600',
+  neutral: 'bg-ink-950/[0.05] text-ink-600',
   primary: 'bg-primary-50 text-primary-600',
   seal: 'bg-seal-100/70 text-seal-600',
   amber: 'bg-amber-100/80 text-amber-700',
@@ -176,7 +176,7 @@ export function Panel({
   anchor?: string;
 }) {
   return (
-    <section id={id} data-flow-anchor={anchor} className={cx('scroll-mt-16 rounded-[18px] bg-surface shadow-raise ring-1 ring-black/[0.04]', className)}>
+    <section id={id} data-flow-anchor={anchor} className={cx('scroll-mt-16 rounded-[18px] bg-surface shadow-raise ring-1 ring-ink-950/[0.04]', className)}>
       {title || actions ? (
         <header className="flex items-start justify-between gap-4 px-6 pb-1 pt-5">
           <div className="min-w-0">
@@ -230,8 +230,8 @@ export function Field({
 }
 
 const controlBase =
-  'h-9 w-full rounded-[10px] border border-black/[0.1] bg-surface px-3 text-sm text-ink-900 placeholder:text-ink-400 ' +
-  'transition-[border-color,box-shadow] duration-150 hover:border-black/[0.18] focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-500/15 ' +
+  'h-9 w-full rounded-[10px] border border-ink-950/[0.1] bg-surface px-3 text-sm text-ink-900 placeholder:text-ink-400 ' +
+  'transition-[border-color,box-shadow] duration-150 hover:border-ink-950/[0.18] focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-500/15 ' +
   'disabled:cursor-not-allowed disabled:bg-ink-50 disabled:text-ink-400';
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function Input(
@@ -271,7 +271,7 @@ export function Tabs<T extends string>({
 }) {
   return (
     <div className={cx('flex', className)}>
-      <div role="tablist" className="inline-flex items-center gap-0.5 rounded-[10px] bg-black/[0.055] p-[3px]">
+      <div role="tablist" className="inline-flex items-center gap-0.5 rounded-[10px] bg-ink-950/[0.055] p-[3px]">
         {items.map((it) => {
           const active = it.value === value;
           return (
@@ -283,7 +283,7 @@ export function Tabs<T extends string>({
               onClick={() => onChange(it.value)}
               className={cx(
                 'flex h-8 items-center gap-1.5 rounded-[8px] px-3.5 text-sm transition-[background-color,color,box-shadow] duration-150',
-                active ? 'bg-white font-medium text-ink-900 shadow-[0_1px_3px_rgb(0_0_0/0.12),0_0_0_0.5px_rgb(0_0_0/0.04)]' : 'text-ink-600 hover:text-ink-900',
+                active ? 'bg-surface font-medium text-ink-900 shadow-[0_1px_3px_rgb(0_0_0/0.12),0_0_0_0.5px_rgb(0_0_0/0.04)]' : 'text-ink-600 hover:text-ink-900',
               )}
             >
               {it.label}
@@ -310,7 +310,7 @@ export function Segmented<T extends string>({
   size?: 'sm' | 'md';
 }) {
   return (
-    <div className="inline-flex rounded-[10px] bg-black/[0.055] p-[3px]" role="radiogroup">
+    <div className="inline-flex rounded-[10px] bg-ink-950/[0.055] p-[3px]" role="radiogroup">
       {items.map((it) => {
         const active = it.value === value;
         return (
@@ -324,7 +324,7 @@ export function Segmented<T extends string>({
             className={cx(
               'rounded-[8px] transition-[background-color,color,box-shadow] duration-150 disabled:cursor-not-allowed disabled:opacity-50',
               size === 'sm' ? 'h-6 px-2.5 text-xs' : 'h-8 px-3.5 text-sm',
-              active ? 'bg-white font-medium text-ink-900 shadow-[0_1px_3px_rgb(0_0_0/0.12),0_0_0_0.5px_rgb(0_0_0/0.04)]' : 'text-ink-600 hover:text-ink-900',
+              active ? 'bg-surface font-medium text-ink-900 shadow-[0_1px_3px_rgb(0_0_0/0.12),0_0_0_0.5px_rgb(0_0_0/0.04)]' : 'text-ink-600 hover:text-ink-900',
             )}
           >
             {it.label}
@@ -374,12 +374,12 @@ export function Modal({
       onClick={(e) => {
         if (e.target === ref.current) onClose();
       }}
-      className="m-auto max-h-[86vh] overflow-visible rounded-[22px] bg-transparent p-0 backdrop:bg-black/25 backdrop:backdrop-blur-sm"
+      className="m-auto max-h-[86vh] overflow-visible rounded-[22px] bg-transparent p-0 backdrop:bg-ink-950/25 backdrop:backdrop-blur-sm"
       style={{ width }}
     >
       {open ? (
-        <div className="anim-rise flex max-h-[86vh] flex-col overflow-hidden rounded-[22px] bg-surface shadow-pop ring-1 ring-black/[0.05]">
-          <header className={cx('flex items-center justify-between px-6 pb-2 pt-5', tone === 'warn' ? 'bg-gradient-to-b from-amber-50 to-white' : '')}>
+        <div className="anim-rise flex max-h-[86vh] flex-col overflow-hidden rounded-[22px] bg-surface shadow-pop ring-1 ring-ink-950/[0.05]">
+          <header className={cx('flex items-center justify-between px-6 pb-2 pt-5', tone === 'warn' ? 'bg-gradient-to-b from-amber-50 to-surface' : '')}>
             <h2 id={titleId} className="text-[17px] font-semibold text-ink-900">
               {title}
             </h2>
@@ -387,7 +387,7 @@ export function Modal({
               type="button"
               aria-label="关闭"
               onClick={onClose}
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-black/[0.05] text-ink-500 transition-colors hover:bg-black/[0.09] hover:text-ink-800"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-ink-950/[0.05] text-ink-500 transition-colors hover:bg-ink-950/[0.09] hover:text-ink-800"
             >
               <Icon name="x" size={14} strokeWidth={2} />
             </button>
@@ -433,10 +433,10 @@ export function Drawer({
     <div className="fixed inset-x-0 top-0 z-40" style={{ bottom: 'var(--flow-dock-h, 0px)' }} role="dialog" aria-modal="true">
       <div className="anim-fade absolute inset-0 bg-black/20 backdrop-blur-[2px]" onClick={onClose} />
       <aside
-        className="anim-slide-right absolute inset-y-2 right-2 flex flex-col overflow-hidden rounded-[22px] bg-paper shadow-pop ring-1 ring-black/[0.06]"
+        className="anim-slide-right absolute inset-y-2 right-2 flex flex-col overflow-hidden rounded-[22px] bg-paper shadow-pop ring-1 ring-ink-950/[0.06]"
         style={{ width: `min(${width}px, calc(100vw - 16px))` }}
       >
-        <header className="flex items-start justify-between gap-4 border-b border-black/[0.06] bg-white/80 px-7 py-5 backdrop-blur-xl">
+        <header className="flex items-start justify-between gap-4 border-b border-ink-950/[0.06] bg-surface/80 px-7 py-5 backdrop-blur-xl">
           <div className="min-w-0">
             <h2 className="truncate text-lg font-semibold text-ink-900">{title}</h2>
             {subtitle ? <div className="mt-1 text-sm text-ink-500">{subtitle}</div> : null}
@@ -448,7 +448,7 @@ export function Drawer({
               aria-label="关闭"
               data-demo="drawer-close"
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/[0.05] text-ink-500 transition-colors hover:bg-black/[0.09] hover:text-ink-800"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-ink-950/[0.05] text-ink-500 transition-colors hover:bg-ink-950/[0.09] hover:text-ink-800"
             >
               <Icon name="x" size={15} strokeWidth={2} />
             </button>
@@ -518,7 +518,7 @@ export function KV({ items, cols = 2, className }: { items: [ReactNode, ReactNod
 export function Empty({ icon = 'inbox', title, children }: { icon?: IconName; title: ReactNode; children?: ReactNode }) {
   return (
     <div className="flex flex-col items-center justify-center gap-2 px-6 py-12 text-center">
-      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-black/[0.04] text-ink-400">
+      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink-950/[0.04] text-ink-400">
         <Icon name={icon} size={20} />
       </span>
       <div className="text-base font-medium text-ink-800">{title}</div>
@@ -554,10 +554,10 @@ export function Switch({ checked, onChange, disabled, label }: { checked: boolea
       onClick={() => onChange(!checked)}
       className={cx(
         'relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-full transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-40',
-        checked ? 'bg-[#34c759]' : 'bg-black/[0.12]',
+        checked ? 'bg-pine-500' : 'bg-ink-950/[0.12]',
       )}
     >
-      <span className={cx('inline-block h-[18px] w-[18px] rounded-full bg-white shadow-[0_2px_4px_rgb(0_0_0/0.2)] transition-transform duration-200', checked ? 'translate-x-[18px]' : 'translate-x-[2px]')} />
+      <span className={cx('inline-block h-[18px] w-[18px] rounded-full bg-surface shadow-[0_2px_4px_rgb(0_0_0/0.2)] transition-transform duration-200', checked ? 'translate-x-[18px]' : 'translate-x-[2px]')} />
     </button>
   );
 }

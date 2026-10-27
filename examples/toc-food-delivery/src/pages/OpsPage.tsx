@@ -97,8 +97,8 @@ function CouponTab() {
       </Panel>
       <div className="col-span-5 space-y-6">
         <Panel anchor="coupon-preview" title="发布前预览" desc="用户端看到的券样式与补贴成本预估（预估参数为假设，见 A-03）。">
-          <div className={cx('flex items-center gap-4 rounded-[16px] bg-gradient-to-r from-[#fff1e3] to-[#ffe0c4] p-4 ring-1 ring-[#ffd2ad] transition-opacity', !shown && 'opacity-40')}>
-            <div className="flex h-16 w-20 flex-col items-center justify-center rounded-[12px] bg-white text-primary-600">
+          <div className={cx('flex items-center gap-4 rounded-[16px] bg-gradient-to-r from-primary-50 to-primary-100 p-4 ring-1 ring-primary-200 transition-opacity', !shown && 'opacity-40')}>
+            <div className="flex h-16 w-20 flex-col items-center justify-center rounded-[12px] bg-surface text-primary-600">
               <span className="num text-[26px] font-bold leading-none">¥{f.off / 100 || '—'}</span>
               <span className="mt-1 text-2xs">满{f.threshold / 100 || '—'}可用</span>
             </div>
@@ -139,7 +139,7 @@ function Field({ label, value, tone }: { label: string; value: string; tone?: 'p
   return (
     <div>
       <div className="mb-1.5 text-xs font-medium text-ink-500">{label}</div>
-      <div className={cx('flex h-9 items-center rounded-[10px] border border-black/[0.1] bg-surface px-3 text-sm', tone === 'pine' ? 'text-pine-700' : 'text-ink-900')}>{value}</div>
+      <div className={cx('flex h-9 items-center rounded-[10px] border border-ink-950/[0.1] bg-surface px-3 text-sm', tone === 'pine' ? 'text-pine-700' : 'text-ink-900')}>{value}</div>
     </div>
   );
 }
@@ -168,7 +168,7 @@ function Dashboard() {
           ['在线骑手', fmtInt(s.riders), '滨湖区', 'bike'],
           ['待取餐', fmtInt(s.pending), '已出餐未取', 'bag'],
         ].map(([k, v, hint, icon]) => (
-          <div key={k} className="rounded-[18px] bg-surface p-4 shadow-raise ring-1 ring-black/[0.04]">
+          <div key={k} className="rounded-[18px] bg-surface p-4 shadow-raise ring-1 ring-ink-950/[0.04]">
             <div className="flex items-center gap-1.5 text-xs text-ink-500">
               <Icon name={icon as 'receipt'} size={14} className="text-primary-500" />
               {k}
@@ -193,7 +193,7 @@ function Dashboard() {
           </div>
         </Panel>
         <Panel className="col-span-5" title="超时预警" desc="平台自动识别，运营跟进处理。" bodyClassName="p-0 pb-2">
-          <ul className="divide-y divide-black/[0.05]">
+          <ul className="divide-y divide-ink-950/[0.05]">
             {warnings.map((x) => (
               <li key={`${x.order}-${x.kind}`} className={cx('flex items-start gap-3 px-6 py-3', x.order === w.order?.no && 'bg-primary-50/60')}>
                 <span className={cx('mt-1.5 h-2 w-2 shrink-0 rounded-full', x.level === 'error' ? 'bg-seal-500' : 'bg-amber-500')} />

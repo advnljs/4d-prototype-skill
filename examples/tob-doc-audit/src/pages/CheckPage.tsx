@@ -348,7 +348,7 @@ export function CheckPage() {
                       {loaded.sheets
                         .filter((x) => x.ok)
                         .map((x) => (
-                          <span key={x.name} className="num rounded bg-white/70 px-1.5 text-xs text-pine-700">
+                          <span key={x.name} className="num rounded bg-surface/70 px-1.5 text-xs text-pine-700">
                             {BIZ_SHEET[x.biz!]} {fmtInt(x.rows!)}
                           </span>
                         ))}
@@ -442,7 +442,7 @@ export function CheckPage() {
               <Icon name="sheet" size={15} className="text-pine-600" />
               <span className="font-medium text-ink-900">已自动生成 {state.reportName}</span>
               {sheetsInfo.map((sh) => (
-                <span key={sh.name} className={cx('rounded-full px-2 py-0.5 text-xs', sh.name === '国别疑点' ? 'bg-seal-50 text-seal-700 ring-1 ring-seal-100' : 'bg-white text-ink-700 ring-1 ring-black/[0.06]')}>
+                <span key={sh.name} className={cx('rounded-full px-2 py-0.5 text-xs', sh.name === '国别疑点' ? 'bg-seal-50 text-seal-700 ring-1 ring-seal-100' : 'bg-surface text-ink-700 ring-1 ring-ink-950/[0.06]')}>
                   {sh.name} <span className="num">{sh.rows}</span> 行
                 </span>
               ))}
@@ -451,7 +451,7 @@ export function CheckPage() {
                 批次已保存，可在“核查结果”中查看
               </a>
             </div>
-            <div className="mt-6 grid grid-cols-12 gap-8 border-t border-black/[0.05] pt-5">
+            <div className="mt-6 grid grid-cols-12 gap-8 border-t border-ink-950/[0.05] pt-5">
               <div className="col-span-7">
                 <h3 className="mb-3 text-sm font-semibold text-ink-900">疑点大类分布（笔，国别为一个大类）</h3>
                 <MajorDistribution run={state.run} />
@@ -462,7 +462,7 @@ export function CheckPage() {
                 <p className="mt-2 text-2xs leading-relaxed text-ink-400">按单次调用约 820 tokens、1.6 秒、并发 8 估算；缓存命中率为原型假设值 72%。</p>
               </div>
             </div>
-            <div className="mt-6 border-t border-black/[0.05] pt-4">
+            <div className="mt-6 border-t border-ink-950/[0.05] pt-4">
               <ResultTable run={state.run} onOpen={setDrawer} />
             </div>
           </Panel>
@@ -498,7 +498,7 @@ function ApiPanel({ onRun, empNo, lastBatch }: { onRun: () => void; empNo: strin
   return (
     <div className="grid grid-cols-12 gap-6">
       <div data-flow-anchor="api-panel" className="col-span-7">
-        <div className="rounded-[14px] bg-ink-900 px-4 py-3.5 text-[12.5px] leading-relaxed text-white/90">
+        <div className="rounded-[14px] bg-ink-900 px-4 py-3.5 text-[12.5px] leading-relaxed text-surface/90">
           <div className="code">
             <span className="text-emerald-300">POST</span> /doc-audit/api/v1/batches
           </div>
@@ -532,7 +532,7 @@ function ApiPanel({ onRun, empNo, lastBatch }: { onRun: () => void; empNo: strin
       </div>
       <div data-flow-anchor="api-batches" className="col-span-5">
         <h3 className="mb-2 text-sm font-semibold text-ink-900">最近的接口上传批次（本人可见范围）</h3>
-        <ul className="divide-y divide-black/[0.05] rounded-[14px] border border-black/[0.07]">
+        <ul className="divide-y divide-ink-950/[0.05] rounded-[14px] border border-ink-950/[0.07]">
           {api.map((b) => (
             <li key={b.id} className="flex items-center gap-3 px-3 py-2 text-sm">
               <span className="code text-xs text-ink-700">{b.id}</span>
@@ -574,7 +574,7 @@ function Writeback({ lastBatch }: { lastBatch: RunState | null }) {
             <Badge tone="pine">放行 {items.length - hold}</Badge>
             <span className="code text-ink-500">{lastBatch.batchId}</span>
           </div>
-          <ul className="divide-y divide-black/[0.05] rounded-[14px] border border-black/[0.07]">
+          <ul className="divide-y divide-ink-950/[0.05] rounded-[14px] border border-ink-950/[0.07]">
             {shown.map((i, k) => (
               <li key={i.applyNo} data-demo={k === 0 ? 'writeback-hold' : i.action === 'RELEASE' && shown[k - 1]?.action === 'HOLD' ? 'writeback-release' : undefined} className="flex items-center gap-2 px-3 py-1.5 text-xs">
                 <span className={cx('shrink-0 rounded-full px-1.5 py-px text-2xs font-medium', i.action === 'HOLD' ? 'bg-seal-100/70 text-seal-600' : 'bg-pine-50 text-pine-700')}>{WRITEBACK_LABEL[i.action]}</span>
@@ -712,7 +712,7 @@ function UploadModal({ open, auto, onClose, onLoaded }: { open: boolean; auto?: 
                     <th className="pb-1 font-normal">　</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-black/[0.05]">
+                <tbody className="divide-y divide-ink-950/[0.05]">
                   {result.sheets.map((x) => (
                     <tr key={x.name}>
                       <td className="py-1.5 text-ink-800">{x.name}</td>
@@ -729,7 +729,7 @@ function UploadModal({ open, auto, onClose, onLoaded }: { open: boolean; auto?: 
           </div>
         ) : (
           <>
-            <div className="rounded-[16px] border border-dashed border-black/[0.15] px-5 py-6">
+            <div className="rounded-[16px] border border-dashed border-ink-950/[0.15] px-5 py-6">
               <input
                 ref={inputRef}
                 type="file"
@@ -748,7 +748,7 @@ function UploadModal({ open, auto, onClose, onLoaded }: { open: boolean; auto?: 
             </div>
             <div>
               <div className="mb-2 text-sm font-medium text-ink-700">演示文件（原型）</div>
-              <ul className="divide-y divide-black/[0.05] rounded-[14px] border border-black/[0.07]">
+              <ul className="divide-y divide-ink-950/[0.05] rounded-[14px] border border-ink-950/[0.07]">
                 <DemoFile name={DEMO_FILE} desc="三个工作表：收款 128 / 付款 86 / 进口结算 32 笔，含设计好的疑点与国别不唯一情景" tone="pine" onUse={() => pick('all')} onDownload={downloadDemo} demo="demo-file-ok" />
                 <DemoFile name="ERP收付款单据导出_收款_20261013.xlsx" desc="只含收款一个工作表：只核查这一类" tone="pine" onUse={() => pick('receipt')} />
                 <DemoFile name={WRONG_FORMAT.fileName} desc="非 ERP 格式（网银流水）：演示上传失败" tone="seal" onUse={() => pick('wrong')} />

@@ -119,12 +119,12 @@ export function FlowOverview() {
                   <p className="mt-2 text-xs leading-relaxed text-ink-600">{ACTORS[a].desc}</p>
                   <div className="mt-2 flex flex-wrap gap-1">
                     {lead.map((s) => (
-                      <button key={s.id} type="button" onClick={() => setSelected(s.id)} className="num rounded-full bg-white px-1.5 text-2xs leading-[18px] text-ink-800 ring-1 ring-black/[0.06] hover:ring-primary-300" title={s.title}>
+                      <button key={s.id} type="button" onClick={() => setSelected(s.id)} className="num rounded-full bg-surface px-1.5 text-2xs leading-[18px] text-ink-800 ring-1 ring-ink-950/[0.06] hover:ring-primary-300" title={s.title}>
                         {STEP_INDEX[s.id] + 1} 主责
                       </button>
                     ))}
                     {join.map((s) => (
-                      <button key={s.id} type="button" onClick={() => setSelected(s.id)} className="num rounded-full px-1.5 text-2xs leading-[18px] text-ink-500 ring-1 ring-black/[0.06] hover:ring-primary-300" title={s.title}>
+                      <button key={s.id} type="button" onClick={() => setSelected(s.id)} className="num rounded-full px-1.5 text-2xs leading-[18px] text-ink-500 ring-1 ring-ink-950/[0.06] hover:ring-primary-300" title={s.title}>
                         {STEP_INDEX[s.id] + 1} 参与
                       </button>
                     ))}
@@ -158,7 +158,7 @@ export function FlowOverview() {
                 <th className="px-5 py-2 font-medium">使用于</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-black/[0.05]">
+            <tbody className="divide-y divide-ink-950/[0.05]">
               {DATA_ORDER.map((k) => {
                 const d = DATA_OBJECTS[k];
                 const out = STEPS.filter((s) => s.outputs.includes(k));
@@ -193,7 +193,7 @@ export function FlowOverview() {
                   <th className="w-[260px] px-5 py-2 font-medium">人工把关</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-black/[0.05] align-top">
+              <tbody className="divide-y divide-ink-950/[0.05] align-top">
                 {STEPS.filter((s) => s.agent || s.human).map((s) => (
                   <tr key={s.id} className="cursor-pointer hover:bg-ink-50/60" onClick={() => setSelected(s.id)}>
                     <td className="px-5 py-2.5">
@@ -248,7 +248,7 @@ function SectionNav() {
     return () => io.disconnect();
   }, []);
   return (
-    <nav aria-label="页面分区" className="sticky top-0 z-20 mt-5 border-b border-black/[0.05] bg-paper/85 px-10 py-2.5 backdrop-blur-xl">
+    <nav aria-label="页面分区" className="sticky top-0 z-20 mt-5 border-b border-ink-950/[0.05] bg-paper/85 px-10 py-2.5 backdrop-blur-xl">
       <ul className="flex flex-wrap gap-1">
         {SECTIONS.map((x, i) => (
           <li key={x.id}>
@@ -256,7 +256,7 @@ function SectionNav() {
               type="button"
               onClick={() => document.getElementById(x.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               aria-current={cur === x.id ? 'true' : undefined}
-              className={cx('flex h-8 items-center gap-1.5 rounded-full px-3.5 text-sm transition-colors duration-150', cur === x.id ? 'bg-ink-900 font-medium text-white' : 'text-ink-600 hover:bg-black/[0.05] hover:text-ink-900')}
+              className={cx('flex h-8 items-center gap-1.5 rounded-full px-3.5 text-sm transition-colors duration-150', cur === x.id ? 'bg-ink-900 font-medium text-surface' : 'text-ink-600 hover:bg-ink-950/[0.05] hover:text-ink-900')}
             >
               <span className={cx('num text-xs', cur === x.id ? 'text-white/70' : 'text-ink-400')}>{i + 1}</span>
               {x.label}
@@ -341,7 +341,7 @@ function StepCard({ step, f, onData, onSelect }: { step: (typeof STEPS)[number];
         </div>
         <p className="mt-3 text-sm leading-relaxed text-ink-700">{step.narration}</p>
         {step.necessity ? (
-          <p className={cx('mt-2 rounded-[10px] px-3 py-2 text-xs leading-relaxed', step.necessity === 'required' ? 'bg-ink-900/[0.05] text-ink-800' : 'border border-dashed border-ink-300 bg-white text-ink-600')}>
+          <p className={cx('mt-2 rounded-[10px] px-3 py-2 text-xs leading-relaxed', step.necessity === 'required' ? 'bg-ink-900/[0.05] text-ink-800' : 'border border-dashed border-ink-300 bg-surface text-ink-600')}>
             <span className="font-semibold">{step.necessity === 'required' ? '为什么必需：' : '为什么可选：'}</span>
             {step.basis}
           </p>
@@ -360,7 +360,7 @@ function StepCard({ step, f, onData, onSelect }: { step: (typeof STEPS)[number];
                   const e = EDGES.find((x) => (dir === 'up' ? x.from === id && x.to === step.id : x.from === step.id && x.to === id))!;
                   const st = stepStateOf(f, id);
                   return (
-                    <button key={id} type="button" onClick={() => onSelect(id)} className="inline-flex h-6 items-center gap-1.5 rounded-full bg-white px-2 text-xs text-ink-800 ring-1 ring-black/[0.06] hover:ring-primary-300">
+                    <button key={id} type="button" onClick={() => onSelect(id)} className="inline-flex h-6 items-center gap-1.5 rounded-full bg-surface px-2 text-xs text-ink-800 ring-1 ring-ink-950/[0.06] hover:ring-primary-300">
                       <span className="num font-semibold" style={{ color: ACTORS[stepById(id).actor].color }}>
                         {STEP_INDEX[id] + 1}
                       </span>

@@ -174,7 +174,7 @@ export function CockpitPage() {
                 ['国别疑点', fmtInt(total.country), '同一交易对方国别不唯一等'],
                 ['覆盖组织', fmtInt(groups.length), branch ? '子公司 / 本区域' : '区域'],
               ].map(([k, v, h]) => (
-                <div key={k} className="rounded-[16px] bg-surface px-4 py-3 shadow-raise ring-1 ring-black/[0.04]">
+                <div key={k} className="rounded-[16px] bg-surface px-4 py-3 shadow-raise ring-1 ring-ink-950/[0.04]">
                   <dt className="text-xs text-ink-500">{k}</dt>
                   <dd className="num mt-0.5 text-[26px] font-semibold leading-tight text-ink-900">{v}</dd>
                   <dd className="text-2xs text-ink-400">{h}</dd>
@@ -211,7 +211,7 @@ export function CockpitPage() {
                     <th className="py-1.5 font-normal">　</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-black/[0.05]">
+                <tbody className="divide-y divide-ink-950/[0.05]">
                   {groups.map((g) => {
                     const canDrill = user.role === 'tier1' && !branch && ORGS.find((o) => o.code === g.code)?.level === 'tier2';
                     return (

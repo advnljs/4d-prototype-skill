@@ -43,7 +43,7 @@ function RoundBtn({ icon, label, onClick, disabled, primary, size = 36 }: { icon
       disabled={disabled}
       className={cx(
         'flex shrink-0 items-center justify-center rounded-full transition-[background-color,transform] duration-150 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35',
-        primary ? 'bg-primary-500 text-white shadow-[0_6px_16px_-6px_rgb(0_113_227/0.7)] hover:bg-[#0077ed]' : 'bg-black/[0.06] text-ink-800 hover:bg-black/[0.1]',
+        primary ? 'bg-primary-500 text-white shadow-[0_6px_16px_-6px_color-mix(in_oklab,var(--color-primary-500)_70%,transparent)] hover:brightness-[1.06]' : 'bg-ink-950/[0.06] text-ink-800 hover:bg-ink-950/[0.1]',
       )}
       style={{ width: size, height: size }}
     >

@@ -262,7 +262,7 @@ export function ResultsPage() {
             ))}
           </dl>
           {rows.length ? (
-            <div className="mt-3 overflow-x-auto rounded-[14px] border border-black/[0.07]">
+            <div className="mt-3 overflow-x-auto rounded-[14px] border border-ink-950/[0.07]">
               <table className="w-full min-w-[1180px] table-fixed text-sm">
                 <colgroup>
                   <col className="w-[176px]" />
@@ -290,7 +290,7 @@ export function ResultsPage() {
                     <th className="px-3 py-2 font-medium">规则库</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-black/[0.05] bg-surface">
+                <tbody className="divide-y divide-ink-950/[0.05] bg-surface">
                   {rows.map((b) => (
                     <tr
                       key={b.id}
@@ -382,13 +382,13 @@ function BatchDetail({ b, major, onMajor, onOpen }: { b: CheckBatch; major: Majo
       {run ? (
         <>
           <ResultSummary run={run} />
-          <div className="mt-5 grid grid-cols-12 gap-8 border-t border-black/[0.05] pt-4">
+          <div className="mt-5 grid grid-cols-12 gap-8 border-t border-ink-950/[0.05] pt-4">
             <div className="col-span-12">
               <h3 className="mb-3 text-sm font-semibold text-ink-900">疑点大类分布（笔，国别为一个大类）</h3>
               <MajorDistribution run={run} />
             </div>
           </div>
-          <div className="mt-5 border-t border-black/[0.05] pt-4">
+          <div className="mt-5 border-t border-ink-950/[0.05] pt-4">
             <ResultTable run={run} onOpen={onOpen} major={major} onMajorChange={onMajor} />
           </div>
           <SecrecyModal
@@ -421,11 +421,11 @@ function FindingList({ b }: { b: CheckBatch }) {
         为保护客商信息，刷新页面后本机批次只保留疑点明细（单据编号、规则、说明）；需要单据详情请重新上传核查。
       </Callout>
       <div className="mt-3 flex flex-wrap gap-1.5">
-        <button type="button" aria-pressed={!major} onClick={() => setMajor('')} className={cx('h-7 rounded-full px-3 text-xs', !major ? 'bg-ink-900 text-white' : 'bg-black/[0.05] text-ink-700')}>
+        <button type="button" aria-pressed={!major} onClick={() => setMajor('')} className={cx('h-7 rounded-full px-3 text-xs', !major ? 'bg-ink-900 text-surface' : 'bg-ink-950/[0.05] text-ink-700')}>
           全部 {rows.length}
         </button>
         {MAJORS.filter((m) => rows.some((r) => r.major === m.key)).map((m) => (
-          <button key={m.key} type="button" aria-pressed={major === m.key} onClick={() => setMajor(m.key)} className={cx('h-7 rounded-full px-3 text-xs', major === m.key ? 'bg-ink-900 text-white' : 'bg-black/[0.05] text-ink-700')}>
+          <button key={m.key} type="button" aria-pressed={major === m.key} onClick={() => setMajor(m.key)} className={cx('h-7 rounded-full px-3 text-xs', major === m.key ? 'bg-ink-900 text-surface' : 'bg-ink-950/[0.05] text-ink-700')}>
             {m.label} {rows.filter((r) => r.major === m.key).length}
           </button>
         ))}
@@ -440,7 +440,7 @@ function FindingList({ b }: { b: CheckBatch }) {
             <th className="py-1.5 font-normal">说明</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-black/[0.05]">
+        <tbody className="divide-y divide-ink-950/[0.05]">
           {shown.map((r, i) => (
             <tr key={`${r.docNo}-${r.ruleId}-${i}`} className="align-top">
               <td className="code py-1.5 pr-3 text-ink-800">{r.docNo}</td>
@@ -491,7 +491,7 @@ function RectifyPanel({ scope, canRectify, who }: { scope: string[]; canRectify:
               <th className="px-3 py-2 text-right font-medium">操作</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/[0.05]">
+          <tbody className="divide-y divide-ink-950/[0.05]">
             {list.map((c) => {
               const d = doneOf(c);
               return (

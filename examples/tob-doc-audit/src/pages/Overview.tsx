@@ -88,7 +88,7 @@ export function Overview() {
             <Button variant="primary" size="lg" icon="play" onClick={openFlowStart}>
               一键运行完整流程
             </Button>
-            <a href={href('/flow')} className="inline-flex h-11 items-center gap-2 rounded-full bg-black/[0.05] px-6 text-[15px] font-medium text-ink-900 transition-colors hover:bg-black/[0.08]">
+            <a href={href('/flow')} className="inline-flex h-11 items-center gap-2 rounded-full bg-ink-950/[0.05] px-6 text-[15px] font-medium text-ink-900 transition-colors hover:bg-ink-950/[0.08]">
               <Icon name="route" size={16} />
               全流程总览
             </a>
@@ -126,7 +126,7 @@ export function Overview() {
         <p className="mt-2 text-[15px] text-ink-500">
           每个剧本会自动切换到对应角色并打开页面，按步骤操作即可。想看完整业务流程串起来的样子，用上方“一键运行完整流程”，或左下角的全流程导航逐个环节查看。
         </p>
-        <ol className="mt-6 divide-y divide-black/[0.06] overflow-hidden rounded-[18px] bg-surface shadow-raise ring-1 ring-black/[0.04]">
+        <ol className="mt-6 divide-y divide-ink-950/[0.06] overflow-hidden rounded-[18px] bg-surface shadow-raise ring-1 ring-ink-950/[0.04]">
           {SCRIPTS.map((s, i) => (
             <li key={s.title} className="grid grid-cols-[56px_minmax(0,1fr)_minmax(0,1.2fr)_150px] items-start gap-6 px-6 py-5">
               <span className="num text-[28px] font-semibold leading-none text-ink-200">{i + 1}</span>
@@ -170,7 +170,7 @@ export function Overview() {
 
 function Card({ title, className, children }: { title: string; className?: string; children: ReactNode }) {
   return (
-    <div className={cx('rounded-[22px] bg-surface p-7 shadow-raise ring-1 ring-black/[0.04]', className)}>
+    <div className={cx('rounded-[22px] bg-surface p-7 shadow-raise ring-1 ring-ink-950/[0.04]', className)}>
       <h3 className="text-[19px] font-semibold tracking-[-0.015em] text-ink-900">{title}</h3>
       <div className="mt-5">{children}</div>
     </div>
@@ -201,7 +201,7 @@ const OUTPUTS: { icon: IconName; title: string }[] = [
 
 function BusinessMap() {
   return (
-    <div className="mt-10 grid grid-cols-[minmax(0,0.9fr)_40px_minmax(0,1.6fr)_40px_minmax(0,0.8fr)] items-center rounded-[28px] bg-surface p-8 shadow-raise ring-1 ring-black/[0.04]">
+    <div className="mt-10 grid grid-cols-[minmax(0,0.9fr)_40px_minmax(0,1.6fr)_40px_minmax(0,0.8fr)] items-center rounded-[28px] bg-surface p-8 shadow-raise ring-1 ring-ink-950/[0.04]">
       <div>
         <div className="mb-3 text-xs font-semibold text-ink-400">数据来源</div>
         <ul className="space-y-3">
@@ -217,14 +217,14 @@ function BusinessMap() {
         </ul>
       </div>
       <Icon name="chevronRight" size={22} className="mx-auto text-ink-300" />
-      <div className="rounded-[20px] bg-gradient-to-b from-primary-50 to-white p-5 ring-1 ring-primary-100">
+      <div className="rounded-[20px] bg-gradient-to-b from-primary-50 to-surface p-5 ring-1 ring-primary-100">
         <div className="mb-3 flex items-center justify-between">
           <span className="text-xs font-semibold text-primary-600">核查助手</span>
           <span className="text-xs text-ink-400">财务共享平台</span>
         </div>
         <div className="grid grid-cols-2 gap-3">
           {MODULES.map((m) => (
-            <a key={m.title} href={href(m.to)} className="group rounded-[14px] bg-white px-4 py-3.5 shadow-raise ring-1 ring-black/[0.04] transition-shadow hover:shadow-pop">
+            <a key={m.title} href={href(m.to)} className="group rounded-[14px] bg-surface px-4 py-3.5 shadow-raise ring-1 ring-ink-950/[0.04] transition-shadow hover:shadow-pop">
               <div className="flex items-center gap-2">
                 <Icon name={m.icon} size={18} className="text-primary-500" />
                 <span className="text-[15px] font-semibold text-ink-900">{m.title}</span>
@@ -316,7 +316,7 @@ function CodePrimer() {
       <div className="flex flex-wrap gap-2">
         {groups.map(([d, n]) => (
           <span key={d} className="flex items-center gap-1.5 rounded-full bg-ink-50 py-1 pl-1 pr-3 text-sm text-ink-700">
-            <span className="code flex h-6 w-6 items-center justify-center rounded-full bg-white font-semibold text-ink-900 shadow-raise">{d}</span>
+            <span className="code flex h-6 w-6 items-center justify-center rounded-full bg-surface font-semibold text-ink-900 shadow-raise">{d}</span>
             {n}
           </span>
         ))}

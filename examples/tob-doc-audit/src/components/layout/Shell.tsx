@@ -1,6 +1,7 @@
 import { Fragment, type ReactNode } from 'react';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { cx } from '@/components/ui/primitives';
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 import { ActorChip } from '@/components/flow/ActorChip';
 import { FlowNavigator } from '@/components/flow/FlowNavigator';
 import { FlowDock } from '@/components/flow/FlowDock';
@@ -52,7 +53,7 @@ export function Shell({ children }: { children: ReactNode }) {
     <div className="flex h-screen min-w-[1280px] flex-col overflow-hidden bg-paper">
       <TopBar />
       <div className="flex min-h-0 flex-1">
-        <nav aria-label="主菜单" className="flex w-[248px] shrink-0 flex-col overflow-y-auto border-r border-black/[0.06] bg-white/60 pb-[250px] backdrop-blur-xl">
+        <nav aria-label="主菜单" className="flex w-[248px] shrink-0 flex-col overflow-y-auto border-r border-ink-950/[0.06] bg-surface/60 pb-[250px] backdrop-blur-xl">
           <div className="px-3 pt-4">
             <HostItem icon="layers" label="工作台" />
             <HostItem icon="chart" label="业务监测" />
@@ -106,12 +107,12 @@ function NavLink({ item, active }: { item: NavItem; active: boolean }) {
       aria-current={active ? 'page' : undefined}
       className={cx(
         'group flex h-9 items-center gap-2.5 rounded-lg px-3 text-[13.5px] transition-colors duration-150',
-        active ? 'bg-black/[0.06] font-medium text-ink-900' : 'text-ink-700 hover:bg-black/[0.035]',
+        active ? 'bg-ink-950/[0.06] font-medium text-ink-900' : 'text-ink-700 hover:bg-ink-950/[0.035]',
       )}
     >
       <Icon name={item.icon} size={17} className={active ? 'text-primary-500' : 'text-ink-400 group-hover:text-ink-600'} />
       <span className="truncate">{item.label}</span>
-      {item.note ? <span className="ml-auto rounded-full bg-black/[0.05] px-1.5 text-2xs leading-[18px] text-ink-500">{item.note}</span> : null}
+      {item.note ? <span className="ml-auto rounded-full bg-ink-950/[0.05] px-1.5 text-2xs leading-[18px] text-ink-500">{item.note}</span> : null}
     </a>
   );
 }
@@ -123,9 +124,9 @@ function TopBar() {
   const user = useUser();
   const org = orgByCode(user.orgCode);
   return (
-    <header className="z-30 flex h-[52px] shrink-0 items-center justify-between border-b border-black/[0.06] bg-white/75 px-5 backdrop-blur-xl">
+    <header className="z-30 flex h-[52px] shrink-0 items-center justify-between border-b border-ink-950/[0.06] bg-surface/75 px-5 backdrop-blur-xl">
       <div className="flex items-center gap-3">
-        <span className="flex h-7 w-7 items-center justify-center rounded-[8px] bg-gradient-to-b from-[#2b8cf0] to-[#0066cc] text-white shadow-[0_1px_2px_rgb(0_0_0/0.2)]">
+        <span className="flex h-7 w-7 items-center justify-center rounded-[8px] bg-gradient-to-b from-primary-400 to-primary-600 text-white shadow-[0_1px_2px_rgb(0_0_0/0.2)]">
           <Icon name="shield" size={15} />
         </span>
         <span className="text-[15px] font-semibold tracking-[-0.01em] text-ink-900">财务共享平台</span>
@@ -133,9 +134,10 @@ function TopBar() {
         <span className="ml-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-100">原型演示环境</span>
       </div>
       <div className="flex items-center gap-4">
+        <ThemeSwitcher />
         <div className="flex items-center gap-2 text-xs text-ink-500">
           演示角色
-          <span className="inline-flex rounded-[9px] bg-black/[0.055] p-[2px]" role="radiogroup" aria-label="演示角色">
+          <span className="inline-flex rounded-[9px] bg-ink-950/[0.055] p-[2px]" role="radiogroup" aria-label="演示角色">
             {ROLE_ORDER.map((r) => (
               <button
                 key={r}
@@ -146,7 +148,7 @@ function TopBar() {
                 onClick={() => setRole(r)}
                 className={cx(
                   'h-7 rounded-[7px] px-3 text-xs transition-[background-color,color,box-shadow] duration-150',
-                  role === r ? 'bg-white font-medium text-ink-900 shadow-[0_1px_3px_rgb(0_0_0/0.12),0_0_0_0.5px_rgb(0_0_0/0.04)]' : 'text-ink-600 hover:text-ink-900',
+                  role === r ? 'bg-surface font-medium text-ink-900 shadow-[0_1px_3px_rgb(0_0_0/0.12),0_0_0_0.5px_rgb(0_0_0/0.04)]' : 'text-ink-600 hover:text-ink-900',
                 )}
               >
                 {ROLE_SHORT[r]}
@@ -154,9 +156,9 @@ function TopBar() {
             ))}
           </span>
         </div>
-        <span className="h-6 w-px bg-black/[0.08]" />
+        <span className="h-6 w-px bg-ink-950/[0.08]" />
         <div className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-b from-[#a1a1a6] to-[#6e6e73] text-sm font-medium text-white">{user.name.slice(0, 1)}</span>
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-b from-ink-300 to-ink-500 text-sm font-medium text-surface">{user.name.slice(0, 1)}</span>
           <div className="leading-tight">
             <div className="text-sm font-medium text-ink-900">
               {user.name}
@@ -232,10 +234,10 @@ function FlowContext() {
             title={`${step.title}（${step.trigger}，${step.when}）`}
             className={cx(
               'inline-flex h-7 items-center gap-1.5 rounded-full pl-1 pr-2.5 text-xs transition-[background-color,box-shadow] duration-150',
-              activeId === step.id ? 'bg-primary-500 text-white' : exact ? 'bg-white text-ink-800 shadow-raise ring-1 ring-black/[0.05] hover:bg-ink-50' : 'text-ink-500 hover:bg-black/[0.04]',
+              activeId === step.id ? 'bg-primary-500 text-white' : exact ? 'bg-surface text-ink-800 shadow-raise ring-1 ring-ink-950/[0.05] hover:bg-ink-50' : 'text-ink-500 hover:bg-ink-950/[0.04]',
             )}
           >
-            <span className={cx('num flex h-5 w-5 items-center justify-center rounded-full text-2xs font-semibold', activeId === step.id ? 'bg-white/25' : 'bg-ink-100 text-ink-600')}>{STEP_INDEX[step.id] + 1}</span>
+            <span className={cx('num flex h-5 w-5 items-center justify-center rounded-full text-2xs font-semibold', activeId === step.id ? 'bg-surface/25' : 'bg-ink-100 text-ink-600')}>{STEP_INDEX[step.id] + 1}</span>
             {step.short}
             <ActorChip actor={step.actor} size="xs" short />
             <span className={cx('num text-2xs', activeId === step.id ? 'text-white/80' : 'text-ink-400')}>{step.when}</span>

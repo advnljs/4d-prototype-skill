@@ -1,6 +1,7 @@
 import { Fragment, type ReactNode } from 'react';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { cx } from '@/components/ui/primitives';
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 import { ActorChip } from '@/components/flow/ActorChip';
 import { FlowNavigator } from '@/components/flow/FlowNavigator';
 import { FlowDock } from '@/components/flow/FlowDock';
@@ -49,7 +50,7 @@ export function Shell({ children }: { children: ReactNode }) {
     <div className="flex h-screen min-w-[1280px] flex-col overflow-hidden bg-paper">
       <TopBar />
       <div className="flex min-h-0 flex-1">
-        <nav aria-label="主菜单" className="flex w-[232px] shrink-0 flex-col overflow-y-auto border-r border-black/[0.06] bg-white/60 pb-[250px] backdrop-blur-xl">
+        <nav aria-label="主菜单" className="flex w-[232px] shrink-0 flex-col overflow-y-auto border-r border-ink-950/[0.06] bg-surface/60 pb-[250px] backdrop-blur-xl">
           <div className="px-3 pt-4">
             <div className="px-3 pb-1.5 text-xs font-semibold text-ink-500">业务现场</div>
             <ul className="space-y-0.5">
@@ -75,7 +76,7 @@ export function Shell({ children }: { children: ReactNode }) {
             <div className="mt-0.5">{scenario.title}</div>
           </div>
           <div className="mx-3 mt-3">
-            <a href="./app.html" className="group flex h-9 items-center gap-2.5 rounded-lg px-3 text-[13.5px] text-ink-700 transition-colors duration-150 hover:bg-black/[0.035]">
+            <a href="./app.html" className="group flex h-9 items-center gap-2.5 rounded-lg px-3 text-[13.5px] text-ink-700 transition-colors duration-150 hover:bg-ink-950/[0.035]">
               <Icon name="phone" size={17} className="text-ink-400 group-hover:text-ink-600" />
               <span className="truncate">手机版 App</span>
               <span className="ml-auto rounded-full bg-primary-50 px-1.5 text-2xs leading-[18px] text-primary-700">新</span>
@@ -100,11 +101,11 @@ function NavLink({ item, active }: { item: NavItem; active: boolean }) {
     <a
       href={href(item.to)}
       aria-current={active ? 'page' : undefined}
-      className={cx('group flex h-9 items-center gap-2.5 rounded-lg px-3 text-[13.5px] transition-colors duration-150', active ? 'bg-primary-50 font-medium text-ink-900' : 'text-ink-700 hover:bg-black/[0.035]')}
+      className={cx('group flex h-9 items-center gap-2.5 rounded-lg px-3 text-[13.5px] transition-colors duration-150', active ? 'bg-primary-50 font-medium text-ink-900' : 'text-ink-700 hover:bg-ink-950/[0.035]')}
     >
       <Icon name={item.icon} size={17} className={active ? 'text-primary-500' : 'text-ink-400 group-hover:text-ink-600'} />
       <span className="truncate">{item.label}</span>
-      {item.note ? <span className={cx('ml-auto rounded-full px-1.5 text-2xs leading-[18px]', active ? 'bg-primary-100 text-primary-700' : 'bg-black/[0.05] text-ink-500')}>{item.note}</span> : null}
+      {item.note ? <span className={cx('ml-auto rounded-full px-1.5 text-2xs leading-[18px]', active ? 'bg-primary-100 text-primary-700' : 'bg-ink-950/[0.05] text-ink-500')}>{item.note}</span> : null}
     </a>
   );
 }
@@ -113,7 +114,7 @@ function TopBar() {
   const role = useRole();
   const u = USERS[role];
   return (
-    <header className="z-30 flex h-[56px] shrink-0 items-center justify-between border-b border-black/[0.06] bg-white/80 px-5 backdrop-blur-xl">
+    <header className="z-30 flex h-[56px] shrink-0 items-center justify-between border-b border-ink-950/[0.06] bg-surface/80 px-5 backdrop-blur-xl">
       <div className="flex items-center gap-3">
         <BrandMark size={30} />
         <span className="text-[16px] font-bold tracking-[-0.01em] text-ink-900">橙子到家</span>
@@ -121,9 +122,10 @@ function TopBar() {
         <span className="ml-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-100">原型演示环境 · 数据虚构</span>
       </div>
       <div className="flex items-center gap-4">
+        <ThemeSwitcher />
         <div className="flex items-center gap-2 text-xs text-ink-500">
           演示角色
-          <span className="inline-flex rounded-[10px] bg-black/[0.055] p-[2px]" role="radiogroup" aria-label="演示角色">
+          <span className="inline-flex rounded-[10px] bg-ink-950/[0.055] p-[2px]" role="radiogroup" aria-label="演示角色">
             {ROLE_ORDER.map((r) => (
               <button
                 key={r}
@@ -132,14 +134,14 @@ function TopBar() {
                 aria-checked={role === r}
                 title={`${USERS[r].roleName} · ${USERS[r].app}`}
                 onClick={() => setRole(r)}
-                className={cx('h-7 rounded-[8px] px-3 text-xs transition-[background-color,color,box-shadow] duration-150', role === r ? 'bg-white font-medium text-ink-900 shadow-[0_1px_3px_rgb(0_0_0/0.12)]' : 'text-ink-600 hover:text-ink-900')}
+                className={cx('h-7 rounded-[8px] px-3 text-xs transition-[background-color,color,box-shadow] duration-150', role === r ? 'bg-surface font-medium text-ink-900 shadow-[0_1px_3px_rgb(0_0_0/0.12)]' : 'text-ink-600 hover:text-ink-900')}
               >
                 {USERS[r].roleName} · {USERS[r].name}
               </button>
             ))}
           </span>
         </div>
-        <span className="h-6 w-px bg-black/[0.08]" />
+        <span className="h-6 w-px bg-ink-950/[0.08]" />
         <div className="flex items-center gap-2.5">
           <span className="brand-grad flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold text-white">{u.name.slice(-1)}</span>
           <div className="leading-tight">
@@ -200,10 +202,10 @@ function FlowContext() {
             title={`${step.title}（${step.trigger}，${step.when}）`}
             className={cx(
               'inline-flex h-7 items-center gap-1.5 rounded-full pl-1 pr-2.5 text-xs transition-[background-color,box-shadow] duration-150',
-              activeId === step.id ? 'brand-grad text-white' : exact ? 'bg-white text-ink-800 shadow-raise ring-1 ring-black/[0.05] hover:bg-ink-50' : 'text-ink-500 hover:bg-black/[0.04]',
+              activeId === step.id ? 'brand-grad text-white' : exact ? 'bg-surface text-ink-800 shadow-raise ring-1 ring-ink-950/[0.05] hover:bg-ink-50' : 'text-ink-500 hover:bg-ink-950/[0.04]',
             )}
           >
-            <span className={cx('num flex h-5 w-5 items-center justify-center rounded-full text-2xs font-semibold', activeId === step.id ? 'bg-white/25' : 'bg-ink-100 text-ink-600')}>{STEP_INDEX[step.id] + 1}</span>
+            <span className={cx('num flex h-5 w-5 items-center justify-center rounded-full text-2xs font-semibold', activeId === step.id ? 'bg-surface/25' : 'bg-ink-100 text-ink-600')}>{STEP_INDEX[step.id] + 1}</span>
             {step.short}
             <ActorChip actor={step.actor} size="xs" short />
             <span className={cx('num text-2xs', activeId === step.id ? 'text-white/80' : 'text-ink-400')}>{step.when}</span>

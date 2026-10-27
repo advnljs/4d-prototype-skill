@@ -15,7 +15,7 @@ export function ActorChip({ actor, size = 'sm', short, iconOnly, className }: { 
         iconOnly && (size === 'xs' ? 'w-[18px] justify-center px-0' : 'w-[22px] justify-center px-0'),
         className,
       )}
-      style={{ background: `color-mix(in srgb, ${a.color} 11%, white)`, boxShadow: `inset 0 0 0 0.5px color-mix(in srgb, ${a.color} 35%, transparent)` }}
+      style={{ background: `color-mix(in srgb, ${a.color} 11%, var(--color-surface))`, boxShadow: `inset 0 0 0 0.5px color-mix(in srgb, ${a.color} 35%, transparent)` }}
     >
       <Icon name={a.icon} size={size === 'xs' ? 11 : 12} strokeWidth={2} style={{ color: a.color }} />
       {iconOnly ? <span className="sr-only">{a.label}</span> : short ? a.short : a.label}
@@ -46,7 +46,7 @@ export function NecessityTag({ n, short, className }: { n?: Necessity; short?: b
       title={n === 'required' ? '需求明确要求、必须执行的环节' : '原型补充，可选：去掉不影响主流程'}
       className={cx(
         'inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-1.5 text-2xs font-medium leading-[16px]',
-        n === 'required' ? 'bg-ink-900 text-white' : 'border border-dashed border-ink-400 bg-white text-ink-600',
+        n === 'required' ? 'bg-ink-900 text-surface' : 'border border-dashed border-ink-400 bg-surface text-ink-600',
         className,
       )}
     >
