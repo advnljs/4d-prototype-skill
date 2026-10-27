@@ -1,0 +1,322 @@
+@import 'tailwindcss';
+
+/*
+ * 设计 token（浅色、类 Apple 的高级风格，按用户要求）
+ * - 中性色采用 Apple 系统灰阶：文字 #1d1d1f、次要 #6e6e73、画布 #f5f5f7、表面纯白；
+ * - 唯一操作色为 Apple 蓝 #0071e3；
+ * - 语义色固定：疑点 = 红（与导出“疑点标红”一致）、需人工确认 = 橙、通过 = 绿、确定性规则 = 青、智能体 = 紫；
+ * - 字体使用系统 SF Pro / 苹方，Windows 回退微软雅黑；大圆角、无边框面板、柔和阴影、毛玻璃导航。
+ */
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei UI',
+    'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'SF Mono', ui-monospace, Menlo, 'Cascadia Mono', Consolas, monospace;
+
+  /* 可读性：最小字号 12px（中文 11px 难辨认），小字号行高略放宽 */
+  --text-2xs: 12px;
+  --text-2xs--line-height: 17px;
+  --text-xs: 12px;
+  --text-xs--line-height: 19px;
+  --text-sm: 13px;
+  --text-sm--line-height: 21px;
+  --text-base: 14px;
+  --text-base--line-height: 22px;
+  --text-md: 16px;
+  --text-md--line-height: 24px;
+  --text-lg: 19px;
+  --text-lg--line-height: 26px;
+  --text-xl: 30px;
+  --text-xl--line-height: 36px;
+  --text-2xl: 28px;
+  --text-2xl--line-height: 34px;
+
+  --color-ink-950: #000000;
+  --color-ink-900: #1d1d1f;
+  --color-ink-800: #1d1d1f;
+  --color-ink-700: #3a3a3c;
+  --color-ink-600: #515154;
+  --color-ink-500: #6e6e73;
+  /* 次要文字：由 #86868b 加深，白底对比度约 4.6:1（满足小字号 AA） */
+  --color-ink-400: #737378;
+  --color-ink-300: #aeaeb2;
+  --color-ink-200: #d2d2d7;
+  --color-ink-150: #e8e8ed;
+  --color-ink-100: #f0f0f3;
+  --color-ink-50: #f5f5f7;
+
+  --color-paper: #f5f5f7;
+  --color-surface: #ffffff;
+
+  --color-primary-700: #0058b0;
+  --color-primary-600: #0066cc;
+  --color-primary-500: #0071e3;
+  --color-primary-400: #2997ff;
+  --color-primary-100: #e1eefd;
+  --color-primary-50: #f0f6fe;
+
+  --color-seal-700: #a1000f;
+  --color-seal-600: #bf0012;
+  --color-seal-500: #d70015;
+  --color-seal-200: #f6c9cd;
+  --color-seal-100: #fde7e9;
+  --color-seal-50: #fff4f5;
+
+  --color-amber-700: #8a3f00;
+  --color-amber-600: #a64b00;
+  --color-amber-500: #c25700;
+  --color-amber-100: #fdeedd;
+  --color-amber-50: #fff8f0;
+
+  --color-pine-700: #1a6a2e;
+  --color-pine-600: #1f7a35;
+  --color-pine-500: #248a3d;
+  --color-pine-100: #e2f4e7;
+  --color-pine-50: #f2faf4;
+
+  --color-rule-700: #075e66;
+  --color-rule-600: #086c75;
+  --color-rule-500: #0a7a84;
+  --color-rule-100: #dcf0f2;
+  --color-rule-50: #eff8f9;
+
+  --color-agent-700: #5a2d8f;
+  --color-agent-600: #6a35a6;
+  --color-agent-500: #7a3fbd;
+  --color-agent-100: #eee6f9;
+  --color-agent-50: #f8f4fd;
+
+  /* 操作方（谁在做）：与“结论语义色”相互独立，只用于泳道、操作方标签与流程导航 */
+  --color-act-portal: #9a6b3f;
+  --color-act-checker: #0071e3;
+  --color-act-reviewer: #0a8f9a;
+  --color-act-tier2: #5856d6;
+  --color-act-tier1: #34318f;
+  --color-act-rpa: #e07800;
+  --color-act-batch: #4b5d73;
+  --color-act-agent: #7a3fbd;
+
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --shadow-pop: 0 24px 60px -12px rgb(0 0 0 / 0.18), 0 2px 8px rgb(0 0 0 / 0.06);
+  --shadow-raise: 0 1px 2px rgb(0 0 0 / 0.03), 0 6px 24px -10px rgb(0 0 0 / 0.08);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-paper text-ink-800 font-sans text-base antialiased;
+  }
+  ::selection {
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+  }
+  :focus-visible {
+    outline: 3px solid rgb(0 113 227 / 0.4);
+    outline-offset: 1px;
+    border-radius: 8px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+  h1 {
+    letter-spacing: -0.022em;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink-300) transparent;
+  }
+  input,
+  select,
+  textarea {
+    caret-color: var(--color-primary-500);
+  }
+}
+
+@layer components {
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+  .code {
+    @apply font-mono text-[12.5px] tracking-tight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 动效：只表达状态变化 */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slide-in-right {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.35) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.96) rotate(-8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-8deg);
+  }
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes progress-stripe {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 24px 0;
+  }
+}
+@keyframes cursor-press {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.82);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes cursor-click {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/*
+ * 全流程演示的“流程 · 数据”窗口停靠在底部时（高度写入 --flow-dock-h），
+ * 弹窗、遮罩、抽屉都止于窗口上方，保证窗口在整个演示过程中始终可见。
+ */
+:root {
+  --flow-dock-h: 0px;
+}
+dialog {
+  bottom: var(--flow-dock-h);
+  max-height: min(86vh, calc(100vh - var(--flow-dock-h) - 32px));
+}
+dialog > div {
+  max-height: min(86vh, calc(100vh - var(--flow-dock-h) - 32px));
+}
+dialog::backdrop {
+  bottom: var(--flow-dock-h);
+}
+
+/* 全流程演示：当前子步骤对应的页面区域高亮（不放进 layer，保证覆盖元素自身阴影） */
+@keyframes spotlight {
+  0% {
+    box-shadow:
+      0 0 0 0 rgb(0 113 227 / 0.55),
+      0 0 0 0 rgb(0 113 227 / 0.18);
+  }
+  35% {
+    box-shadow:
+      0 0 0 3px rgb(0 113 227 / 0.55),
+      0 0 0 10px rgb(0 113 227 / 0.14);
+  }
+  100% {
+    box-shadow:
+      0 0 0 3px rgb(0 113 227 / 0.4),
+      0 0 0 6px rgb(0 113 227 / 0.06);
+  }
+}
+.flow-spotlight {
+  animation: spotlight 900ms var(--ease-out-strong) both;
+  border-radius: 16px;
+}
+
+/* 依赖图：指向正在运行环节的边，流动虚线表示数据正在交付 */
+@keyframes dag-flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+.dag-live {
+  stroke-dasharray: 6 3;
+  animation: dag-flow 0.9s linear infinite;
+}
+
+.anim-fade {
+  animation: fade-in 180ms var(--ease-out-strong) both;
+}
+.anim-rise {
+  animation: rise-in 220ms var(--ease-out-strong) both;
+}
+.anim-slide-right {
+  animation: slide-in-right 260ms var(--ease-out-strong) both;
+}
+.anim-stamp {
+  animation: stamp-in 320ms var(--ease-out-strong) both;
+}
+.anim-pulse {
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+.bar-running {
+  background-image: linear-gradient(
+    -45deg,
+    rgb(255 255 255 / 0.28) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgb(255 255 255 / 0.28) 50%,
+    rgb(255 255 255 / 0.28) 75%,
+    transparent 75%
+  );
+  background-size: 24px 24px;
+  animation: progress-stripe 0.8s linear infinite;
+}

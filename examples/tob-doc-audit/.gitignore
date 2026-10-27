@@ -1,0 +1,14 @@
+# 依赖与构建产物
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# 本地/系统文件
+.DS_Store
+*.local
+.env
+.env.*
+
+# 需求材料与真实样本一律不入库
+refer/

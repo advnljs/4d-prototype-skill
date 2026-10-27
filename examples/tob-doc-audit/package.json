@@ -1,0 +1,28 @@
+{
+  "name": "tob-doc-audit",
+  "private": true,
+  "version": "0.1.0",
+  "description": "4d-prototype toB 示例：集团财务共享中心收付款单据智能核查（规则引擎 + 模拟智能体 + 4D 全流程演示，数据全部虚构）",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5280 --strictPort",
+    "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "preview": "vite preview --port 5281 --strictPort",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.4"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "4d-prototype",
+  "version": "1.0.0",
+  "description": "Claude Code skill: turn requirement docs into 4D prototypes — a clickable prototype plus a time axis that plays the business by itself, with roles, workflow DAG, original-format data and formal checks of the flow.",
+  "type": "module",
+  "bin": {
+    "4d-prototype": "bin/install.mjs"
+  },
+  "files": [
+    "bin/",
+    "skills/4d-prototype/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude-code",
+    "claude",
+    "agent-skills",
+    "skill",
+    "prototype",
+    "requirements",
+    "workflow",
+    "dag",
+    "demo"
+  ],
+  "license": "MIT-0",
+  "author": "advnljs",
+  "homepage": "https://github.com/advnljs/4d-prototype-skill#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/advnljs/4d-prototype-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/advnljs/4d-prototype-skill/issues"
+  }
+}
